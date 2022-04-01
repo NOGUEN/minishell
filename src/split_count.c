@@ -29,7 +29,7 @@ void    skip_space(char const **s)
         (*s)++;
 }
 
-int split_count(char const *s, const char c)
+int split_count(char const *s)
 {
     char    word_flag;
     int     cnt;
