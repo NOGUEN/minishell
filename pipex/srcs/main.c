@@ -25,4 +25,6 @@ int	main(int argc, char **argv, char **envp)
 	exec_arg(&arg, envp, &inout);
 	close(inout.out.fd);
 	return (0);
+
+
 }

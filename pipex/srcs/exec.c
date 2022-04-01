@@ -58,7 +58,7 @@ void	exec_cmd(char *cmd, char **envp, int (*pipes)[2])
 
 	pid = fork();
 	if (pid < 0)
-		perror_exit("Error : fork");
+		error_exit("Error : fork");
 	if (pid != CHILD)
 	{
 		close(pipes[PTOC][RD]);

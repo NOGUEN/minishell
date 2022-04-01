@@ -14,26 +14,28 @@
 
 int	is_correct_path(char *path, char *cmd)
 {
-	int		gnl_result;
-	char	*grepped;
-	int		fd;
+	int		pid;
+	int		ls_pipe[2];
+	char	*line;
+	char	**paths;
 
-	ls_grep_sh(path, cmd);
-	fd = open("./grepped", O_RDONLY);
-	gnl_result = SUCCESS;
-	while (gnl_result == SUCCESS)
+	pipe(ls_pipe);
+	pid = fork();
+	if (pid == CHILD)
 	{
-		gnl_result = get_next_line(fd, &grepped);
-		if (!ft_strcmp(grepped, cmd))
-		{
-			free(grepped);
-			close(fd);
-			return (TRUE);
-		}
-		free(grepped);
+		close(ls_pipe[RD]);
+		char *args[2];
+		args[0] = "ls";
+		args[1] = NULL;
+		execve("/bin/ls", args, NULL);
 	}
-	close(fd);
-	return (FALSE);
+	waitpid(CHILD, NULL, 0);
+	close(ls_pipe[WR]);
+	while (get_next_line(ls_pipe[RD], &line) == SUCCESS)
+	{
+		line
+	}
+	return 0;
 }
 
 char	**get_path_list(char **envp)
