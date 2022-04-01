@@ -20,4 +20,6 @@ void    signal_init(void);
 /* check */
 int     check_whitespace(char *line);
 
+/* split */
+int     split_count(char const *s);
 #endif
