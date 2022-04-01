@@ -1,14 +1,16 @@
 #include "minishell.h"
 
-int main()
+int main(int argc, char *argv[], char *envp[])
 {
     char *line;
 
+    signal_init();
     while (line = readline("minishell $ "))
     {
-        if (*line != '\0')
+        if (*line != '\0' && !check_whitespace(line))
         {
-            dfdf
+            add_history(line);
+
         }
     }
 }
