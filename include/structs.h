@@ -7,7 +7,7 @@ typedef struct      s_token
     char            redir_flag;
 }                   t_token;
 
-typedef struct  s_cmd
+typedef struct      s_cmd
 {
     t_token         *cmds;
     int             flag;
