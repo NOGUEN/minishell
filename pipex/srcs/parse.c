@@ -6,36 +6,62 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 22:37:02 by soekim            #+#    #+#             */
-/*   Updated: 2022/04/01 13:27:39 by soekim           ###   ########.fr       */
+/*   Updated: 2022/04/01 20:42:46 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parse.h"
 
+int check_ls_result(int *ls_pipe, char *cmd)
+{
+	int		result;
+	char	*line;
+	char	**finded;
+	char	**to_free;
+
+	result = FALSE;
+	while (get_next_line(ls_pipe[RD], &line) == SUCCESS)
+	{
+		finded = ft_split(line, ' ');
+		to_free = finded;
+		while (*finded)
+		{
+			if (!ft_strcmp(*finded, cmd))
+			{
+				result = TRUE;
+				break;
+			}
+			++finded;
+		}
+		free(line);
+		free_char_ptr2d(to_free);
+		if (result == TRUE)
+			break;
+	}
+	return result;
+}
+
 int	is_correct_path(char *path, char *cmd)
 {
-	int		pid;
 	int		ls_pipe[2];
-	char	*line;
-	char	**paths;
-
+	int		pid;
+	char	*ls_args[3]; 
+	
 	pipe(ls_pipe);
 	pid = fork();
 	if (pid == CHILD)
 	{
 		close(ls_pipe[RD]);
-		char *args[2];
-		args[0] = "ls";
-		args[1] = NULL;
-		execve("/bin/ls", args, NULL);
+		dup2(ls_pipe[WR], STDOUT);
+		ls_args[0] = "ls";
+		ls_args[1] = path;
+		ls_args[2] = NULL;
+		execve("/bin/ls", ls_args, NULL);
+		exit(0);
 	}
 	waitpid(CHILD, NULL, 0);
 	close(ls_pipe[WR]);
-	while (get_next_line(ls_pipe[RD], &line) == SUCCESS)
-	{
-		line
-	}
-	return 0;
+	return check_ls_result(ls_pipe, cmd);
 }
 
 char	**get_path_list(char **envp)
