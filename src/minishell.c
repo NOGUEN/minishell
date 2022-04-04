@@ -2,9 +2,13 @@
 
 int main(int argc, char *argv[], char *envp[])
 {
-    char *line;
+    //char *line;
 
-    signal_init();
+    argc = argc * argc;
+    //signal_init();
+    printf("%s", argv[1]);
+    printf("%s", envp[1]);
+    /*
     while (line = readline("minishell $ "))
     {
         if (*line != '\0' && !check_whitespace(line))
@@ -13,4 +17,5 @@ int main(int argc, char *argv[], char *envp[])
 
         }
     }
+    */
 }

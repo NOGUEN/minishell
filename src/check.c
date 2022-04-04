@@ -9,7 +9,7 @@ int check_whitespace(char *line)
     i = -1;
     while (++i < len)
     {
-        if (!ft_isspace(line[i]))
+        if (!ft_isspace((int)line[i]))
             return (0);
     }
     return (1);

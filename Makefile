@@ -5,11 +5,12 @@ NAME 		=	minishell
 LIBFT		=	libft.a
 LIBFT_DIR	=	libft
 
-SRC_DIR		=	srcs
-SRC			=	srcs/minishell.c
+SRC_DIR		=	src
+SRC			=	src/check.c src/minishell.c src/parse.c src/signal.c \
+				src/split_cmd.c src/split_count.c
 
-OBJ_DIR		=	objs
-OBJ			=	$(SRC: $(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJ_DIR		=	obj
+OBJ			=	$(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all :		$(NAME)
 
@@ -19,7 +20,7 @@ $(NAME) :	$(LIBFT) $(OBJ)
 
 $(LIBFT) :
 			cd $(LIBFT_DIR); make
-			cd $(LIBFT_DIR)/$(LIBFT) ./
+			cp $(LIBFT_DIR)/$(LIBFT) ./
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 				mkdir -p $(OBJ_DIR)
@@ -30,7 +31,7 @@ clean :
 			rm -rf $(OBJ) $(OBJ_DIR)
 
 fclean :	clean
-			cd $(LIBFT_DIR); make clean
+			cd $(LIBFT_DIR); make fclean
 			rm -rf $(NAME) $(LIBFT)
 
 re:			fclean all
