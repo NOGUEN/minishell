@@ -14,13 +14,20 @@
 #include "../libft/libft.h"
 #include "structs.h"
 
+# define BEGIN 0x00000001
+# define SQUOTE 0x00000002
+# define DQUOTE 0x00000004
+# define REDIR 0x00000008
+# define COUNT 0x000000016
+
 /* signal */
 void    signal_init(void);
 
 /* check */
 int     check_whitespace(char *line);
 
-/* split */
+/* split_count */
+void    maksing_quote_flag(char const *s, int *flag);
 int     split_count(char const *s);
 t_token *cmd_split(char const *s);
 #endif

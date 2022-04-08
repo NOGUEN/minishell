@@ -1,65 +1,73 @@
 #include "../include/minishell.h"
 
+void    masking_quote_flag(char const *s, int *flag)
+{
+    if (*s == '\"')
+    {
+        if ((*flag) & DQUOTE)
+            (*flag) &= !DQUOTE;
+        else
+            (*flag) |= DQUOTE;
+    }
+    else if (*s == '\'')
+    {
+        if ((*flag) & SQUOTE)
+            (*flag) &= !SQUOTE;
+        else
+            (*flag) |= SQUOTE;
+    }
+}
+
+void    count(int *flag, int *cnt, int make_begin_zero_flag)
+{
+    if (*flag & REDIR)
+        *flag &= !REDIR;
+    if (make_begin_zero_flag == 1)
+        *flag &= !BEGIN;
+    (*cnt)++;
+}
+
+void    count_on_flag(char const *s, int *flag, int *cnt)
+{
+    if (*s == ' ' && (!(*flag & DQUOTE) && !(*flag & SQUOTE)))
+        count(flag, cnt, 1);
+    else if ((*s == '>' || *s == '<') && (!(*flag & DQUOTE) && !(*flag & SQUOTE)))
+    {
+        if (!(*flag & REDIR))
+            (*cnt)++;
+        *flag |= REDIR;
+    }
+    else if (*s != ' ' 
+                && !(*s == '>' || *s == '<')
+                && (!(*flag & DQUOTE) && !(*flag & SQUOTE))
+                && (*(s - 1) == '>' || *(s - 1) == '<'))
+        count(flag, cnt, 0);
+    else if (*s == '\'' && *flag & SQUOTE)
+        count(flag, cnt, 0);
+    else if (*s == '\"' && *flag & DQUOTE)
+        count(flag, cnt, 0);
+}
+
 int split_count(char const *s)
 {
-    char    word_flag;
-    int     cnt;
-    char    quote;
+    int cnt;
+    int flag;
 
     cnt = 0;
-    quote = 0;
-    word_flag = 0;
+    flag = 0;
     while (*s)
     {
-        if (*s == '\"')
+        masking_quote_flag(s, &flag);
+        if (!(flag & BEGIN))
         {
-            if (quote == '\"')
-            {
-                quote = 0;
-                if (word_flag == 0)
-                    ++cnt;
-            }
-            else
-                quote = '\"';
-            ++s;
-        }
-        else if (*s == '\'')
-        {
-            if (quote == '\'')
-            {
-                quote = 0;
-                if (word_flag == 0)
-                    ++cnt;
-            }
-            else
-                quote = '\'';
-            ++s;
-        }
-        else if (*s == '>' || *s == '<')
-        {
-            if (word_flag == 1)
-                ++cnt;
-            while (*s == '>' || *s == '<')
-                ++s;
-            ++cnt;
-        }
-        else if (*s == ' ')
-        {
-            if (word_flag == 1)
-            {
-                word_flag = 0;
-                ++cnt;
-            }
-            while (*s == ' ')
-                ++s;
+            if (*s != ' ')
+                flag |= BEGIN;
+            if (*s == '<' || *s == '>')
+                flag |= REDIR;
         }
         else
-        {
-            word_flag = 1;
-            ++s;
-        }
+            count_on_flag(s, &flag, &cnt);
+        ++s;
     }
-    if (quote != 0 || word_flag == 1)
-        ++cnt;
-    return (cnt);
+    return (flag & BEGIN ? cnt + 1 : cnt);
 }
