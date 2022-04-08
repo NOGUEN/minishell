@@ -1,5 +1,5 @@
 #ifndef STRUCTS_H
-#define STRICTS_H
+#define STRUCTS_H
 
 typedef struct      s_token
 {
@@ -11,7 +11,7 @@ typedef struct      s_cmd
 {
     t_token         *cmds;
     int             flag;
-    char            *(redir_file[2]);
+    char            *(redir_file[4]);
     struct s_cmd    *next;
 }                   t_cmd;
 

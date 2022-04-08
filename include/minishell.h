@@ -22,4 +22,5 @@ int     check_whitespace(char *line);
 
 /* split */
 int     split_count(char const *s);
+t_token *cmd_split(char const *s);
 #endif
