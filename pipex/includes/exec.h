@@ -18,8 +18,10 @@
 # include "vars.h"
 # include "utils.h"
 # include "parse.h"
+# include "structs.h"
+# include "inout.h"
 
-void	exec_arg(t_arg *arg, char **envp, t_inout *inout);
+void	exec_arg(t_cmd *cmd_list, char **envp);
 void	exec_cmd(char *cmd, char **envp, int (*pipes)[2]);
 
 #endif

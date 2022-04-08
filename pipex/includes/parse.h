@@ -14,6 +14,7 @@
 # define PARSE_H
 
 # include "utils.h"
+# include "structs.h"
 
 int		is_correct_path(char *path, char *cmd);
 char	*find_cmdpath(char *cmd, char **envp);

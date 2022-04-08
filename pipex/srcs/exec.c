@@ -21,26 +21,17 @@ void	init_pipe(int (*pipes)[2])
 	return ;
 }
 
-void	exec_arg(t_arg *arg, char **envp, t_inout *inout)
+void	exec_arg(t_cmd * cmd_list, char **envp)
 {
-	int		i;
-	int		input;
-	int		cmd_num;
+	t_inout	inout;
 	int		pipes[2][2];
 
-	if (arg->cnt == 3 || arg->cnt == 4)
-		cmd_num = arg->cnt - 2;
-	else if (arg->cnt >= 5)
-		cmd_num = arg->cnt - 3;
-	else
-		return ;
-	input = inout->in.fd;
-	i = 0;
-	arg->vec += 2;
-	while (i < cmd_num)
+	while (cmd_list)
 	{
 		init_pipe(pipes);
-		transfer_data(input, pipes[PTOC][WR]);
+		init_inout(&init_inout, cmd_list);
+		// consider how to get input from stdin when << token 
+		transfer_data(&inout, pipes[PTOC][WR]);
 		exec_cmd(arg->vec[i], envp, pipes);
 		close(input);
 		input = pipes[CTOP][RD];

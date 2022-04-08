@@ -13,11 +13,14 @@
 #ifndef INOUT_H
 # define INOUT_H
 
+# define NO_INPUT
+
 # include "vars.h"
 # include "utils.h"
+# include "structs.h"
 
 # include <fcntl.h>
 
-void	init_inout(t_inout *inout, t_arg *arg);
+// void	init_inout(t_inout *inout, t_cmd *cmd);
 
 #endif

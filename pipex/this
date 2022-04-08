@@ -1,1 +1,6 @@
-68336 ttys001    0:00.00 ./pipex test ps grep e this
+Makefile
+echo_test.c
+includes
+srcs
+test
+this

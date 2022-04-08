@@ -43,11 +43,20 @@ struct	s_file
 };
 typedef struct s_file	t_file;
 
-struct	s_inout
+// struct	s_inout
+// {
+// 	t_file	in;
+// 	t_file	out;
+// };
+// typedef struct s_inout	t_inout;
+
+struct s_token_info
 {
-	t_file	in;
-	t_file	out;
+	int input;
+	int output;
+	char **cmd_arg;
 };
-typedef struct s_inout	t_inout;
+typedef struct s_token_info t_token_info;
+
 
 #endif
