@@ -63,5 +63,5 @@ int     squote_cnt(char **cmd);
 t_cmd   *new_cmd(char *line, int pipe_flag, char **envp, int exit_flag);
 
 /* utils */
-char    *cut_string(char *str);
+char    *cut_string(char **str);
 #endif

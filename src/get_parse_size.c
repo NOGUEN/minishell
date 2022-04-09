@@ -1,7 +1,5 @@
 #include "../include/minishell.h"
 
-
-
 int get_parse_size(char *cmd, char **envp)
 {
     int size;
@@ -11,7 +9,9 @@ int get_parse_size(char *cmd, char **envp)
     while (*cmd)
     {
         if (*cmd == '\'')
-            ;
+            size += squote_cnt(&cmd);
+        if (*cmd == '\"')
+            size += dquote_cnt(&cmd, envp);
     }
     return (0);
 }

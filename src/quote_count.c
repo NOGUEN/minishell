@@ -24,7 +24,7 @@ int env_len(char *str, char **envp)
     len = 0;
     env = find_env(str, envp);
     if (env != NULL)
-        len = ft_strlen(env) - ft_strlen(str);
+        len = ft_strlen(env) - ft_strlen(str) - 1;
     return (len);
 }
 
@@ -34,7 +34,8 @@ int dquote_cnt(char **cmd, char **envp)
     char *tmp;
 
     size = 0;
-    while (*(*cmd++) && **cmd != '\"')
+    (*cmd)++;
+    while (**cmd && **cmd != '\"')
     {
         if (**cmd == '$')
         {
@@ -44,6 +45,7 @@ int dquote_cnt(char **cmd, char **envp)
         }
         else
             size++;
+        (*cmd)++;
     }
     return (size);
 }
@@ -54,10 +56,10 @@ int squote_cnt(char **cmd)
 
     size = 0;
     (*cmd)++;
-    while (*(*cmd++) && **cmd != '\'')
+    while (**cmd && **cmd != '\'')
     {
         ++size;
-        ++cmd;
+        ++(*cmd);
     }
     return (size);
 }
