@@ -9,7 +9,7 @@ int check_whitespace(char *line)
     i = -1;
     while (++i < len)
     {
-        if (!ft_isspace((int)line[i]))
+        if (!((line[i] >= 9 && line[i] <= 13) || line[i] == 32))
             return (0);
     }
     return (1);
