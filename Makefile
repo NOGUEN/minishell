@@ -1,20 +1,31 @@
-CC			=	gcc -g
-CFLAGS		=	-Wall -Wextra -Werror
-NAME 		=	minishell
+CC 				= gcc -g -fsanitize=address
+RM				= rm -rf
+CFLAGS 			= -Wall -Wextra -Werror
+NAME 			= minishell
 
-LIBFT		=	libft.a
-LIBFT_DIR	=	libft
+LIBFT		= libft.a
+LIBFT_DIR	= libft
 
-SRC_DIR		=	src
-SRC			=	src/check.c src/minishell.c src/parse.c src/signal.c \
-				src/split_cmd.c src/split_count.c
+SRC_DIR 	= src
+SRC 		= src/alloc_token.c \
+			  src/alloc_word.c \
+			  src/check.c \
+			  src/get_parse_size.c \
+			  src/minishell.c \
+			  src/new_cmd.c \
+			  src/parse.c \
+			  src/quote_count.c \
+			  src/signal.c \
+			  src/split_cmd.c \
+			  src/split_count.c \
+			  src/utils.c
 
-OBJ_DIR		=	obj
-OBJ			=	$(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJ_DIR 	= objs
+OBJ 		= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-all :		$(NAME)
+all : 		$(NAME)
 
-$(NAME) :	$(LIBFT) $(OBJ)
+$(NAME) : 	$(LIBFT) $(OBJ)
 			$(CC) $(CFLAGS) -o $@ $(OBJ)
 			$(LIBFT)
 
@@ -23,17 +34,17 @@ $(LIBFT) :
 			cp $(LIBFT_DIR)/$(LIBFT) ./
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-				mkdir -p $(OBJ_DIR)
-				$(CC) $(CFLAGS) -c $< -o $(<:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+			mkdir -p $(OBJ_DIR)
+			$(CC) $(CFLAGS) -c $< -o $(<:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 clean :
 			cd $(LIBFT_DIR); make clean
-			rm -rf $(OBJ) $(OBJ_DIR)
+			$(RM) $(OBJ) $(OBJ_DIR)
 
-fclean :	clean
+fclean : 	clean
 			cd $(LIBFT_DIR); make fclean
-			rm -rf $(NAME) $(LIBFT)
+			$(RM) $(NAME) $(LIBFT)
 
-re:			fclean all
+re : 		fclean all
 
-.PHONY : 	all clean fclean
+.PHONY :	all clean fclean

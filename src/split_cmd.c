@@ -1,6 +1,6 @@
 #include "../include/minishell.h"
 
-static void *free_cmd(t_token *result, int len)
+void *free_cmd(t_token *result, int len)
 {
     int i;
 
@@ -10,7 +10,7 @@ static void *free_cmd(t_token *result, int len)
     return (NULL);
 }
 
-t_token *cmd_split(char const *s)
+t_token *split_cmd(char const *s)
 {
     int     result_index;
     t_token *result;
@@ -30,6 +30,7 @@ t_token *cmd_split(char const *s)
             result[result_index].cmd = alloc_word(&s);
             result[result_index].redir_flag = 0;
             if (result[result_index].cmd == NULL)
+                free_cmd(result, result_index);
                 return (free_cmd(result, result_index));
             ++result_index;
         }

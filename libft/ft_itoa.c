@@ -3,55 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnoh <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: mac <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/07 13:23:56 by hnoh              #+#    #+#             */
-/*   Updated: 2021/01/07 13:27:01 by hnoh             ###   ########.fr       */
+/*   Created: 2020/07/11 16:18:28 by mac               #+#    #+#             */
+/*   Updated: 2020/08/25 12:40:58 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_get_digit_count(long int n)
+int		ft_abs(int n)
 {
-	int		i;
+	int		result;
 
 	if (n < 0)
-		n *= -1;
-	i = 1;
-	while (n > 9)
+		result = -1 * n;
+	else
+		result = n;
+	return (result);
+}
+
+int		cal_size(int n)
+{
+	int		size;
+	int		tmp;
+
+	size = 1;
+	tmp = n;
+	if (n < -9)
+		size++;
+	if (n < 0)
 	{
-		i++;
-		n /= 10;
+		size++;
+		tmp = ft_abs(tmp / 10);
 	}
-	return (i);
+	while (tmp > 9)
+	{
+		size++;
+		tmp = tmp / 10;
+	}
+	return (size);
 }
 
 char	*ft_itoa(int n)
 {
-	char			*str;
-	int				digit_count;
-	long int		long_n;
+	char	*result;
+	int		size;
+	int		flag;
 
-	long_n = n;
-	digit_count = ft_get_digit_count(long_n);
-	if (long_n < 0)
-		digit_count++;
-	if (!(str = malloc((digit_count + 1) * sizeof(char))))
-		return (NULL);
-	str[0] = '0';
-	if (long_n < 0)
+	flag = 0;
+	size = cal_size(n);
+	if (!(result = (char*)malloc(size + 1)))
+		return (0);
+	result[size--] = '\0';
+	if (n < 0)
+		flag = 1;
+	while (size >= 0)
 	{
-		str[0] = '-';
-		long_n *= -1;
+		result[size] = '0' + ft_abs(n % 10);
+		n = ft_abs(n / 10);
+		size--;
 	}
-	str[digit_count] = '\0';
-	while (((digit_count >= 0 && str[0] != '-')
-				|| (digit_count > 0 && str[0] == '-')) && long_n != 0)
-	{
-		str[digit_count - 1] = (long_n % 10) + '0';
-		long_n /= 10;
-		digit_count--;
-	}
-	return (str);
+	if (flag == 1)
+		result[0] = '-';
+	return (result);
 }

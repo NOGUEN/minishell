@@ -1,47 +1,47 @@
 #include "../include/minishell.h"
 
-int env_value_size(char *str, int size, char **envp)
+char *find_env(char *str, char **envp)
 {
-    int index;
+    int len;
+    char **tmp;
 
-    index = -1;
-    while (envp[++index])
+    len = ft_strlen(str);
+    tmp = envp;
+    while (*tmp)
     {
-        if ((ft_strncmp(&str[1], envp[index], size))
-                && envp[index][size] == '=')
-            return (ft_strlen(envp[index] + size + 1));
+        if (ft_strncmp(str, *tmp, len) == 0)
+            return *tmp;
+        tmp++;
     }
-    return (0);
+    return (NULL);
 }
 
-int env_key_size(char *str)
+int env_len(char *str, char **envp)
 {
-    int index;
+    int len;
+    char *env;
 
-    index = 0;
-    if (ft_isdigit(str[1]))
-        return (1);
-    while (str[++index])
-    {
-        if (!(ft_isalnum(str[index]) || str[index]))
-    }
+    len = 0;
+    env = find_env(str, envp);
+    if (env != NULL)
+        len = ft_strlen(env) - ft_strlen(str);
+    return (len);
 }
-
-int env_len(char *str, int size, char **envp)
-{
-    
-}
-
 
 int dquote_cnt(char **cmd, char **envp)
 {
     int size;
+    char *tmp;
 
     size = 0;
     while (*(*cmd++) && **cmd != '\"')
     {
         if (**cmd == '$')
-            size += env_cnt();
+        {
+            tmp = cut_string(*cmd + 1);
+            size += env_len(tmp, envp);
+            free(tmp);
+        }
         else
             size++;
     }

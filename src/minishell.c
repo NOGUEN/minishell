@@ -8,6 +8,7 @@ int main(int argc, char *argv[], char *envp[])
     //signal_init();
     printf("%s", argv[1]);
     printf("%s", envp[1]);
+    printf("%d", env_len("ZSH", envp));
     /*
     while (line = readline("minishell $ "))
     {

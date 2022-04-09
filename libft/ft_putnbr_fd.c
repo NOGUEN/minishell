@@ -3,29 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnoh <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: mac <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/04 12:12:22 by hnoh              #+#    #+#             */
-/*   Updated: 2021/01/04 12:20:57 by hnoh             ###   ########.fr       */
+/*   Created: 2020/07/14 17:55:29 by mac               #+#    #+#             */
+/*   Updated: 2020/08/10 21:38:37 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+void	display_nbr(int n, int fd)
+{
+	if (n >= 10)
+		display_nbr(n / 10, fd);
+	write(fd, &"0123456789"[n % 10], 1);
+}
+
 void	ft_putnbr_fd(int n, int fd)
 {
-	unsigned int i;
-
-	if (n >= 0)
+	if (fd < 0)
+		return ;
+	if (n == -2147483648)
 	{
-		i = n;
+		write(fd, "-2147483648", 11);
+		return ;
 	}
 	if (n < 0)
 	{
-		ft_putchar_fd('-', fd);
-		i = (unsigned int)(n * -1);
+		write(fd, "-", 1);
+		n *= -1;
 	}
-	if (i > 9)
-		ft_putnbr_fd(i / 10, fd);
-	ft_putchar_fd((char)(i % 10 + '0'), fd);
+	display_nbr(n, fd);
 }

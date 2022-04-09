@@ -49,8 +49,8 @@ int word_len(char const *s)
         return (len);
     while (*s)
     {
-        maksing_quote_flag(s, &flag);
-        if (count_word_len_on_flag(s, &len, &flag))
+        masking_quote_flag(s, &flag);
+        if (count_word_len_on_flag(s, &len, flag))
             break ;
         ++s;
     }

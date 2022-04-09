@@ -11,6 +11,7 @@ t_token *alloc_token(t_token *token, char **envp)
     {
         cmd_len = 0;
         tmp_cmd = token[i].cmd;
-        cmd_len = 
+        printf("%d %s %s", cmd_len, tmp_cmd, envp[1]);
     }
+    return (NULL);
 }

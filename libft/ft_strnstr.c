@@ -3,36 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnoh <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: djeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/03 12:43:34 by hnoh              #+#    #+#             */
-/*   Updated: 2021/01/03 12:53:02 by hnoh             ###   ########.fr       */
+/*   Created: 2020/06/03 13:11:16 by djeon             #+#    #+#             */
+/*   Updated: 2020/07/08 12:48:56 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *big, const char *little, size_t length)
+int			ft_all_match(char *str, char *to_find, int to_find_len)
 {
-	size_t		i;
-	size_t		j;
+	int index;
 
-	if (!*little)
-		return ((char *)big);
-	i = 0;
-	while (big[i] && (size_t)i < length)
+	index = 0;
+	while (index < to_find_len)
 	{
-		if (big[i] == little[0])
+		if (str[index] == to_find[index])
 		{
-			j = 0;
-			while (big[i + j] == little[j] && i + j < length)
-			{
-				if (little[j + 1] == '\0')
-					return ((char *)&big[i]);
-				j++;
-			}
+			index++;
+			if (index == to_find_len)
+				return (1);
 		}
-		i++;
+		else
+			return (0);
+	}
+	return (0);
+}
+
+char		*ft_strnstr(const char *str, const char *to_find, size_t len)
+{
+	size_t	to_find_len;
+	size_t	index;
+	size_t	j;
+
+	to_find_len = 0;
+	index = 0;
+	while (to_find[to_find_len] != '\0')
+		to_find_len++;
+	if (to_find_len == 0)
+		return ((char*)str);
+	if (len == 0)
+		return (0);
+	while (str[index] != '\0' && index <= len - to_find_len)
+	{
+		if (str[index] == to_find[0])
+		{
+			j = ft_all_match((char*)&str[index], (char*)to_find, to_find_len);
+			if (j == 1)
+				return ((char*)&str[index]);
+		}
+		index++;
 	}
 	return (0);
 }
