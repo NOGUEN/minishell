@@ -26,8 +26,9 @@ OBJ 		= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 all : 		$(NAME)
 
 $(NAME) : 	$(LIBFT) $(OBJ)
-			$(CC) $(CFLAGS) -o $@ $(OBJ)
+			$(CC) $(CFLAGS) -o $@ $(OBJ) \
 			$(LIBFT)
+			
 
 $(LIBFT) :
 			cd $(LIBFT_DIR); make
