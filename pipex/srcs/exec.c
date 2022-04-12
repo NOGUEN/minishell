@@ -12,40 +12,89 @@
 
 #include "../includes/exec.h"
 
-void	init_pipe(int (*pipes)[2])
+void init_pipe(int (*pipes)[2])
 {
 	if (pipe(pipes[PTOC]) < 0)
 		error_exit("Error : pipe");
 	if (pipe(pipes[CTOP]) < 0)
 		error_exit("Error : pipe");
-	return ;
+	return;
 }
 
-void	exec_arg(t_cmd * cmd_list, char **envp)
+void transfer_data(int fd_src, int *fd_targets)
 {
-	t_inout	inout;
-	int		pipes[2][2];
+	int read_result;
+	int *fd_target;
+	char buf[33];
 
+	buf[32] = 0;
+	read_result = 1;
+	while (read_result > 0)
+	{
+		read_result = read(fd_src, buf, 32);
+		buf[read_result] = 0;
+		fd_target = fd_targets;
+		while (*fd_target != END_OF_FDS)
+			ft_putstr_fd(buf, *fd_target);
+	}
+	return;
+}
+
+void exec_arg(t_cmd *cmd_list, char **envp)
+{
+	t_token_info token_info;
+	int pipes[2][2];
+	int fds_to_write[3];
+	int last_pipe;
+	int last_outredir;
+
+	fds_to_write[2] = END_OF_FDS;
 	while (cmd_list)
 	{
 		init_pipe(pipes);
-		init_inout(&init_inout, cmd_list);
-		// consider how to get input from stdin when << token 
-		transfer_data(&inout, pipes[PTOC][WR]);
-		exec_cmd(arg->vec[i], envp, pipes);
-		close(input);
-		input = pipes[CTOP][RD];
+		init_token_info(&token_info, cmd_list->cmdline);
+		// consider how to get input from stdin when << token
+		// when input exist in token, input of pipe doesn't work
+		// when output exist in token, should write both output of pipe and output redirection file
+		if (token_info.input == NO_DATA)
+		{
+			fds_to_write[0] = pipes[PTOC][WR];
+			fds_to_write[1] = last_outredir;
+			transfer_data(last_pipe, fds_to_write);
+			close(last_outredir);
+		}
+		else
+		{
+			fds_to_write[0] = last_outredir;
+			fds_to_write[1] = END_OF_FDS;
+			transfer_data(last_pipe, fds_to_write);
+			fds_to_write[0] = pipes[PTOC][WR];
+			transfer_data(token_info.input, fds_to_write);
+		}
+		close(last_pipe);
+
+		exec_cmd(&token_info, envp, pipes);
+		last_pipe = pipes[CTOP][RD];
+		last_outredir = token_info.output;
 		close(pipes[PTOC][WR]);
-		++i;
+		// free token_info
+		cmd_list = cmd_list->next;
 	}
-	transfer_data(input, inout->out.fd);
+
+	fds_to_write[1] = END_OF_FDS;
+	if (last_outredir == NO_DATA)
+		fds_to_write[0] = STDOUT;
+	else
+		fds_to_write[0] = last_outredir;
+	transfer_data(last_pipe, fds_to_write);
+	close(last_outredir);
+	close(last_pipe);
 }
 
-void	exec_cmd(char *cmd, char **envp, int (*pipes)[2])
+void exec_cmd(t_token_info *token_info, char **envp, int (*pipes)[2])
 {
-	int		pid;
-	char	*path;
-	char	**cmd_arg;
+	int pid;
+	char *path;
 
 	pid = fork();
 	if (pid < 0)
@@ -59,12 +108,11 @@ void	exec_cmd(char *cmd, char **envp, int (*pipes)[2])
 	{
 		close(pipes[PTOC][WR]);
 		close(pipes[CTOP][RD]);
-		path = find_cmdpath(cmd, envp);
-		cmd_arg = ft_split(cmd, ' ');
+		path = find_cmdpath(token_info->cmd_arg[0], envp);
 		dup2(pipes[PTOC][RD], STDIN);
 		dup2(pipes[CTOP][WR], STDOUT);
-		execve(path, cmd_arg, envp);
+		execve(path, token_info->cmd_arg, envp);
 		exit(0);
 	}
-	return ;
+	return;
 }

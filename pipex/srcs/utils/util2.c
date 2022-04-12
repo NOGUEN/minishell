@@ -29,22 +29,6 @@ void	free_char_ptr2d(char **ptr2d)
 	return ;
 }
 
-void	transfer_data(int fd_src, int fd_target)
-{
-	int		read_result;
-	char	buf[33];
-
-	buf[32] = 0;
-	read_result = 1;
-	while (read_result > 0)
-	{
-		read_result = read(fd_src, buf, 32);
-		buf[read_result] = 0;
-		ft_putstr_fd(buf, fd_target);
-	}
-	return ;
-}
-
 void	cmd_not_found(char *cmd)
 {
 	write(1, "\n", 1);

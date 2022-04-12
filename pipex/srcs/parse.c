@@ -82,27 +82,24 @@ char	*find_cmdpath(char *cmd, char **envp)
 {
 	char	**path_list;
 	char	**to_free;
-	char	**to_find;
 	char	*to_cat;
 	char	*path;
 
 	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3))
 		return (*ft_split(cmd, ' '));
-	to_find = ft_split(cmd, ' ');
 	path_list = get_path_list(envp);
 	to_free = path_list;
 	while (*path_list)
 	{
-		if (is_correct_path(*path_list, *to_find))
+		if (is_correct_path(*path_list, cmd))
 			break ;
 		++path_list;
 	}
 	if (!(*path_list))
-		cmd_not_found(*to_find);
-	to_cat = ft_strjoin("/", *to_find);
+		cmd_not_found(cmd);
+	to_cat = ft_strjoin("/", cmd);
 	path = ft_strjoin(*path_list, to_cat);
 	free(to_cat);
-	free_char_ptr2d(to_find);
 	free_char_ptr2d(to_free);
 	return (path);
 }

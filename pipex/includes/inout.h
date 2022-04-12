@@ -13,7 +13,7 @@
 #ifndef INOUT_H
 # define INOUT_H
 
-# define NO_INPUT
+# define NO_DATA -1
 
 # include "vars.h"
 # include "utils.h"
@@ -21,6 +21,5 @@
 
 # include <fcntl.h>
 
-// void	init_inout(t_inout *inout, t_cmd *cmd);
-
+void init_token_info(t_token_info *info, t_token *token);
 #endif

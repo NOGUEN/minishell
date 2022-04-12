@@ -13,6 +13,8 @@
 #ifndef EXEC_H
 # define EXEC_H
 
+# define END_OF_FDS -1
+
 # include <unistd.h>
 
 # include "vars.h"
@@ -22,6 +24,6 @@
 # include "inout.h"
 
 void	exec_arg(t_cmd *cmd_list, char **envp);
-void	exec_cmd(char *cmd, char **envp, int (*pipes)[2]);
+void	exec_cmd(t_token_info *token_info, char **envp, int (*pipes)[2]);
 
 #endif
