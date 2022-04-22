@@ -101,30 +101,30 @@ int				add_envp(char *cmd, char ***envp)
 	return (1);
 }
 
-int			ft_export(t_cmd *cmd_list, char ***envp, int fd)
+int			ft_export(t_cmd_list *cmd_list, char ***envp, int fd)
 {
 	int			i;
 	int 		keyindex;
 
 	i = 1;
-	while(cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
+	while(cmd_list->tokens[i].cmd && cmd_list->tokens[i].redir_flag == 0)
 	{
-		if (isvalid_export(cmd_list->cmdline[i].cmd))
+		if (isvalid_export(cmd_list->tokens[i].cmd))
 		{
-			if ((keyindex = check_key(*envp, cmd_list->cmdline[i].cmd)) >= 0)
+			if ((keyindex = check_key(*envp, cmd_list->tokens[i].cmd)) >= 0)
 			{
-				if (haveequal(cmd_list->cmdline[i].cmd))
-					add_key_envp(envp, cmd_list->cmdline[i].cmd, keyindex);
+				if (haveequal(cmd_list->tokens[i].cmd))
+					add_key_envp(envp, cmd_list->tokens[i].cmd, keyindex);
 					//key가 있는데 value가 없이 들어오면 아무 처리 안해줌.
 			}
 			else
-				add_envp(cmd_list->cmdline[i].cmd, envp);//key가 없어서 새로 추가.
+				add_envp(cmd_list->tokens[i].cmd, envp);//key가 없어서 새로 추가.
 		}
 		else//유효한 키가 아닐때,
 			cmd_list->err_manage.errcode = 5;
 		i++;
 	}
-	if (!(cmd_list->cmdline[1].cmd) || cmd_list->cmdline[1].redir_flag == 1)
+	if (!(cmd_list->tokens[1].cmd) || cmd_list->tokens[1].redir_flag == 1)
 		print_export(*envp, fd);
 	if (cmd_list->err_manage.errcode == 5)
 		return (-1);

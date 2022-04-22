@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int				left_redirect(t_cmd *cmd_list, int *last_index)
+int				left_redirect(t_cmd_list *cmd_list, int *last_index)
 {
 	int			fd;
 
@@ -24,7 +24,7 @@ int				left_redirect(t_cmd *cmd_list, int *last_index)
 	return (0);
 }
 
-int				left_redirect_double(t_cmd *cmd_list, int **fds)
+int				left_redirect_double(t_cmd_list *cmd_list, int **fds)
 {
 	char		*line;
 
@@ -39,7 +39,7 @@ int				left_redirect_double(t_cmd *cmd_list, int **fds)
 	return (0);
 }
 
-int				right_redirect(t_cmd *cmd_list, int *last_index)
+int				right_redirect(t_cmd_list *cmd_list, int *last_index)
 {
 	int			fd;
 
@@ -51,7 +51,7 @@ int				right_redirect(t_cmd *cmd_list, int *last_index)
 	return (1);
 }
 
-int				right_redirect_double(t_cmd *cmd_list, int *last_index)
+int				right_redirect_double(t_cmd_list *cmd_list, int *last_index)
 {
 	int			fd;
 
@@ -65,7 +65,7 @@ int				right_redirect_double(t_cmd *cmd_list, int *last_index)
 
 
 
-int		redirect(t_cmd *cmd_list, int **fds, int *last_index)
+int		redirect(t_cmd_list *cmd_list, int **fds, int *last_index)
 {
 	int error_left;
 	int error_right;

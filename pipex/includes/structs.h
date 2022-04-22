@@ -26,9 +26,9 @@ typedef struct	s_token
 	char		redir_flag;
 }				t_token;
 
-typedef struct	s_cmd
+typedef struct	s_cmd_list
 {
-	t_token			*cmdline;
+	t_token			*tokens;
 	int				pipe_flag;
 	int				exit_flag;
 	int				right_flag;
@@ -39,7 +39,7 @@ typedef struct	s_cmd
 	//index 2 : righ redirect char (>, >>);
 	//index 3 : righ redirect filename;
 	struct s_err	err_manage;
-	struct s_cmd	*next;
-}				t_cmd;
+	struct s_cmd_list	*next;
+}				t_cmd_list;
 
 #endif

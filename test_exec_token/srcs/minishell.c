@@ -17,7 +17,7 @@ int g_exit_status = 0;
 int main(int argc, char *argv[], char *envp[])
 {
 	char *line;
-	t_cmd *cmd_list;
+	t_cmd_list *cmd_list;
 	char **cpenv;
 	if (!argv) return 0;
 
@@ -33,7 +33,7 @@ int main(int argc, char *argv[], char *envp[])
 			add_history(line);
 			parse(&cmd_list, line, cpenv); // 입력된 문자열을 먹기좋게 파싱합니다.
 
-			// print token
+			// //print token
 			// for (t_cmd *cmd = cmd_list; cmd; cmd = cmd->next)
 			// {
 			// 	for (t_token*token = cmd->cmdline;token->cmd;++token)
@@ -44,6 +44,7 @@ int main(int argc, char *argv[], char *envp[])
 
 			// g_exit_status = exec(cmd_list, argv, &cpenv); // 파싱된 명령어 및 문자열을 실행합니다.
 			exec_arg(cmd_list, envp);
+			printf("this\n");
 			free_list(cmd_list);						  // 파싱된 데이터가 들어있는 list를 해제시켜줍니다.
 			free(line);									  // readline으로 할당한 line을 해제시켜줍니다.
 		}

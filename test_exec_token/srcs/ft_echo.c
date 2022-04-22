@@ -19,7 +19,7 @@ int         n_opt_chk(char *cmd)
 	return (1);
 }
 
-int        ft_echo(t_cmd *cmd_list, int fd)
+int        ft_echo(t_cmd_list *cmd_list, int fd)
 {
 	int flg; //-n 옵션에 대한 플래그
 	int i;
@@ -28,17 +28,17 @@ int        ft_echo(t_cmd *cmd_list, int fd)
 	i = 1;
 	flg = 0;
 	cnt = 0;
-	while (n_opt_chk(cmd_list->cmdline[i].cmd))  //-n 옵션이 중복가능해서 while문을 사용
+	while (n_opt_chk(cmd_list->tokens[i].cmd))  //-n 옵션이 중복가능해서 while문을 사용
 	{
 		//-nnnn 도 가능. -n -n -n 도 가능하게 해야합니다.
 		flg = 1;
 		i++;
 	}
-	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0) //리다이렉션 제외 출력
+	while (cmd_list->tokens[i].cmd && cmd_list->tokens[i].redir_flag == 0) //리다이렉션 제외 출력
 	{
 		if (cnt != 0)
 			write(fd, " ", 1); //여러 명령어나올때 사이사이에만 공백넣기.
-		ft_putstr_fd(cmd_list->cmdline[i].cmd, fd);
+		ft_putstr_fd(cmd_list->tokens[i].cmd, fd);
 		i++;
 		cnt++;
 	}

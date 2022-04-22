@@ -7,12 +7,12 @@ typedef struct      s_token
     char            redir_flag;
 }                   t_token;
 
-typedef struct      s_cmd
+typedef struct      s_cmd_list
 {
-    t_token         *cmds;
+    t_token         *cmd_line;
     int             flag;
     char            *(redir_file[4]);
-    struct s_cmd    *next;
+    struct s_cmd_list    *next;
 }                   t_cmd;
 
 #endif

@@ -40,7 +40,7 @@ void transfer_data(int fd_src, int *fd_targets)
 	return;
 }
 
-void exec_arg(t_cmd *cmd_list, char **envp)
+void exec_arg(t_cmd_list *cmd_list, char **envp)
 {
 	t_token_info token_info;
 	int pipes[2][2];
@@ -52,7 +52,7 @@ void exec_arg(t_cmd *cmd_list, char **envp)
 	while (cmd_list)
 	{
 		init_pipe(pipes);
-		init_token_info(&token_info, cmd_list->cmdline);
+		init_token_info(&token_info, cmd_list->tokens);
 		// consider how to get input from stdin when << token
 		// when input exist in token, input of pipe doesn't work
 		// when output exist in token, should write both output of pipe and output redirection file
