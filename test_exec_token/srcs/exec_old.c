@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int				non_builtin_exec(t_cmd_list *cmd_list, char *argv[], char **envp, char *path, int fds[])
+int				non_builtin_exec(t_cmd *cmd_list, char *argv[], char **envp, char *path, int fds[])
 {
 	int			status;
 	pid_t		pid;
@@ -21,9 +21,9 @@ int				non_builtin_exec(t_cmd_list *cmd_list, char *argv[], char **envp, char *p
 
 	i = 1;
 	argv[0] = path; // path는 입력된 명령어에 해당하는 프로그램의 경로입니다.
-	while (cmd_list->tokens[i].cmd != NULL && cmd_list->tokens[i].redir_flag == 0) // 인자가 필요한 프로그램의 경우, 인자를 활용해야하므로 argv에 인자 넣는 작업을 거칩니다. while loop의 조건은 cmd가 존재하거나 redirection 기호가 아닐때까지 입니다.
+	while (cmd_list->cmdline[i].cmd != NULL && cmd_list->cmdline[i].redir_flag == 0) // 인자가 필요한 프로그램의 경우, 인자를 활용해야하므로 argv에 인자 넣는 작업을 거칩니다. while loop의 조건은 cmd가 존재하거나 redirection 기호가 아닐때까지 입니다.
 	{
-		argv[i] = cmd_list->tokens[i].cmd;
+		argv[i] = cmd_list->cmdline[i].cmd;
 		i++;
 	}
 	argv[i] = NULL;
@@ -44,7 +44,7 @@ int				non_builtin_exec(t_cmd_list *cmd_list, char *argv[], char **envp, char *p
 	return (0);
 }
 
-int				non_builtin(t_cmd_list *cmd_list, char *argv[], char **envp, int fds[])
+int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 {
 	struct stat	*buf;
 	char		*env_path;
@@ -60,9 +60,9 @@ int				non_builtin(t_cmd_list *cmd_list, char *argv[], char **envp, int fds[])
 		free(buf);
 		return (0);
 	}
-	if (cmd_list->tokens[0].cmd[0] != '\0' && stat(cmd_list->tokens[0].cmd, buf) == 0) // 프롬프트에 입력된 명령어가 상대경로나 절대경로가 포함된 명령어일 경우, stat함수는 0을 반환합니다.
+	if (cmd_list->cmdline[0].cmd[0] != '\0' && stat(cmd_list->cmdline[0].cmd, buf) == 0) // 프롬프트에 입력된 명령어가 상대경로나 절대경로가 포함된 명령어일 경우, stat함수는 0을 반환합니다.
 	{
-		if ((non_builtin_exec(cmd_list, argv, envp, cmd_list->tokens[0].cmd, fds)) == -1) // 명령어에 맞게 프로그램을 동작시킵니다.
+		if ((non_builtin_exec(cmd_list, argv, envp, cmd_list->cmdline[0].cmd, fds)) == -1) // 명령어에 맞게 프로그램을 동작시킵니다.
 		{
 			free(buf);
 			return (0);
@@ -83,12 +83,12 @@ int				non_builtin(t_cmd_list *cmd_list, char *argv[], char **envp, int fds[])
 		}
 		while (paths[++i] != NULL) // : 로 분리된 path들을 하나씩 볼겁니다.
 		{
-			if ((tmp = strjoin_path(paths[i], cmd_list->tokens[0].cmd)) == 0) // path 뒤에 명령어를 붙입니다. (ex. /bin + / + cat)
+			if ((tmp = strjoin_path(paths[i], cmd_list->cmdline[0].cmd)) == 0) // path 뒤에 명령어를 붙입니다. (ex. /bin + / + cat)
 			{
 				free(buf);
 				return (0);
 			}
-			if (cmd_list->tokens[0].cmd[0] != '\0' &&  stat(tmp, buf) == 0) // path와 명령어를 붙인 문자열에 해당하는 경로에 파일이 있을 경우, 0을 반환(ex. /bin/cat 경로에 해당하는 cat 파일이 존재하므로 0반환)
+			if (cmd_list->cmdline[0].cmd[0] != '\0' &&  stat(tmp, buf) == 0) // path와 명령어를 붙인 문자열에 해당하는 경로에 파일이 있을 경우, 0을 반환(ex. /bin/cat 경로에 해당하는 cat 파일이 존재하므로 0반환)
 			{
 				if (non_builtin_exec(cmd_list, argv, envp, tmp, fds) == -1) // 명령어에 맞게 프로그램을 동작시킵니다.
 				{
@@ -106,7 +106,7 @@ int				non_builtin(t_cmd_list *cmd_list, char *argv[], char **envp, int fds[])
 			free(paths[i]);
 		free(paths);
 	}
-	if (flag == 0 && cmd_list->tokens[0].redir_flag != 1)
+	if (flag == 0 && cmd_list->cmdline[0].redir_flag != 1)
 	{
 		free(buf);
 		return (0);
@@ -115,7 +115,7 @@ int				non_builtin(t_cmd_list *cmd_list, char *argv[], char **envp, int fds[])
 	return (1);
 }
 
-int				exec_function(t_cmd_list *cmd_list, char *argv[], char **envp[], int fds[])
+int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 {
 	int			fd;
 
@@ -128,19 +128,19 @@ int				exec_function(t_cmd_list *cmd_list, char *argv[], char **envp[], int fds[
 		fd = fds[1];
 	else
 		fd = 1;
-	if (ft_strncmp("pwd", cmd_list->tokens[0].cmd, 4) == 0) // 명령어는 커맨드라인의 처음부분에만 올 수 있으므로 cmdline의 첫번째 index를 과제에서 구현해야하는 명령어와 비교하여 일치할 시, 조건문의 함수를 실행합니다.
+	if (ft_strncmp("pwd", cmd_list->cmdline[0].cmd, 4) == 0) // 명령어는 커맨드라인의 처음부분에만 올 수 있으므로 cmdline의 첫번째 index를 과제에서 구현해야하는 명령어와 비교하여 일치할 시, 조건문의 함수를 실행합니다.
 		return (ft_pwd(fd));
-	else if (ft_strncmp("cd", cmd_list->tokens[0].cmd, 3) == 0)
+	else if (ft_strncmp("cd", cmd_list->cmdline[0].cmd, 3) == 0)
 		return (ft_cd(cmd_list));
-	else if (ft_strncmp("exit", cmd_list->tokens[0].cmd, 5) == 0)
+	else if (ft_strncmp("exit", cmd_list->cmdline[0].cmd, 5) == 0)
 		return (ft_exit(cmd_list));
-	else if (ft_strncmp("env", cmd_list->tokens[0].cmd, 4) == 0)
+	else if (ft_strncmp("env", cmd_list->cmdline[0].cmd, 4) == 0)
 		return (ft_env(*envp, fd));
-	else if (ft_strncmp("export", cmd_list->tokens[0].cmd, 7) == 0)
+	else if (ft_strncmp("export", cmd_list->cmdline[0].cmd, 7) == 0)
 		return (ft_export(cmd_list, envp, fd));
-	else if (ft_strncmp("echo", cmd_list->tokens[0].cmd, 5) == 0)
+	else if (ft_strncmp("echo", cmd_list->cmdline[0].cmd, 5) == 0)
 		return (ft_echo(cmd_list, fd));
-	else if (ft_strncmp("unset", cmd_list->tokens[0].cmd, 6) == 0)
+	else if (ft_strncmp("unset", cmd_list->cmdline[0].cmd, 6) == 0)
 		return (ft_unset(cmd_list, *envp));
 	else if (non_builtin(cmd_list, argv, *envp, fds) == 0) // 위의 해당하는 명령어가 아닐경우, non_built 함수에서 입력된 명령어가 유효한 명령어인지 최종적으로 확인합니다. 유효한 명령어일 경우, 내장된 프로그램이 실행되고 아닐경우, 오류가 출력됩니다.
 	{
@@ -150,7 +150,7 @@ int				exec_function(t_cmd_list *cmd_list, char *argv[], char **envp[], int fds[
 	return (0);
 }
 
-int				exec(t_cmd_list *cmd_list, char *argv[], char **envp[])
+int				exec(t_cmd *cmd_list, char *argv[], char **envp[])
 {
 	int			fds[2];
 	int			status;

@@ -55,15 +55,20 @@ void init_output(int *output, t_token *out_redir)
 {
 	int open_flag;
 
-	if (!ft_strcmp(out_redir[0].cmd, ">"))
-		open_flag = O_WRONLY | O_CREAT | O_TRUNC;
+	printf("toekn %s|||||\n", out_redir->cmd);
+	if (!ft_strcmp(out_redir->cmd, ">"))
+	{
+		open_flag = O_WRONLY | O_CREAT ;//| O_TRUNC;
+		printf("flag\n");
+	}
 	// else if (!ft_strcmp(out_redir->cmd, ">>"))
 	// 	open_flag = O_WRONLY | O_APPEND;
 	else
 		open_flag = O_WRONLY | O_APPEND;
 	// should change to error
 
-	*output = open_file(out_redir[1].cmd, open_flag);
+	printf("after opne %s\n", out_redir->cmd);
+	*output = open_file(out_redir->cmd, open_flag);
 }
 
 void init_cmd_arg(t_token_info *info, t_token *token, int len_cmd_arg)
@@ -83,7 +88,8 @@ void init_cmd_arg(t_token_info *info, t_token *token, int len_cmd_arg)
 	i = 1;
 	while (token[i].cmd)
 	{
-		if (token[i - 1].cmd[0] != '<' && token[i - 1].cmd[0] != '>')
+		if (token[i].cmd[0] != '<' &&token[i - 1].cmd[0] != '<' 
+		&&token[i].cmd[0] != '>' &&token[i - 1].cmd[0] != '>')
 		{
 			info->cmd_arg[cmd_i] = token[i].cmd;
 			++cmd_i;

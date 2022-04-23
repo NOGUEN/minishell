@@ -106,13 +106,13 @@ char	*find_cmdpath(char *cmd, char **envp)
 }
 
 
-void			parse(t_cmd_list **cmd_list, char *line, char **envp)
+void			parse(t_cmd **cmd_list, char *line, char **envp)
 {
 	int			i;
 	int			start;
 	int			pipe_flag;
-	t_cmd_list		*tmp;
-	t_cmd_list		*new;
+	t_cmd		*tmp;
+	t_cmd		*new;
 	int			quote_flag;
 
 	quote_flag = 0;

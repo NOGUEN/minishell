@@ -69,16 +69,16 @@ char *alloc_unexpected_token(char *redir)
 	return (result);
 }
 
-int redir_err_chk(t_cmd_list *cmd_list)
+int redir_err_chk(t_cmd *cmd_list)
 {
 	int i;
 
 	i = 0;
-	while (cmd_list->tokens[i].cmd)
+	while (cmd_list->cmdline[i].cmd)
 	{
-		if (cmd_list->tokens[i].redir_flag == -1)
+		if (cmd_list->cmdline[i].redir_flag == -1)
 		{
-			cmd_list->err_manage.errtoken = alloc_unexpected_token(cmd_list->tokens[i].cmd);
+			cmd_list->err_manage.errtoken = alloc_unexpected_token(cmd_list->cmdline[i].cmd);
 			cmd_list->err_manage.errcode = 7;
 			return (-1);
 		}

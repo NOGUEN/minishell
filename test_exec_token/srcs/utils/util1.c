@@ -39,8 +39,11 @@ int	open_file(char *name, int mode)
 
 	if (!name)
 		return (-1);
-	fd = open(name, mode, 0644);
+	fd = open(name, mode);
 	if (fd < 0)
+	{
+		printf("faield open:\n");
 		exit(0);
+	}
 	return (fd);
 }

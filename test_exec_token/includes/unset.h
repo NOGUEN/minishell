@@ -16,6 +16,6 @@
 # include "../libft/libft.h"
 
 int	ft_valid_key(char *key);
-int ft_unset(t_cmd_list *cmd_list, char **envp);
+int ft_unset(t_cmd *cmd_list, char **envp);
 
 #endif
