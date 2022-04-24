@@ -12,42 +12,15 @@
 
 #include "../includes/inout.h"
 
-// void	init_inout(t_inout *inout, t_arg *arg)
-//{
-//	ft_memset(inout, sizeof(t_inout), 0);
-//	inout->in.o_flag = O_RDONLY;
-//	inout->in.fd = open_file(arg->vec[1], inout->in.o_flag);
-//	inout->out.o_flag = O_RDWR | O_CREAT | O_TRUNC;
-//	if (arg->cnt > 4)
-//		inout->out.fd = open_file(arg->vec[arg->cnt - 1], inout->out.o_flag);
-//	else
-//		inout->out.fd = STDOUT;
-//	return ;
-// }
-
-// init in_out file of each command in one pipe
-//  void	init_inout(t_inout *inout, t_cmd *cmd)
-//  {
-//  	ft_memset(inout, sizeof(t_inout), 0);
-//  	inout->in.o_flag = O_RDONLY;
-//  	inout->in.fd = open_file(cmd->redir_file[0], inout->in.o_flag);
-//  	inout->out.o_flag = O_RDWR | O_CREAT | O_TRUNC;
-//  	if (arg->cnt > 4)
-//  		inout->out.fd = open_file(arg->vec[arg->cnt - 1], inout->out.o_flag);
-//  	else
-//  		inout->out.fd = STDOUT;
-//  	return ;
-//  }
-
 void init_input(int *input, t_token *in_redir)
 {
 	if (!ft_strcmp(in_redir[0].cmd, "<"))
 		*input = open_file(in_redir[1].cmd, O_RDONLY);
-	// else if (!ft_strcmp(in_redir->cmd, "<<"))
-	// 	;
+	else if (!ft_strcmp(in_redir->cmd, "<<"))
+		; //should implement heredoc
 	// implement stdin until in_redir[1].cmd comes in
 	else
-		exit(0);
+		error_exit("minishell: parse error near '<'\n");
 	// error
 }
 
@@ -55,20 +28,21 @@ void init_output(int *output, t_token *out_redir)
 {
 	int open_flag;
 
+	open_flag = 0;
 	printf("toekn %s|||||\n", out_redir->cmd);
-	if (!ft_strcmp(out_redir->cmd, ">"))
+	if (!ft_strcmp((out_redir - 1)->cmd, ">"))
 	{
-		open_flag = O_WRONLY | O_CREAT ;//| O_TRUNC;
+		open_flag = O_WRONLY | O_CREAT | O_TRUNC;
 		printf("flag\n");
 	}
-	// else if (!ft_strcmp(out_redir->cmd, ">>"))
-	// 	open_flag = O_WRONLY | O_APPEND;
-	else
+	else if (!ft_strcmp((out_redir - 1)->cmd, ">>"))
 		open_flag = O_WRONLY | O_APPEND;
+	else
+		error_exit("minishell: parse error near '>'\n");
 	// should change to error
 
-	printf("after opne %s\n", out_redir->cmd);
 	*output = open_file(out_redir->cmd, open_flag);
+	printf("opened:%d\n", *output);
 }
 
 void init_cmd_arg(t_token_info *info, t_token *token, int len_cmd_arg)
@@ -88,8 +62,7 @@ void init_cmd_arg(t_token_info *info, t_token *token, int len_cmd_arg)
 	i = 1;
 	while (token[i].cmd)
 	{
-		if (token[i].cmd[0] != '<' &&token[i - 1].cmd[0] != '<' 
-		&&token[i].cmd[0] != '>' &&token[i - 1].cmd[0] != '>')
+		if (token[i].cmd[0] != '<' && token[i - 1].cmd[0] != '<' && token[i].cmd[0] != '>' && token[i - 1].cmd[0] != '>')
 		{
 			info->cmd_arg[cmd_i] = token[i].cmd;
 			++cmd_i;
@@ -98,7 +71,7 @@ void init_cmd_arg(t_token_info *info, t_token *token, int len_cmd_arg)
 	}
 }
 
-void init_token_info(t_token_info *info, t_token *token)
+void init_token_info(t_token_info *info, t_token *tokens)
 {
 	int len_cmd_arg;
 	int i;
@@ -107,18 +80,18 @@ void init_token_info(t_token_info *info, t_token *token)
 	ft_memset(info, 0, sizeof(t_token_info));
 	info->input = NO_DATA;
 	info->output = NO_DATA;
-	if (token[0].cmd[0] != '<' && token[0].cmd[0] != '>')
+	if (tokens[0].cmd[0] != '<' && tokens[0].cmd[0] != '>')
 		++len_cmd_arg;
 	i = 1;
-	while (token[i].cmd)
+	while (tokens[i].cmd)
 	{
-		if (token[i - 1].cmd[0] == '<')
-			init_input(&info->input, &token[i]);
-		else if (token[i - 1].cmd[0] == '>')
-			init_output(&info->output, &token[i]);
-		else if (token[i].cmd[0] != '<' && token[i].cmd[0] != '>') 
+		if (tokens[i - 1].cmd[0] == '<')
+			init_input(&info->input, &tokens[i]);
+		else if (tokens[i - 1].cmd[0] == '>')
+			init_output(&info->output, &tokens[i]);
+		else if (tokens[i].cmd[0] != '<' && tokens[i].cmd[0] != '>')
 			++len_cmd_arg;
 		++i;
 	}
-	init_cmd_arg(info, token, len_cmd_arg);
+	init_cmd_arg(info, tokens, len_cmd_arg);
 }

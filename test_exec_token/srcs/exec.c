@@ -34,7 +34,6 @@ void transfer_data(int fd_src, int *fd_targets)
 		read_result = read(fd_src, buf, 32);
 		if (read_result<=0)
 			break;
-		// printf("%s %d\n",buf, read_result);
 		buf[read_result] = 0;
 		fd_target = fd_targets;
 		while (*fd_target != END_OF_FDS)
@@ -73,7 +72,6 @@ void exec_arg(t_cmd *cmd_list, char **envp)
 				fds_to_write[1] = last_outredir;
 
 			transfer_data(last_pipe, fds_to_write);
-			printf("output %d\n", last_outredir);
 			close(last_outredir);
 		}
 		else
