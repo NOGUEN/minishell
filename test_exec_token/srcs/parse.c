@@ -86,6 +86,8 @@ char	*find_cmdpath(char *cmd, char **envp)
 	char	*to_cat;
 	char	*path;
 
+	if (!cmd || !*cmd)
+		error_exit("command didn't pass to find path\n");
 	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3))
 		return (*ft_split(cmd, ' '));
 	path_list = get_path_list(envp);

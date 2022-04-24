@@ -20,6 +20,7 @@
 # include "structs.h"
 
 # include <fcntl.h>
+# include <readline/readline.h>
 
-void init_token_info(t_token_info *info, t_token *token);
+void init_token_info(t_token_info *info, t_token *token, int (*pipes)[2]);
 #endif

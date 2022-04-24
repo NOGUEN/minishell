@@ -59,7 +59,7 @@ void exec_arg(t_cmd *cmd_list, char **envp)
 	while (cmd_list)
 	{
 		init_pipe(pipes);
-		init_token_info(&token_info, cmd_list->cmdline);
+		init_token_info(&token_info, cmd_list->cmdline,pipes);
 		// consider how to get input from stdin when << token
 		// when input exist in token, input of pipe doesn't work
 		// when output exist in token, should write both output of pipe and output redirection file
