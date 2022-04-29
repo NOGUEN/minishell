@@ -22,5 +22,5 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 
-void init_token_info(t_token_info *info, t_token *token, int (*pipes)[2]);
+void init_cmd_info(t_cmd_info *info, t_token *token, int (*pipes)[2]);
 #endif

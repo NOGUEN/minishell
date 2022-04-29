@@ -50,13 +50,14 @@ typedef struct s_file	t_file;
 // };
 // typedef struct s_inout	t_inout;
 
-struct s_token_info
+struct s_cmd_info
 {
-	int input;
-	int output;
+	int in_fd;
+	int out_fd;
+	char *out_name;
 	char **cmd_arg;
 };
-typedef struct s_token_info t_token_info;
+typedef struct s_cmd_info t_cmd_info;
 
 
 #endif

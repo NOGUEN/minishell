@@ -12,7 +12,7 @@
 
 #include "../includes/exec.h"
 
-void init_pipe(int (*pipes)[2])
+void init_fork_pipes(int (*pipes)[2])
 {
 	if (pipe(pipes[PTOC]) < 0)
 		error_exit("Error : pipe");
@@ -45,69 +45,49 @@ void transfer_data(int fd_src, int *fd_targets)
 	return;
 }
 
-void exec_arg(t_cmd *cmd_list, char **envp)
+void new_exec(t_cmd *cmd_list, char **envp)
 {
-	t_token_info token_info;
+	t_cmd_info cmd_info;
 	int pipes[2][2];
-	int fds_to_write[3];
-	int last_pipe;
-	int last_outredir;
+	// int fds_to_write[3];
+	int input;
 
-	last_outredir  = NO_DATA;
-	last_pipe = NO_DATA;
-	fds_to_write[2] = END_OF_FDS;
+	input = STDIN;
 	while (cmd_list)
 	{
-		init_pipe(pipes);
-		init_token_info(&token_info, cmd_list->cmdline,pipes);
-		// consider how to get input from stdin when << token
+		init_fork_pipes(pipes);
+		init_cmd_info(&cmd_info, cmd_list->cmdline,pipes);
+		if (cmd_info.in_fd==NO_DATA)
+			cmd_info.in_fd = input;
+		if (cmd_info.out_fd==NO_DATA)
+		{
+			if (cmd_list->next)
+				cmd_info.out_fd = pipes[CTOP][WR];
+			else
+				cmd_info.out_fd = STDOUT;
+		}
+
 		// when input exist in token, input of pipe doesn't work
 		// when output exist in token, should write both output of pipe and output redirection file
-		if (token_info.input == NO_DATA)
-		{
-			fds_to_write[0] = pipes[PTOC][WR];
-			if (last_outredir == NO_DATA)
-				fds_to_write[1] = END_OF_FDS;
-			else
-				fds_to_write[1] = last_outredir;
+		exec_cmd(&cmd_info, envp, pipes);
 
-			transfer_data(last_pipe, fds_to_write);
-			close(last_outredir);
+		if (input != STDIN)
+			close(input);
+
+		if (cmd_info.out_name)
+		{
+			close(pipes[CTOP][RD]);
+			input = open(cmd_info.out_name, O_RDONLY);
 		}
 		else
-		{
-			if (last_outredir != NO_DATA)
-			{
-				fds_to_write[0] = last_outredir;
-				fds_to_write[1] = END_OF_FDS;
-				transfer_data(last_pipe, fds_to_write);
-			}
-			fds_to_write[0] = pipes[PTOC][WR];
-			transfer_data(token_info.input, fds_to_write);
-		}
-		close(last_pipe);
-
-		exec_cmd(&token_info, envp, pipes);
+			input = pipes[CTOP][RD];
 		
-		last_pipe = pipes[CTOP][RD];
-		last_outredir = token_info.output;
-		close(pipes[PTOC][WR]);
-		// free token_info
+		free(cmd_info.cmd_arg);
 		cmd_list = cmd_list->next;
-
 	}
-	fds_to_write[1] = END_OF_FDS;
-	if (last_outredir == NO_DATA)
-		fds_to_write[0] = STDOUT;
-	else
-		fds_to_write[0] = last_outredir;
-
-	transfer_data(last_pipe, fds_to_write);
-	close(last_outredir);
-	close(last_pipe);
 }
 
-void exec_cmd(t_token_info *token_info, char **envp, int (*pipes)[2])
+void exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2])
 {
 	int pid;
 	char *path;
@@ -115,20 +95,23 @@ void exec_cmd(t_token_info *token_info, char **envp, int (*pipes)[2])
 	pid = fork();
 	if (pid < 0)
 		error_exit("Error : fork");
-	if (pid != CHILD)
-	{
-		close(pipes[PTOC][RD]);
-		close(pipes[CTOP][WR]);
-	}
+	
 	if (pid == CHILD)
 	{
 		close(pipes[PTOC][WR]);
 		close(pipes[CTOP][RD]);
-		path = find_cmdpath(token_info->cmd_arg[0], envp);
-		dup2(pipes[PTOC][RD], STDIN);
-		dup2(pipes[CTOP][WR], STDOUT);
-		execve(path, token_info->cmd_arg, envp);
+		path = find_cmdpath(cmd_info->cmd_arg[0], envp);
+		dup2(cmd_info->in_fd, STDIN);
+		dup2(cmd_info->out_fd, STDOUT);
+		execve(path, cmd_info->cmd_arg, envp);
 		exit(0);
+	}
+	else
+	{
+		close(pipes[PTOC][RD]);
+		close(pipes[PTOC][WR]);
+		close(pipes[CTOP][WR]);
+		waitpid(CHILD,NULL,0);
 	}
 	return;
 }

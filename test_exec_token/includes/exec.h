@@ -23,7 +23,7 @@
 # include "structs.h"
 # include "inout.h"
 
-void	exec_arg(t_cmd *cmd_list, char **envp);
-void	exec_cmd(t_token_info *token_info, char **envp, int (*pipes)[2]);
+void	new_exec(t_cmd *cmd_list, char **envp);
+void	exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2]);
 
 #endif
