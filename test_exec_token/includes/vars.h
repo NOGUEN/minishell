@@ -13,8 +13,8 @@
 #ifndef VARS_H
 # define VARS_H
 
-# define PTOC	0
-# define CTOP	1
+# define P_TO_C	0
+# define C_TO_P	1
 
 # define RD		0
 # define WR		1
@@ -55,7 +55,7 @@ struct s_cmd_info
 	int in_fd;
 	int out_fd;
 	char *out_name;
-	char **cmd_arg;
+	char **cmd_args;
 };
 typedef struct s_cmd_info t_cmd_info;
 

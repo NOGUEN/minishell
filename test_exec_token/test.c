@@ -8,7 +8,7 @@
 
 int main()
 {
-   int fd = open("./fortest", O_RDWR | O_CREAT);
+   int fd = open("./fortes", O_RDWR | O_APPEND);
    int pid = fork();
 
    if (pid == 0)
@@ -20,10 +20,13 @@ int main()
    }
    waitpid(0, NULL, 0);
    printf("I\'m  parent");
+   close(fd);
 
-	char buf[33];
-	buf[32] = 0;
-	int result = read(fd, buf,32);
+	fd = open("./fortes", O_RDWR );
+
+	char buf[1025];
+	buf[1024] = 0;
+	int result = read(fd, buf,1024);
 	buf[result] =0;
 	printf("%s", buf);
 
@@ -39,7 +42,8 @@ int main()
 	// 	printf("read :%s\n", line);
 	// 	free(line);
 	// }
+	//
 
-
+	close(fd);
 	return (0);
 }

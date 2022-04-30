@@ -6,7 +6,7 @@
 #    By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/25 19:30:48 by djeon             #+#    #+#              #
-#    Updated: 2022/04/20 17:30:28 by soekim           ###   ########.fr        #
+#    Updated: 2022/04/30 18:20:23 by soekim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ SRC_DIR 	= srcs
 SRC 		= srcs/minishell.c \
 			  srcs/utils.c \
 	  	  	  srcs/error_management.c \
-			  srcs/ft_cd.c \
 			  srcs/ft_exit.c \
 			  srcs/ft_env.c \
 			  srcs/ft_pwd.c \

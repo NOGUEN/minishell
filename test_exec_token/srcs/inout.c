@@ -20,7 +20,7 @@ void init_input(int *in_fd, t_token *in_redir, int (*pipes)[2])
 		*in_fd = open_file(in_redir->cmd, O_RDONLY);
 	else 
 	{
-		*in_fd = pipes[PTOC][RD];
+		*in_fd = pipes[P_TO_C][RD];
 		if (!ft_strcmp((in_redir - 1)->cmd, "<<"))
 		{
 			while ((hdoc_input = readline("heredoc> ")))
@@ -28,12 +28,12 @@ void init_input(int *in_fd, t_token *in_redir, int (*pipes)[2])
 				//refactor to save heredocument input in .heredoc file
 				if (!ft_strcmp(hdoc_input, in_redir->cmd))
 					break;
-				ft_putendl_fd(hdoc_input, pipes[PTOC][WR]);
+				ft_putendl_fd(hdoc_input, pipes[P_TO_C][WR]);
 				free(hdoc_input);
 			}
 		}
 		else if (!ft_strcmp((in_redir - 1)->cmd, "<<<"))
-			ft_putstr_fd(in_redir->cmd, pipes[PTOC][WR]);
+			ft_putstr_fd(in_redir->cmd, pipes[P_TO_C][WR]);
 		else
 			error_exit("minishell: parse error near '<'\n");//should change from exit to goback to main loop
 	}
@@ -64,12 +64,12 @@ void init_cmd_arg(t_cmd_info *info, t_token *token, int len_cmd_arg)
 	int i;
 	int cmd_i;
 
-	info->cmd_arg = malloc((len_cmd_arg + 1) * sizeof(char *));
-	info->cmd_arg[len_cmd_arg] = NULL;
+	info->cmd_args = malloc((len_cmd_arg + 1) * sizeof(char *));
+	info->cmd_args[len_cmd_arg] = NULL;
 	cmd_i = 0;
 	if (token[0].cmd[0] != '<' && token[0].cmd[0] != '>')
 	{
-		info->cmd_arg[0] = token[0].cmd;
+		info->cmd_args[0] = token[0].cmd;
 		++cmd_i;
 	}
 	i = 1;
@@ -77,7 +77,7 @@ void init_cmd_arg(t_cmd_info *info, t_token *token, int len_cmd_arg)
 	{
 		if (token[i].cmd[0] != '<' && token[i - 1].cmd[0] != '<' && token[i].cmd[0] != '>' && token[i - 1].cmd[0] != '>')
 		{
-			info->cmd_arg[cmd_i] = token[i].cmd;
+			info->cmd_args[cmd_i] = token[i].cmd;
 			++cmd_i;
 		}
 		++i;
