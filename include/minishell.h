@@ -34,12 +34,16 @@ int     check_whitespace(char *line);
 int     check_redir(char *cmd);
 int     check_unclosed_quote(char *str, char quote);
 
+/*get env*/
+char    *get_env_value(char *key, char **envp);
+int     get_env_key(char *src, char **key);
+
+
 /* split_count */
 void    masking_quote_flag(char const *s, int *flag);
 void    count(int *flag, int *cnt, int make_begin_zero_flag);
 void    count_on_flag(char const *s, int *flag, int *cnt);
 int     split_count(char const *s);
-
 void    *free_cmd(t_token *result, int len);
 t_token *split_cmd(char const *s);
 
@@ -55,14 +59,13 @@ int     get_parse_size(char *cmd, char **envp);
 /* */
 char    *get_env_value(char *key, char **envp);
 int     get_env_key(char *src, char **key);
+
+/* */
 void    alloc_env(char *src, char **dest, char **envp, int *index);
 void    alloc_d_quote_cnt(char *src, char **dest, char **envp, int *index);
 void    alloc_s_quote_cnt(char *src, char **dest, int *index);
 void    cmd_copy(char *src, char *dest, char **envp);
 t_token *alloc_token(t_token *token, char **envp);
-
-/* */
-int     env_len(char *str, char **envp);
 
 /* */
 char    *find_env(char *str, char **envp);
@@ -79,4 +82,5 @@ void    parse(t_cmd **cmds, char *line, char **envp);
 
 /* utils */
 char    *cut_string(char **str);
+
 #endif

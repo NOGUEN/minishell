@@ -13,6 +13,7 @@ SRC_DIR 	= src
 SRC 		= src/alloc_token.c \
 			  src/alloc_word.c \
 			  src/check.c \
+			  src/get_env.c \
 			  src/get_parse_size.c \
 			  src/minishell.c \
 			  src/new_cmd.c \

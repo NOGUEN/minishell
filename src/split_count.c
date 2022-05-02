@@ -37,7 +37,7 @@ void    count_on_flag(char const *s, int *flag, int *cnt)
             (*cnt)++;
         *flag |= REDIR;
     }
-    else if (*s != ' ' 
+    else if (*s != ' '
                 && !(*s == '>' || *s == '<')
                 && ((*flag & DQUOTE) == 0 && (*flag & SQUOTE) == 0)
                 && (*(s - 1) == '>' || *(s - 1) == '<'))

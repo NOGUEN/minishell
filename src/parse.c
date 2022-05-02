@@ -29,7 +29,7 @@ void    parse(t_cmd **cmds, char *line, char **envp)
             if (begin == 0)
             {
                 *cmds = new;
-                tmp = *cmds; 
+                tmp = *cmds;
             }
             else
             {
@@ -42,6 +42,5 @@ void    parse(t_cmd **cmds, char *line, char **envp)
         }
         ++index;
     }
-    printf("%s\n", (*cmds)->cmd_line[0].cmd);
     *cmds = tmp;
 }

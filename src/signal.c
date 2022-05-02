@@ -17,8 +17,7 @@ void    signal_sigquit(int signo)
 {
     pid_t   pid;
     int     status;
-
-
+    
     pid = waitpid(-1, &status, WNOHANG);
     pid = pid * 1;
     if (signo == SIGQUIT)
