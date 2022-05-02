@@ -21,6 +21,7 @@ t_token *split_cmd(char const *s)
     result = malloc(sizeof(t_token) * (split_count(s) + 1));
     if (result == NULL)
         return (NULL);
+    //아래가 문제
     while (*s)
     {
         if (*s == ' ')
@@ -28,9 +29,9 @@ t_token *split_cmd(char const *s)
         else
         {
             result[result_index].cmd = alloc_word(&s);
+            printf("alloc : %s\n", result[result_index].cmd);
             result[result_index].redir_flag = 0;
             if (result[result_index].cmd == NULL)
-                free_cmd(result, result_index);
                 return (free_cmd(result, result_index));
             ++result_index;
         }

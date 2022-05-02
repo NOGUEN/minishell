@@ -6,6 +6,9 @@ NAME 			= minishell
 LIBFT		= libft.a
 LIBFT_DIR	= libft
 
+READLINE_LIB	= -lreadline -L/opt/homebrew/opt/readline/lib
+READLINE_INC	= -I/opt/homebrew/opt/readline/include
+
 SRC_DIR 	= src
 SRC 		= src/alloc_token.c \
 			  src/alloc_word.c \
@@ -26,7 +29,7 @@ OBJ 		= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 all : 		$(NAME)
 
 $(NAME) : 	$(LIBFT) $(OBJ)
-			$(CC) $(CFLAGS) -o $@ $(OBJ) \
+			$(CC) -o $@ $(OBJ) $(READLINE_LIB) $(READLINE_INC)\
 			$(LIBFT)
 			
 
@@ -36,7 +39,8 @@ $(LIBFT) :
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 			mkdir -p $(OBJ_DIR)
-			$(CC) $(CFLAGS) -c $< -o $(<:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+			$(CC) -c $< -o $(<:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o) \
+			$(READLINE_INC)
 
 clean :
 			cd $(LIBFT_DIR); make clean

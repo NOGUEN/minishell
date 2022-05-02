@@ -14,3 +14,28 @@ int check_whitespace(char *line)
     }
     return (1);
 }
+
+int check_redir(char *cmd)
+{
+    int len;
+
+    len = ft_strlen(cmd);
+    if (len > 2)
+        return (0);
+    if (!ft_strncmp("<<", cmd, len) || !ft_strncmp(">>", cmd, len)
+        || !ft_strncmp("<", cmd, len) || !ft_strncmp(">", cmd, len))
+        return (1);
+    else
+        return (0);
+}
+
+int check_unclosed_quote(char *str, char quote)
+{
+    int index;
+
+    index = 0;
+    while (str[++index] && str[index] != quote) ;
+    if (str[index] == '\0')
+        return (0);
+    return (1);
+}

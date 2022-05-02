@@ -16,21 +16,21 @@ int redir_len(char const **s, int *len)
     return (*len);
 }
 
-int count_word_len_on_flag(char const *s, int *len, int flag)
+int count_word_len_on_flag(char const *s, int *len, int *flag)
 {
-    if (!(flag & BEGIN))
+    if ((*flag & BEGIN) == 0)
     {
         if (*s != ' ')
         {
-            flag |= BEGIN;
+            *flag |= BEGIN;
             (*len)++;
         }
     }
     else
     {
-        if (*s == ' ' && !(flag & DQUOTE) && !(flag & SQUOTE))
+        if (*s == ' ' && (*flag & DQUOTE) == 0 && (*flag & SQUOTE) == 0)
             return (1);
-        else if ((*s == '>' || *s == '<') && !(flag & DQUOTE) && !(flag & SQUOTE))
+        else if ((*s == '>' || *s == '<') && (*flag & DQUOTE) == 0 && (*flag & SQUOTE) == 0)
             return (1);
         else
             (*len)++;
@@ -50,7 +50,7 @@ int word_len(char const *s)
     while (*s)
     {
         masking_quote_flag(s, &flag);
-        if (count_word_len_on_flag(s, &len, flag))
+        if (count_word_len_on_flag(s, &len, &flag))
             break ;
         ++s;
     }

@@ -7,6 +7,7 @@ char    *cut_string(char **str)
     int     size;
     int     i;
 
+    ret = NULL;
     size = 0;
     tmp = *str;
     while (tmp) {
@@ -16,7 +17,7 @@ char    *cut_string(char **str)
             break ;
         else
             ++size;
-        ++(*tmp);
+        ++(tmp);
     }
     ret = (char *)malloc(sizeof(char) * (size + 1));
     ft_strlcpy(ret, *str, size + 1);

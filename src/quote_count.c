@@ -34,12 +34,15 @@ int dquote_cnt(char **cmd, char **envp)
     char *tmp;
 
     size = 0;
+    printf("%s\n", envp[0]);
     (*cmd)++;
     while (**cmd && **cmd != '\"')
     {
         if (**cmd == '$')
         {
-            tmp = cut_string(*cmd + 1);
+            ++(*cmd);
+            tmp = cut_string(cmd);
+            printf("%s\n", tmp);
             size += env_len(tmp, envp);
             free(tmp);
         }
@@ -47,6 +50,7 @@ int dquote_cnt(char **cmd, char **envp)
             size++;
         (*cmd)++;
     }
+    printf("dquote : %d\n", size);
     return (size);
 }
 

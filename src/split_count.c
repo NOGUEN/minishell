@@ -29,17 +29,17 @@ void    count(int *flag, int *cnt, int make_begin_zero_flag)
 
 void    count_on_flag(char const *s, int *flag, int *cnt)
 {
-    if (*s == ' ' && (!(*flag & DQUOTE) && !(*flag & SQUOTE)))
+    if (*s == ' ' && ((*flag & DQUOTE) == 0 && (*flag & SQUOTE) == 0))
         count(flag, cnt, 1);
-    else if ((*s == '>' || *s == '<') && (!(*flag & DQUOTE) && !(*flag & SQUOTE)))
+    else if ((*s == '>' || *s == '<') && ((*flag & DQUOTE) == 0 && (*flag & SQUOTE) == 0))
     {
-        if (!(*flag & REDIR))
+        if ((*flag & REDIR) == 0)
             (*cnt)++;
         *flag |= REDIR;
     }
     else if (*s != ' ' 
                 && !(*s == '>' || *s == '<')
-                && (!(*flag & DQUOTE) && !(*flag & SQUOTE))
+                && ((*flag & DQUOTE) == 0 && (*flag & SQUOTE) == 0)
                 && (*(s - 1) == '>' || *(s - 1) == '<'))
         count(flag, cnt, 0);
     else if (*s == '\'' && *flag & SQUOTE)
@@ -58,7 +58,7 @@ int split_count(char const *s)
     while (*s)
     {
         masking_quote_flag(s, &flag);
-        if (!(flag & BEGIN))
+        if ((flag & BEGIN) == 0)
         {
             if (*s != ' ')
                 flag |= BEGIN;

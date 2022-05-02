@@ -12,6 +12,8 @@ typedef struct      s_cmd_list
     t_token         *cmd_line;
     int             flag;
     char            *(redir_file[4]);
+    int             pipe_flag;
+    int             exit_flag;
     struct s_cmd_list    *next;
 }                   t_cmd;
 
