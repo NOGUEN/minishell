@@ -88,17 +88,14 @@ void new_exec(t_cmd *cmd_list, char **envp)
 		// when input exist in token, input of pipe doesn't work
 		// when output exist in token, should write both output of pipe and output redirection file
 		if (!ft_strcmp(cmd_info.cmd_args[0],"cd"))
-		{
 			cd_and_close_fds(&cmd_info, pipes, input);
-			cmd_list = cmd_list->next;
-			continue;
-		}
-
-		exec_cmd(&cmd_info, envp, pipes);
+		else
+		{
+			exec_cmd(&cmd_info, envp, pipes);
 		
 
-		if (input != STDIN)
-			close(input);
+			if (input != STDIN)
+				close(input);
 		// if (cmd_info.out_name)
 		// {
 		// 	close(pipes[C_TO_P][RD]);
@@ -107,7 +104,7 @@ void new_exec(t_cmd *cmd_list, char **envp)
 		// else
 		// when meet redir output bash acts like no pipes before
 			input = pipes[C_TO_P][RD];
-		
+		}
 		free(cmd_info.cmd_args);
 		cmd_list = cmd_list->next;
 	}
