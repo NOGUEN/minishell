@@ -25,7 +25,6 @@ void init_input(int *in_fd, t_token *in_redir, int (*pipes)[2])
 		{
 			while ((hdoc_input = readline("heredoc> ")))
 			{
-				//refactor to save heredocument input in .heredoc file
 				if (!ft_strcmp(hdoc_input, in_redir->cmd))
 					break;
 				ft_putendl_fd(hdoc_input, pipes[P_TO_C][WR]);
@@ -44,18 +43,14 @@ void init_output(int *out_fd, char **out_name, t_token *out_redir)
 	int open_flag;
 
 	open_flag = 0;
-	// printf("toekn %s|||||\n", out_redir->cmd);
 	if (!ft_strcmp((out_redir - 1)->cmd, ">"))
-	{
 		open_flag = O_WRONLY | O_CREAT | O_TRUNC;
-		// printf("flag\n");
-	}
 	else if (!ft_strcmp((out_redir - 1)->cmd, ">>"))
 		open_flag = O_WRONLY | O_APPEND| O_CREAT;
 	else
 		error_exit("minishell: parse error near '>'\n");
 	*out_name = out_redir->cmd;
-	printf("%d %s\n",open_flag, *out_name);
+	// printf("%d %s\n",open_flag, *out_name);
 	*out_fd = open_file(*out_name, open_flag);
 }
 
