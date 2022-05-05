@@ -3,127 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejpark <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: soekim <soekim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 15:33:09 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/06 15:31:13 by hoylee           ###   ########.fr       */
+/*   Created: 2020/11/11 13:24:08 by soekim            #+#    #+#             */
+/*   Updated: 2020/11/22 18:25:20 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_split_cnt(char const *s, const char c)
+static int	wordcount(const char *s, char c)
 {
-	int			cnt;
-	int			begin;
+	int		wordnum;
 
-	cnt = 0;
-	begin = 0;
+	if (!s)
+		return (-1);
+	wordnum = 0;
 	while (*s)
 	{
-		if (begin == 0)
-		{
-			if (*s != c)
-				begin = 1;
-		}
-		else
-		{
-			if (*s == c)
-			{
-				begin = 0;
-				cnt++;
-			}
-		}
-		s++;
+		while (*s == c)
+			s++;
+		if (*s != c && *s)
+			wordnum++;
+		while (*s != c && *s)
+			s++;
 	}
-	return (begin == 0 ? cnt : cnt + 1);
+	return (wordnum);
 }
 
-int				ft_word_len(char const *s, const char c)
+static int	wdalloc(const char *str, char c, int wordnum, char **ret)
 {
-	int			len;
-	int			begin;
+	int		count;
+	int		i;
 
-	len = 0;
-	begin = 0;
-	while (*s)
-	{
-		if (begin == 0)
-		{
-			if (*s != c)
-			{
-				begin = 1;
-				len++;
-			}
-		}
-		else
-		{
-			if (*s == c)
-				break ;
-			else
-				len++;
-		}
-		s++;
-	}
-	return (len);
+	count = 0;
+	if (!(*str))
+		return (0);
+	while (str[count] != c && str[count])
+		count++;
+	ret[wordnum] = (char *)malloc(count + 1);
+	if (!ret[wordnum])
+		return (-1);
+	ret[wordnum][count] = '\0';
+	i = -1;
+	while (++i < count)
+		ret[wordnum][i] = str[i];
+	return (count);
 }
 
-static char		*ft_alloc_word(int *idx, char const *s, const char c)
+static void	*splfree_null(char ***tofree, int n)
 {
-	int			word_len;
-	char		*word;
-	int			i;
+	int		i;
 
-	word_len = ft_word_len(&s[*idx], c);
-	word = (char*)malloc(sizeof(char) + (word_len + 1));
-	if (word == NULL)
-		return (NULL);
 	i = 0;
-	while (i < word_len)
+	while (i < n)
 	{
-		word[i] = s[*idx + i];
+		free((*tofree)[i]);
 		i++;
 	}
-	word[i] = '\0';
-	*idx += word_len;
-	return (word);
+	free(*tofree);
+	return ((void *)0);
 }
 
-void			*ft_free(char **result, int len)
+char	**ft_split(char const *s, char c)
 {
-	int			i;
+	int		wordnum;
+	int		wordlen;
+	char	*tab;
+	char	**ret;
 
-	i = 0;
-	while (i < len)
-		free(result[i++]);
-	return (NULL);
-}
-
-char			**ft_split(char const *s, char c)
-{
-	int			i;
-	int			cursor;
-	char		**result;
-
-	if (s == NULL)
-		return (NULL);
-	i = 0;
-	cursor = 0;
-	result = (char**)malloc(sizeof(char*) * (ft_split_cnt(s, c) + 1));
-	if (result == NULL)
-		return (NULL);
-	while (s[cursor])
+	if (!s)
+		return (0);
+	wordnum = wordcount(s, c);
+	ret = (char **)malloc((wordnum + 1) * sizeof(char *));
+	if (!ret)
+		return ((void *)0);
+	ret[wordnum] = (void *)0;
+	tab = (char *)s;
+	wordnum = 0;
+	while (*tab)
 	{
-		if (s[cursor] == c)
-			cursor++;
-		else
-		{
-			result[i] = ft_alloc_word(&cursor, s, c);
-			if (result[i] == NULL)
-				return (ft_free(result, i));
-			i++;
-		}
+		while (*tab == c)
+			tab++;
+		wordlen = wdalloc(tab, c, wordnum, ret);
+		if (wordlen < 0)
+			return (splfree_null(&ret, wordnum));
+		tab += wordlen;
+		wordnum++;
 	}
-	result[i] = 0;
-	return (result);
+	return (ret);
 }

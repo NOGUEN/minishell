@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djeon <djeon@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/02 10:58:14 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/08 12:50:01 by djeon            ###   ########.fr       */
+/*   Created: 2020/11/09 16:51:49 by soekim            #+#    #+#             */
+/*   Updated: 2020/11/22 18:18:38 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void	*result;
+	long long int	i;
+	void			*memory;
+	char			*tab;
 
-	if (!(result = malloc(count * size)))
-		return (NULL);
-	ft_bzero(result, (count * size));
-	return (result);
+	i = (int)count * (int)size;
+	memory = malloc(i);
+	if (!memory)
+		return (0);
+	tab = (char *)memory;
+	while (--i >= 0)
+		tab[i] = 0;
+	return (memory);
 }

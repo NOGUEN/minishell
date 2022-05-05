@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/10 14:44:51 by soekim            #+#    #+#             */
-/*   Updated: 2020/11/18 19:01:17 by soekim           ###   ########.fr       */
+/*   Created: 2021/06/26 16:45:13 by soekim            #+#    #+#             */
+/*   Updated: 2021/07/01 22:53:21 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-char	*ft_strrchr(const char *s, int c)
-{
-	char	*str;
+# define END_OF_FDS -1
 
-	str = (char *)s;
-	while (*str)
-		str++;
-	while (str >= (char *)s)
-	{
-		if (*str == (char)c)
-			return (str);
-		str--;
-	}
-	return ((void *)0);
-}
+# include <unistd.h>
+
+# include "vars.h"
+# include "utils.h"
+# include "parse.h"
+# include "structs.h"
+# include "inout.h"
+
+void	exec(t_cmd *cmd_list, char **envp);
+void	exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2]);
+
+#endif

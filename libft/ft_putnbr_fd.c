@@ -3,35 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/14 17:55:29 by mac               #+#    #+#             */
-/*   Updated: 2020/08/10 21:38:37 by djeon            ###   ########.fr       */
+/*   Created: 2020/11/12 13:58:33 by soekim            #+#    #+#             */
+/*   Updated: 2020/11/19 15:45:05 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	display_nbr(int n, int fd)
-{
-	if (n >= 10)
-		display_nbr(n / 10, fd);
-	write(fd, &"0123456789"[n % 10], 1);
-}
-
 void	ft_putnbr_fd(int n, int fd)
 {
-	if (fd < 0)
-		return ;
-	if (n == -2147483648)
+	char	num;
+
+	if (n >= 0 && n < 10)
 	{
-		write(fd, "-2147483648", 11);
+		n += '0';
+		num = (char)n;
+		write(fd, &num, 1);
 		return ;
 	}
 	if (n < 0)
 	{
 		write(fd, "-", 1);
-		n *= -1;
+		if (n == -2147483648)
+		{
+			write(fd, "2", 1);
+			n = -147483648;
+		}
+		ft_putnbr_fd(-n, fd);
+		return ;
 	}
-	display_nbr(n, fd);
+	ft_putnbr_fd(n / 10, fd);
+	num = (char)((n % 10) + '0');
+	write(fd, &num, 1);
+	return ;
 }

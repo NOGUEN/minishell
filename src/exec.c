@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/exec.h"
+#include "../include/exec.h"
 
 void init_fork_pipes(int (*pipes)[2])
 {
@@ -63,7 +63,7 @@ void cd_and_close_fds(t_cmd_info *cmd_info, int (*pipes)[2], int input)
 		close(cmd_info->out_fd);
 }
 
-void new_exec(t_cmd *cmd_list, char **envp)
+void exec(t_cmd *cmd_list, char **envp)
 {
 	t_cmd_info cmd_info;
 	int pipes[2][2];
@@ -74,7 +74,7 @@ void new_exec(t_cmd *cmd_list, char **envp)
 	while (cmd_list)
 	 {
 		init_fork_pipes(pipes);
-		init_cmd_info(&cmd_info, cmd_list->cmdline,pipes);
+		init_cmd_info(&cmd_info, cmd_list->cmd_line,pipes);
 		if (cmd_info.in_fd==NO_DATA)
 			cmd_info.in_fd = input;
 		if (cmd_info.out_fd==NO_DATA)

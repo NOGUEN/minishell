@@ -22,7 +22,13 @@ SRC 		= src/alloc_token.c \
 			  src/signal.c \
 			  src/split_cmd.c \
 			  src/split_count.c \
-			  src/utils.c
+			  src/utils.c		\
+			  src/exec.c		\
+			  src/inout.c		\
+			  src/utils/util1.c	\
+			  src/utils/util2.c	\
+			  src/get_next_line/get_next_line.c\
+			  src/get_next_line/get_next_line_utils.c
 
 OBJ_DIR 	= objs
 OBJ 		= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -40,6 +46,8 @@ $(LIBFT) :
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 			mkdir -p $(OBJ_DIR)
+			mkdir -p $(OBJ_DIR)/utils
+			mkdir -p $(OBJ_DIR)/get_next_line
 			$(CC) -c $< -o $(<:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o) \
 			$(READLINE_INC)
 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/get_next_line.h"
+#include "../../include/get_next_line.h"
 
 char	*ft_strcpy(char *dst, const char *src)
 {

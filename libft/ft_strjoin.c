@@ -3,44 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoylee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/04 23:30:47 by hoylee            #+#    #+#             */
-/*   Updated: 2021/07/06 14:09:39 by djeon            ###   ########.fr       */
+/*   Created: 2020/11/10 14:44:51 by soekim            #+#    #+#             */
+/*   Updated: 2021/07/02 15:52:55 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_length(int *i, int *j, char const *s1, char const *s2)
+static void	copy_and_move(char **target, char **src)
 {
-	while (s1[*i])
-		(*i)++;
-	while (s2[*j])
-		(*j)++;
+	while (**src)
+	{
+		**target = **src;
+		++(*target);
+		++(*src);
+	}
+	return ;
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*result;
-	int		i;
-	int		j;
+	char	*ret;
+	char	*join;
 
-	if (!s1 && !s2)
+	join = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!join)
 		return (NULL);
-	if (!s1 || !s2)
-		return (!s1 ? ft_strdup(s2) : ft_strdup(s1));
-	i = 0;
-	j = 0;
-	ft_length(&i, &j, s1, s2);
-	if (!(result = (char *)malloc(sizeof(char) * (i + j + 1))))
-		return (NULL);
-	i = -1;
-	j = -1;
-	while (s1[++i])
-		result[i] = s1[i];
-	while (s2[++j])
-		result[i++] = s2[j];
-	result[i] = 0;
-	return (result);
+	ret = join;
+	if (s1)
+		copy_and_move(&join, &s1);
+	if (s2)
+		copy_and_move(&join, &s2);
+	*join = '\0';
+	return (ret);
 }

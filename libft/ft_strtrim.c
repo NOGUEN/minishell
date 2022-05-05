@@ -3,75 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/09 12:38:03 by mac               #+#    #+#             */
-/*   Updated: 2020/08/19 21:05:41 by djeon            ###   ########.fr       */
+/*   Created: 2020/11/10 20:06:56 by soekim            #+#    #+#             */
+/*   Updated: 2020/11/22 18:21:08 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		cmp_set(char const c, char const *set)
-{
-	char	tmp1;
-	char	*tmp2;
-	int		i;
-
-	tmp1 = (char)c;
-	tmp2 = (char*)set;
-	i = 0;
-	while (tmp2[i] != '\0')
-	{
-		if (tmp1 == tmp2[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int		start_and_end(char const *str, char const *set, int tmp)
-{
-	int		i;
-
-	if (tmp == 1)
-	{
-		i = 0;
-		while (cmp_set(str[i], set) && str[i] != '\0')
-			i++;
-	}
-	else
-	{
-		i = ft_strlen(str) - 1;
-		while (cmp_set(str[i], set))
-			i--;
-	}
-	return (i);
-}
-
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*tmp1;
-	char	*result;
-	int		i;
-	int		j;
-	int		a;
+	int		len;
+	char	*ret;
 
-	tmp1 = (char*)s1;
-	i = start_and_end(tmp1, set, 1);
-	a = 0;
-	if (tmp1[i] == '\0')
-	{
-		if (!(result = (char*)malloc(1)))
-			return (0);
-		result[0] = 0;
-		return (result);
-	}
-	j = start_and_end(tmp1, set, -1);
-	if (!(result = (char*)malloc(j - i + 2)))
+	if (!s1)
 		return (0);
-	while (i <= j)
-		result[a++] = tmp1[i++];
-	result[a] = '\0';
-	return (result);
+	while (is_element(set, *s1) && *s1)
+		s1++;
+	len = ft_strlen(s1);
+	while (--len > 0 && is_element(set, s1[len]))
+		;
+	len++;
+	ret = (char *)malloc(len + 1);
+	if (!ret)
+		return ((void *)0);
+	ret[len] = '\0';
+	while (--len >= 0)
+		ret[len] = s1[len];
+	return (ret);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/utils.h"
+#include "../../include/utils.h"
 
 int	strdelcpy(char *s1, char *s2, int del)
 {

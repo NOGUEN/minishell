@@ -11,8 +11,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+
 #include "structs.h"
 #include "../libft/libft.h"
+#include "exec.h"
+
 
 # define BEGIN 0x00000001
 # define SQUOTE 0x00000002
