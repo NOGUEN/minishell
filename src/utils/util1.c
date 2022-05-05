@@ -42,7 +42,7 @@ int	open_file(char *name, int mode)
 	fd = open(name, mode);
 	if (fd < 0)
 	{
-		printf("faield open:\n");
+		printf("failed open: %s\n", name);
 		exit(0);
 	}
 	return (fd);

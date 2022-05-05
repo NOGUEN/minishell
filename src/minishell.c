@@ -13,27 +13,19 @@ int main(int argc, char *argv[], char *envp[])
         {
             add_history(line);
             parse(&cmds, line, envp);
-            //command test
-            // int i = -1;
-			// while (cmds->cmd_line[++i].cmd != NULL)
-			// {
-			// 	printf("cmd : %s\n", cmds->cmd_line[i].cmd);
-			// 	printf("redir_flag : %d\n", cmds->cmd_line[i].redir_flag);
-			// 	printf("exit_flag : %d\n", cmds->exit_flag);
-			// 	printf("index : %d\n", i);
-			// }
+
+
+            // command test
+
+			// print token
+			for (t_cmd *cmd = cmds; cmd; cmd = cmd->next)
+			{
+				for (t_token*token = cmd->cmd_line;token->cmd;++token)
+					printf("token : %s \n", token->cmd);
+				printf("\n");
+			}
+
             
-            // if (cmds->next != NULL)
-            // {
-            //     i = -1;
-            //     while (cmds->next->cmd_line[++i].cmd != NULL)
-			//     {
-		    // 		printf("cmd : %s\n", cmds->next->cmd_line[i].cmd);
-	    	// 		printf("redir_flag : %d\n", cmds->next->cmd_line[i].redir_flag);
-    		// 		printf("exit_flag : %d\n", cmds->exit_flag);
-			// 	    printf("index : %d\n", i);
-			//     }
-            // }
             exec(cmds, envp);
             // free_list(cmds);						  
             free(line);				

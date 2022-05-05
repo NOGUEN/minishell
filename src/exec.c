@@ -81,7 +81,7 @@ void exec(t_cmd *cmd_list, char **envp)
 		{
 			if (cmd_list->next)
 				cmd_info.out_fd = pipes[C_TO_P][WR];
-			else
+			else if (cmd_info.out_fd==NO_DATA)
 				cmd_info.out_fd = STDOUT;
 		}
 

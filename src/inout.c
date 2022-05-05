@@ -51,12 +51,12 @@ void init_output(int *out_fd, char **out_name, t_token *out_redir)
 		// printf("flag\n");
 	}
 	else if (!ft_strcmp((out_redir - 1)->cmd, ">>"))
-		open_flag = O_WRONLY | O_APPEND;
+		open_flag = O_WRONLY | O_APPEND| O_CREAT;
 	else
 		error_exit("minishell: parse error near '>'\n");
 	*out_name = out_redir->cmd;
+	printf("%d %s\n",open_flag, *out_name);
 	*out_fd = open_file(*out_name, open_flag);
-	// printf("opened:%d\n", *out_fd);
 }
 
 void init_cmd_arg(t_cmd_info *info, t_token *token, int len_cmd_arg)
