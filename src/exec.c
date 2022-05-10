@@ -87,7 +87,9 @@ void exec(t_cmd *cmd_list, char **envp)
 
 		// when input exist in token, input of pipe doesn't work
 		// when output exist in token, should write both output of pipe and output redirection file
-		if (!ft_strcmp(cmd_info.cmd_args[0],"cd"))
+		if (!ft_strcmp(cmd_info.cmd_args[0], "exit"))
+			exit(0);// should refactor consider signal handling when exit cmd
+		else if (!ft_strcmp(cmd_info.cmd_args[0],"cd"))
 			cd_and_close_fds(&cmd_info, pipes, input);
 		else
 		{
@@ -124,8 +126,6 @@ void exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2])
 	{
 		close(pipes[P_TO_C][WR]);
 		close(pipes[C_TO_P][RD]);
-		if (!ft_strcmp( cmd_info->cmd_args[0],"exit"))
-			exit(0);// should refactor consider signal handling when exit cmd
 		path = find_cmdpath(cmd_info->cmd_args[0], envp);
 		dup2(cmd_info->in_fd, STDIN);
 		dup2(cmd_info->out_fd, STDOUT);
