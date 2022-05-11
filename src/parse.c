@@ -60,7 +60,7 @@ char	**get_path_list(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (!strdelcpy("PATH", envp[i], '='))
+		if (!strdelcmp("PATH", envp[i], '='))
 			break ;
 		++i;
 	}

@@ -20,7 +20,7 @@
 # include "../libft/libft.h"
 # include "get_next_line.h"
 
-int		strdelcpy(char *s1, char *s2, int del);
+int		strdelcmp(char *s1, char *s2, int del);
 int		open_file(char *name, int mode);
 void	free_char_ptrarr(char **ptrarr);
 void	free_char_ptr2d(char **ptr2d);

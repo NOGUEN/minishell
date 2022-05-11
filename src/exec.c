@@ -63,7 +63,7 @@ void cd_and_close_fds(t_cmd_info *cmd_info, int (*pipes)[2], int input)
 		close(cmd_info->out_fd);
 }
 
-void exec(t_cmd *cmd_list, char **envp)
+void exec(t_cmd *cmd_list, char ***envp)
 {
 	t_cmd_info cmd_info;
 	int pipes[2][2];
@@ -93,7 +93,7 @@ void exec(t_cmd *cmd_list, char **envp)
 			cd_and_close_fds(&cmd_info, pipes, input);
 		else
 		{
-			exec_cmd(&cmd_info, envp, pipes);
+			exec_cmd(&cmd_info, *envp, pipes);
 		
 
 			if (input != STDIN)

@@ -12,7 +12,7 @@
 
 #include "../../include/utils.h"
 
-int	strdelcpy(char *s1, char *s2, int del)
+int	strdelcmp(char *s1, char *s2, int del)
 {
 	while (*s1 && *s2 && *s1 != del && *s2 != del)
 	{
