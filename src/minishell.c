@@ -2,6 +2,19 @@
 
 int g_exit_status;
 
+void free_copied_env(char **copied)
+{
+    char **i;
+
+    i = copied;
+    while (*i)
+    {
+        free(*i);
+        ++i;
+    }
+    free(copied);
+}
+
 char **copy_env(char *envp[])
 {
     int num_env;
@@ -13,7 +26,7 @@ char **copy_env(char *envp[])
     copied = malloc((num_env + 1) * sizeof(char *));
     copied[num_env] = NULL;
     for (int i = 0; i < num_env; ++i)
-        ft_strdup(copied[i], envp[i]);
+        copied[i] = ft_strdup(envp[i]);
     return copied;
 }
 
@@ -37,10 +50,11 @@ int main(int argc, char *argv[], char *envp[])
                     printf("token : %s \n", token->cmd);
                 printf("\n");
             }
-            exec(cmds, copied_env);
+            exec(cmds, &copied_env);
             // free_list(cmds);
             free(line);
         }
     }
-    //free_copied_env
+    free_copied_env(copied_env);
+    return (0);
 }

@@ -91,6 +91,8 @@ void exec(t_cmd *cmd_list, char ***envp)
 			exit(0);// should refactor consider signal handling when exit cmd
 		else if (!ft_strcmp(cmd_info.cmd_args[0],"cd"))
 			cd_and_close_fds(&cmd_info, pipes, input);
+		else if (!ft_strcmp(cmd_info.cmd_args[0],"unset"))
+			unset(&cmd_info, envp);
 		else
 		{
 			exec_cmd(&cmd_info, *envp, pipes);

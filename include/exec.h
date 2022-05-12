@@ -22,8 +22,9 @@
 # include "parse.h"
 # include "structs.h"
 # include "inout.h"
+# include "unset.h"
 
-void	exec(t_cmd *cmd_list, char **envp);
+void	exec(t_cmd *cmd_list, char ***envp);
 void	exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2]);
 
 #endif
