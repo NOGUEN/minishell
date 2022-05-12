@@ -25,7 +25,7 @@ void    signal_sigint(int signo)
         {
             rl_on_new_line();
             rl_redisplay();
-            print_str_fd("    \n", STDOUT);
+            print_str_fd("  \n", STDOUT);
             rl_on_new_line();
             rl_replace_line("", 0);
             rl_redisplay();
@@ -48,7 +48,7 @@ void    signal_sigquit(int signo)
         {
             rl_on_new_line();
             rl_redisplay();
-            print_str_fd("    \b\b", STDOUT);
+            print_str_fd("  \b\b", STDOUT);
         }
         else
             print_str_fd("Quit: 3\n", STDOUT);

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include "../include/parse.h"
+#include "../../include/minishell.h"
+#include "../../include/parse.h"
 
 int check_ls_result(int *ls_pipe, char *cmd)
 {

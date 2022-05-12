@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
+#include "../../include/parse.h"
 
 int check_whitespace(char *line)
 {

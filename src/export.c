@@ -41,6 +41,7 @@ void    print_env_value(char *str, int fd)
         write(fd, "\"", 1);
         write(fd, str + i, ft_strlen(str + i));
         write(fd, "\"", 1);
+        write(fd, "\n", 1);
     }
 }
 
@@ -90,7 +91,7 @@ void    print_export(char **envp)
     i = -1;
     sorted = sort_env(envp);
     while (sorted[++i])
-        printf("declare -x %s", sorted[i]);
+        printf("declare -x %s\n", sorted[i]);
 }
 
 int	ft_valid_key(char *key)

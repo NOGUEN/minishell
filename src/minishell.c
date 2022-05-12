@@ -38,7 +38,10 @@ int main(int argc, char *argv[], char *envp[])
     char *line;
     char **copied_env;
 
+    dup2(STDIN, 100);
+    dup2(STDOUT, 101);
     copied_env = copy_env(envp);
+    signal_init();
     while (line = readline("minishell $ "))
     {
         if (*line != '\0' && !check_whitespace(line))

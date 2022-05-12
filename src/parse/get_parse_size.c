@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
+#include "../../include/parse.h"
 
 int get_parse_size(char *cmd, char **envp)
 {

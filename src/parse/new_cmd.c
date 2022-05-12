@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
+#include "../../include/parse.h"
 
 t_cmd   *new_cmd(char *line, int pipe_flag, char **envp, int exit_flag)
 {
