@@ -39,7 +39,7 @@ int	open_file(char *name, int mode)
 
 	if (!name)
 		return (-1);
-	fd = open(name, mode);
+	fd = open(name, mode, S_IWUSR|S_IRUSR);
 	if (fd < 0)
 	{
 		printf("failed open: %s\n", name);

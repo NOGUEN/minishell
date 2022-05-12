@@ -8,7 +8,7 @@ int main(int argc, char *argv[], char *envp[])
     char *line;
     char **copied_env;
 
-    copied_env = copy_env(envp);
+    copied_env = copy_envp(envp);
     signal_init();
     while (line = readline("minishell $ "))
     {

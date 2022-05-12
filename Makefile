@@ -6,8 +6,14 @@ NAME 			= minishell
 LIBFT		= libft.a
 LIBFT_DIR	= libft
 
-READLINE_LIB	= -lreadline -L/opt/homebrew/opt/readline/lib
-READLINE_INC	= -I/opt/homebrew/opt/readline/include
+READLINE_LIB 	= -lreadline -L/usr/local/opt/readline/lib
+READLINE_INC	= -I/usr/local/opt/readline/include
+
+#READLINE_LIB 	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
+#READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
+
+# READLINE_LIB	= -lreadline -L/opt/homebrew/opt/readline/lib
+# READLINE_INC	= -I/opt/homebrew/opt/readline/include
 
 SRC_DIR 	= src
 SRC 		= src/parse/alloc_token.c \
