@@ -95,7 +95,7 @@ void    print_export(char **envp)
     while (sorted[++i])
     {
         seperator = ft_strchr(sorted[i], '=');
-        if (*seperator == '=')
+        if (seperator && *seperator == '=')
         {
             *seperator = '\0';
             printf("declare -x %s=\"%s\"\n", sorted[i], seperator+1);
@@ -146,12 +146,31 @@ int     is_valid_export(char *line)
 
 char    **find_existing_var(char *token, char **envp)
 {
+    char    *token_sep;
+    char    *env_sep;
+    
+    token_sep = ft_strchr(token, '=');
+    if (token_sep)
+        *token_sep = '\0';
     while (*envp)
     {
-        if (!strdelcmp(token, *envp, '='))
+        env_sep = ft_strchr(*envp, '=');
+        if (env_sep)
+            *env_sep = '\0';
+        if (!ft_strcmp(token, *envp))
+        {
+            if (env_sep)
+                *env_sep = '=';
+            if (token_sep)
+                *token_sep = '=';
             return envp;
+        }
+        if (env_sep)
+            *env_sep = '=';
         ++envp;
     }
+    if (token_sep)
+        *token_sep = '=';
     return NULL;
 }
 
@@ -167,10 +186,7 @@ void    export(t_cmd *cmds, char ***envp)
         print_export(*envp);
         return;
     }
-    i = -1;
     count = 0;
-    while ((*envp)[++i])
-        ++count;
     i = 0;
     while (cmds->tokens[++i].cmd)
     {
@@ -179,8 +195,10 @@ void    export(t_cmd *cmds, char ***envp)
             target = find_existing_var(cmds->tokens[i].cmd, *envp);
             if (target) 
             {
+                printf("token %s",cmds->tokens[i].cmd);
                 if (ft_strchr(cmds->tokens[i].cmd, '='))
                 {
+                    printf("here\n\n\n");
                     free(*target);
                     *target = ft_strdup(cmds->tokens[i].cmd);
                 }
@@ -191,6 +209,14 @@ void    export(t_cmd *cmds, char ***envp)
         else
             cmds->tokens[i].cmd[0] = '\0';
     }
+    if (count == 0)
+    {
+        printf("bf return\n");
+        return ;
+    }
+    i = -1;
+    while ((*envp)[++i])
+        ++count;
     new_env = malloc((count+1)*sizeof(char *));
     new_env[count] = NULL;
     count = -1;
