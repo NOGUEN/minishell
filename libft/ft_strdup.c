@@ -12,6 +12,8 @@
 
 #include "libft.h"
 
+
+#include <stdio.h>
 char	*ft_strdup(const char *s1)
 {
 	int		i;
@@ -23,10 +25,8 @@ char	*ft_strdup(const char *s1)
 	dup = (char *)malloc(i + 1);
 	if (!dup)
 		return (0);
-	while (i >= 0)
-	{
+	dup[i] = '\0';
+	while (--i >= 0)
 		dup[i] = s1[i];
-		i--;
-	}
 	return (dup);
 }

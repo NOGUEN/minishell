@@ -9,7 +9,7 @@ typedef struct      s_token
 
 typedef struct      s_cmd_list
 {
-    t_token         *cmd_line;
+    t_token         *tokens;
     int             flag;
     char            *(redir_file[4]);
     int             pipe_flag;

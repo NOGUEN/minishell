@@ -15,7 +15,7 @@ void free_copied_env(char **copied)
     free(copied);
 }
 
-char **copy_env(char *envp[])
+char **copy_env(char **envp)
 {
     int num_env;
     char **copied;
@@ -26,7 +26,9 @@ char **copy_env(char *envp[])
     copied = malloc((num_env + 1) * sizeof(char *));
     copied[num_env] = NULL;
     for (int i = 0; i < num_env; ++i)
-        copied[i] = ft_strdup(envp[i]);
+{        copied[i] = ft_strdup(envp[i]);
+// printf("%p      \n", copied[i]);
+}
     return copied;
 }
 
@@ -36,15 +38,7 @@ int main(int argc, char *argv[], char *envp[])
     char *line;
     char **copied_env;
 
-<<<<<<< HEAD
-    int i = -1;
-    while (envp[++i])
-    {
-        printf("%s\n", envp[i]);
-    }
-=======
     copied_env = copy_env(envp);
->>>>>>> 9adfe3634dc979e44f93a4d3ac72f3f3df6ece34
     while (line = readline("minishell $ "))
     {
         if (*line != '\0' && !check_whitespace(line))
@@ -54,7 +48,7 @@ int main(int argc, char *argv[], char *envp[])
             // print token
             for (t_cmd *cmd = cmds; cmd; cmd = cmd->next)
             {
-                for (t_token *token = cmd->cmd_line; token->cmd; ++token)
+                for (t_token *token = cmd->tokens; token->cmd; ++token)
                     printf("token : %s \n", token->cmd);
                 printf("\n");
             }

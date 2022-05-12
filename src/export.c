@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../include/export.h"
 
 int cnt_envp(char **envp)
 {
@@ -70,18 +70,33 @@ void    add_envp(char *new_envp, char ***envp)
     *envp = new;
 }
 
-void    print_export(char **envp, int fd)
+void    print_export(char **envp)
 {
     int i;
     char    **sorted;
 
     i = -1;
-    sorted = sort_envp(envp);
+    sorted = sort_env(envp);
     while (sorted[++i])
-    {
-        print_str_fd("declare -x ", fd);
+        printf("declare -x %s", sorted[i]);
+}
 
-    }
+int	ft_valid_key(char *key)
+{
+	int i;
+
+	i = 0;
+	if (ft_strlen(key) == 0)
+		return (0);
+	while (key[i])
+	{
+		if (ft_isdigit(key[0]))
+			return (0);
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int     check_valid_export(char *line)
@@ -91,8 +106,8 @@ int     check_valid_export(char *line)
     int     i;
     int     ret;
 
-    key = str_arr[0];
     str_arr = ft_split(line, '=');
+    key = str_arr[0];
     i = -1;
     ret = ft_valid_key(key);
     while (str_arr[++i])
@@ -103,17 +118,43 @@ int     check_valid_export(char *line)
     return (ret);
 }
 
-void    exec_export(t_cmd *cmds, char ***envp, int fd)
+void    export(t_cmd *cmds, char ***envp)
 {
     int i;
+    int count;
     int key_index;
+    char **new_env;
 
-    i = 1;
-    while (cmds->cmdline[i].cmd && cmds->cmdline[i].redir_flag == 0)
+    if (!cmds->tokens[1].cmd)
     {
-        if (check_valid_export(cmds->cmdline[i].cmd))
+        print_export(*envp);
+        return;
+    }
+    i = -1;
+    count = 0;
+    while ((*envp)[++i])
+        ++count;
+    i = 0;
+    while (cmds->tokens[++i].cmd)
+    {
+        if (check_valid_export(cmds->tokens[i].cmd))
         {
-            
+            cmds->tokens[i].cmd[0] = '\0';
+            ++count;
         }
     }
+    new_env = malloc((count+1)*sizeof(char *));
+    new_env[count] = NULL;
+    count = -1;
+    i = -1;
+    while ((*envp)[++i])
+        new_env[++count] = (*envp)[i];
+    i = 0;
+    while (cmds->tokens[++i].cmd)
+    {
+        if (cmds->tokens[i].cmd[0])
+            new_env[++count] = cmds->tokens[i].cmd;
+    }
+    free(*envp);
+    *envp = new_env;
 }

@@ -74,7 +74,7 @@ void exec(t_cmd *cmd_list, char ***envp)
 	while (cmd_list)
 	 {
 		init_fork_pipes(pipes);
-		init_cmd_info(&cmd_info, cmd_list->cmd_line,pipes);
+		init_cmd_info(&cmd_info, cmd_list->tokens,pipes);
 		if (cmd_info.in_fd==NO_DATA)
 			cmd_info.in_fd = input;
 		if (cmd_info.out_fd==NO_DATA)
@@ -93,6 +93,8 @@ void exec(t_cmd *cmd_list, char ***envp)
 			cd_and_close_fds(&cmd_info, pipes, input);
 		else if (!ft_strcmp(cmd_info.cmd_args[0],"unset"))
 			unset(&cmd_info, envp);
+		else if (!ft_strcmp(cmd_info.cmd_args[0],"export"))
+			export(cmd_list,envp);
 		else
 		{
 			exec_cmd(&cmd_info, *envp, pipes);

@@ -6,8 +6,8 @@ t_cmd   *new_cmd(char *line, int pipe_flag, char **envp, int exit_flag)
 
     if (!(result = (t_cmd*)malloc(sizeof(t_cmd))))
         return (NULL);
-    result->cmd_line = split_cmd(line);
-    alloc_token(result->cmd_line, envp);
+    result->tokens = split_cmd(line);
+    alloc_token(result->tokens, envp);
     result->pipe_flag = pipe_flag;
     if (exit_flag == 0 && pipe_flag == 0)
         result->exit_flag = 1;

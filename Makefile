@@ -1,4 +1,4 @@
-CC 				= gcc -g -fsanitize=address
+CC 				= gcc #-g -fsanitize=address
 RM				= rm -rf
 CFLAGS 			= -Wall -Wextra -Werror
 NAME 			= minishell
@@ -23,6 +23,8 @@ SRC 		= src/alloc_token.c \
 			  src/split_cmd.c \
 			  src/split_count.c \
 			  src/utils.c		\
+			  src/unset.c		\
+			  src/export.c		\
 			  src/exec.c		\
 			  src/inout.c		\
 			  src/utils/util1.c	\

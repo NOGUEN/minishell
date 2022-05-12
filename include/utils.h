@@ -27,5 +27,6 @@ void	free_char_ptr2d(char **ptr2d);
 void	error_exit(char *str);
 int		***get_pipes(int cmd_num);
 void	cmd_not_found(char *cmd);
+char    **sort_env(char **envp);
 
 #endif
