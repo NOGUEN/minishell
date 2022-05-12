@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/12 19:56:11 by noguen            #+#    #+#             */
+/*   Updated: 2022/05/12 19:56:13 by noguen           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void    signal_sigint(int signo)
@@ -9,7 +21,17 @@ void    signal_sigint(int signo)
     pid = pid * 1;
     if (signo == SIGINT)
     {
-        //not complete yet
+        if (pid == -1)
+        {
+            rl_on_new_line();
+            rl_redisplay();
+            print_str_fd("    \n", STDOUT);
+            rl_on_new_line();
+            rl_replace_line("", 0);
+            rl_redisplay();
+        }
+        else
+            print_str_fd("\n", STDOUT);
     }
 }
 
@@ -22,7 +44,14 @@ void    signal_sigquit(int signo)
     pid = pid * 1;
     if (signo == SIGQUIT)
     {
-        //not complete yet
+        if (pid == -1)
+        {
+            rl_on_new_line();
+            rl_redisplay();
+            print_str_fd("    \b\b", STDOUT);
+        }
+        else
+            print_str_fd("Quit: 3\n", STDOUT);
     }
 }
 
