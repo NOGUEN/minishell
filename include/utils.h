@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/12 13:58:33 by soekim            #+#    #+#             */
-/*   Updated: 2020/11/19 15:45:05 by soekim           ###   ########.fr       */
+/*   Created: 2021/06/18 19:43:55 by soekim            #+#    #+#             */
+/*   Updated: 2022/04/01 12:19:43 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-void	ft_putnbr_fd(int n, int fd)
-{
-	char	num;
+# include <stdlib.h>
+# include <fcntl.h>
 
-	if (n >= 0 && n < 10)
-	{
-		n += '0';
-		num = (char)n;
-		write(fd, &num, 1);
-		return ;
-	}
-	if (n < 0)
-	{
-		write(fd, "-", 1);
-		if (n == -2147483648)
-		{
-			write(fd, "2", 1);
-			n = -147483648;
-		}
-		ft_putnbr_fd(-n, fd);
-		return ;
-	}
-	ft_putnbr_fd(n / 10, fd);
-	num = (char)((n % 10) + '0');
-	write(fd, &num, 1);
-	return ;
-}
+# include "vars.h"
+# include "../libft/libft.h"
+# include "get_next_line.h"
+
+int		strdelcmp(char *s1, char *s2, int del);
+int		open_file(char *name, int mode);
+void	free_char_ptrarr(char **ptrarr);
+void	free_char_ptr2d(char **ptr2d);
+void	error_exit(char *str);
+int		***get_pipes(int cmd_num);
+void	cmd_not_found(char *cmd);
+
+#endif

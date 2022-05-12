@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/30 21:49:59 by mac               #+#    #+#             */
-/*   Updated: 2020/07/27 21:22:29 by djeon            ###   ########.fr       */
+/*   Created: 2020/11/09 16:51:49 by soekim            #+#    #+#             */
+/*   Updated: 2020/11/19 16:43:03 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char	*srcc;
-	char	*dstc;
-	size_t	i;
+	char	*dst_tab;
+	char	*src_tab;
+	int		i;
 
-	i = 0;
-	srcc = (char *)src;
-	dstc = (char *)dst;
 	if (!dst && !src)
 		return (0);
-	if (srcc < dstc)
-		while (len > 0)
-		{
-			*(dstc + len - 1) = *(srcc + len - 1);
-			len--;
-		}
+	i = (int)len;
+	dst_tab = (char *)dst;
+	src_tab = (char *)src;
+	if (dst_tab > src_tab)
+		while (--i >= 0)
+			dst_tab[i] = src_tab[i];
 	else
-		while (i < len)
+	{
+		while (--i >= 0)
 		{
-			*(dstc + i) = *(srcc + i);
-			i++;
+			*dst_tab = *src_tab;
+			dst_tab++;
+			src_tab++;
 		}
+	}
 	return (dst);
 }

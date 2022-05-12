@@ -1,44 +1,54 @@
 #include "../include/minishell.h"
 
-int g_exit_status = 0;
+int g_exit_status;
+
+char **copy_env(char *envp[])
+{
+    int num_env;
+    char **copied;
+
+    num_env = 0;
+    while (envp[num_env++])
+        ;
+    copied = malloc((num_env + 1) * sizeof(char *));
+    copied[num_env] = NULL;
+    for (int i = 0; i < num_env; ++i)
+        ft_strdup(copied[i], envp[i]);
+    return copied;
+}
 
 int main(int argc, char *argv[], char *envp[])
 {
-    t_cmd   *cmds;
-    char    *line;
+    t_cmd *cmds;
+    char *line;
+    char **copied_env;
 
+<<<<<<< HEAD
     int i = -1;
     while (envp[++i])
     {
         printf("%s\n", envp[i]);
     }
+=======
+    copied_env = copy_env(envp);
+>>>>>>> 9adfe3634dc979e44f93a4d3ac72f3f3df6ece34
     while (line = readline("minishell $ "))
     {
         if (*line != '\0' && !check_whitespace(line))
         {
             add_history(line);
             parse(&cmds, line, envp);
-            //command test
-            int i = -1;
-			while (cmds->cmd_line[++i].cmd != NULL)
-			{
-				printf("cmd : %s\n", cmds->cmd_line[i].cmd);
-				printf("redir_flag : %d\n", cmds->cmd_line[i].redir_flag);
-				printf("exit_flag : %d\n", cmds->exit_flag);
-				printf("index : %d\n", i);
-			}
-            
-            if (cmds->next != NULL)
+            // print token
+            for (t_cmd *cmd = cmds; cmd; cmd = cmd->next)
             {
-                i = -1;
-                while (cmds->next->cmd_line[++i].cmd != NULL)
-			    {
-		    		printf("cmd : %s\n", cmds->next->cmd_line[i].cmd);
-	    			printf("redir_flag : %d\n", cmds->next->cmd_line[i].redir_flag);
-    				printf("exit_flag : %d\n", cmds->exit_flag);
-				    printf("index : %d\n", i);
-			    }
+                for (t_token *token = cmd->cmd_line; token->cmd; ++token)
+                    printf("token : %s \n", token->cmd);
+                printf("\n");
             }
+            exec(cmds, copied_env);
+            // free_list(cmds);
+            free(line);
         }
     }
+    //free_copied_env
 }

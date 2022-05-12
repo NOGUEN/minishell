@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/30 20:18:46 by mac               #+#    #+#             */
-/*   Updated: 2020/07/27 21:18:30 by djeon            ###   ########.fr       */
+/*   Created: 2020/11/09 16:51:49 by soekim            #+#    #+#             */
+/*   Updated: 2020/11/18 18:44:04 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,27 @@
 
 void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	char	*result;
-	char	*start;
-	char	tmp;
+	unsigned char	*dst_tab;
+	unsigned char	*src_tab;
+	size_t			i;
 
-	result = (char*)dst;
-	start = (char*)src;
-	tmp = (unsigned char)c;
-	if (!dst && !src)
-		return (0);
-	while (n--)
+	dst_tab = (unsigned char *)dst;
+	src_tab = (unsigned char *)src;
+	i = 0;
+	while (i < n && *src_tab != (unsigned char)c)
 	{
-		*result++ = *start;
-		if (*start++ == tmp)
-			return (result);
+		*dst_tab = *src_tab;
+		dst_tab++;
+		src_tab++;
+		i++;
 	}
-	return (0);
+	if (i == n)
+		return ((void *)0);
+	while (*src_tab == (unsigned char)c)
+	{
+		*dst_tab = *src_tab;
+		dst_tab++;
+		src_tab++;
+	}
+	return ((void *)dst_tab);
 }

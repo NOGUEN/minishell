@@ -1,43 +1,70 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: djeon <djeon@student.42seoul.kr>           +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/07/03 14:22:20 by djeon             #+#    #+#              #
-#    Updated: 2021/07/08 12:48:12 by djeon            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC = gcc
-HEADER = libft.h
-CFAGS = -Wall -Wextra -Werror
-OPTION = -I $(HEADER)
-NAME = libft.a
-SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c \
-	  ft_memcmp.c ft_strlen.c ft_strlcpy.c ft_strlcat.c ft_strchr.c ft_strrchr.c \
-	  ft_strnstr.c ft_strncmp.c ft_atoi.c ft_isalpha.c ft_isdigit.c ft_isalnum.c \
-	  ft_isascii.c ft_isprint.c ft_toupper.c ft_tolower.c ft_calloc.c ft_strdup.c \
-	  ft_substr.c ft_strtrim.c ft_strjoin.c ft_split.c ft_itoa.c ft_strmapi.c \
-	  ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c \
-	  ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
-	  ft_lstclear.c ft_lstiter.c ft_lstmap.c
+AR = ar -crs
+CFLAGS = -Wall -Werror -Wextra
 
-OBJECTS = $(SRC:.c=.o)
+RM = rm -f
+
+NAME = libft.a
+HEADER = libft.h
+.SUFFIXES = .c.o
+SRCS =	ft_memset.c			\
+		ft_bzero.c 			\
+		ft_memcpy.c			\
+		ft_memccpy.c		\
+		ft_memmove.c		\
+		ft_memchr.c			\
+		ft_memcmp.c			\
+		ft_strlen.c			\
+		ft_strlcpy.c		\
+		ft_strlcat.c		\
+		ft_strchr.c			\
+		ft_strrchr.c		\
+		ft_strnstr.c		\
+		ft_strncmp.c		\
+		ft_atoi.c			\
+		ft_isalpha.c		\
+		ft_isdigit.c		\
+		ft_isalnum.c		\
+		ft_isprint.c		\
+		ft_toupper.c		\
+		ft_tolower.c		\
+		ft_isascii.c		\
+		ft_calloc.c			\
+		ft_strdup.c			\
+		ft_substr.c			\
+		ft_strjoin.c		\
+		ft_strtrim.c		\
+		ft_itoa.c			\
+		ft_strmapi.c		\
+		ft_putchar_fd.c		\
+		ft_putstr_fd.c		\
+		ft_putendl_fd.c		\
+		ft_putnbr_fd.c		\
+		ft_split.c			\
+		is_element.c		\
+		ft_lstnew.c			\
+		ft_lstadd_front.c	\
+		ft_lstsize.c		\
+		ft_lstlast.c		\
+		ft_lstadd_back.c	\
+		ft_lstdelone.c		\
+		ft_lstclear.c		\
+		ft_lstiter.c		\
+		ft_lstmap.c			\
+		ft_strcmp.c
+
+OBJTS = ${SRCS:.c=.o}
+
 
 all : $(NAME)
-
-$(NAME) : $(OBJECTS)
-	ar rc $@ $(OBJECTS)
-
-%.o:%.c	$(HEADER)
-	$(CC) $(CFAGS) -o $@ -c $< -I $(HEADER)
+	
+$(NAME) : $(OBJTS)
+	$(AR) $(NAME) $(OBJTS)
 
 clean :
-	rm -f $(OBJECTS)
+	$(RM) $(OBJTS) $(BONUS_OBJTS)
 
 fclean : clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 
-re : fclean all
+re: fclean all

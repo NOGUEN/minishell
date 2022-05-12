@@ -3,68 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: soekim <soekim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/11 16:18:28 by mac               #+#    #+#             */
-/*   Updated: 2020/08/25 12:40:58 by mac              ###   ########.fr       */
+/*   Created: 2020/11/11 03:59:01 by soekim            #+#    #+#             */
+/*   Updated: 2020/11/20 15:40:40 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_abs(int n)
+int	get_len(int n)
 {
-	int		result;
+	int	temp;
+	int	len;
 
-	if (n < 0)
-		result = -1 * n;
+	if (n > 0)
+	{
+		temp = (long long int)n;
+		len = 0;
+	}
 	else
-		result = n;
-	return (result);
-}
-
-int		cal_size(int n)
-{
-	int		size;
-	int		tmp;
-
-	size = 1;
-	tmp = n;
-	if (n < -9)
-		size++;
-	if (n < 0)
 	{
-		size++;
-		tmp = ft_abs(tmp / 10);
+		temp = -(long long int)n;
+		len = 1;
 	}
-	while (tmp > 9)
+	while (temp != 0)
 	{
-		size++;
-		tmp = tmp / 10;
+		len++;
+		temp /= 10;
 	}
-	return (size);
+	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*result;
-	int		size;
-	int		flag;
+	long long int	temp;
+	int				len;
+	char			*arr;
 
-	flag = 0;
-	size = cal_size(n);
-	if (!(result = (char*)malloc(size + 1)))
+	len = get_len(n);
+	arr = (char *)malloc(len + 1);
+	if (!arr)
 		return (0);
-	result[size--] = '\0';
 	if (n < 0)
-		flag = 1;
-	while (size >= 0)
+		arr[0] = '-';
+	else
+		arr[0] = '0';
+	if (n < 0)
+		temp = -(long long int)n;
+	else
+		temp = (long long int)n;
+	arr[len] = '\0';
+	while (temp > 0)
 	{
-		result[size] = '0' + ft_abs(n % 10);
-		n = ft_abs(n / 10);
-		size--;
+		len--;
+		arr[len] = temp % 10 + '0';
+		temp /= 10;
 	}
-	if (flag == 1)
-		result[0] = '-';
-	return (result);
+	return (arr);
 }
