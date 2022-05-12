@@ -29,20 +29,30 @@ char    *cut_string(char **str)
 
 char    **copy_envp(char **envp)
 {
-    char    **new;
-    int     i;
+    int num_env;
+    char **copied;
 
-    i = -1;
-    while (envp[++i])
-        i++;
-    new = malloc(sizeof(char *) * (i + 1));
-    if (new == NULL)
-        return (NULL);
-    i = -1;
-    while (envp[++i])
-        new[i] = ft_strdup(envp[i]);
-    new[i] = NULL;
-    return (new);
+    num_env = -1;
+    while (envp[++num_env])
+        ;
+    copied = malloc((num_env + 1) * sizeof(char *));
+    copied[num_env] = NULL;
+    for (int i = 0; i < num_env; ++i)
+        copied[i] = ft_strdup(envp[i]);
+    return copied;
+}
+
+void free_copied_env(char **copied)
+{
+    char **i;
+
+    i = copied;
+    while (*i)
+    {
+        free(*i);
+        ++i;
+    }
+    free(copied);
 }
 
 char    **sort_env(char **envp)

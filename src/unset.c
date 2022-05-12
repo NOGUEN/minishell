@@ -14,7 +14,7 @@ void unset(t_cmd_info *cmd_info, char ***envp)
         j = 0;
         while (cmd_info->cmd_args[++j])
         {
-            if (strdelcmp((*envp)[i], cmd_info->cmd_args[j], '='))
+            if (!strdelcmp((*envp)[i], cmd_info->cmd_args[j], '='))
                 (*envp)[i][0] = 0;
         }
         if ((*envp)[i][0])

@@ -95,20 +95,23 @@ void exec(t_cmd *cmd_list, char ***envp)
 			unset(&cmd_info, envp);
 		else if (!ft_strcmp(cmd_info.cmd_args[0],"export"))
 			export(cmd_list,envp);
+		else if (!ft_strcmp(cmd_info.cmd_args[0],"env")) 
+		{// if strchr('=')  print else: don't print
+			char **i;
+
+			i = *envp;
+			while (*i)
+			{
+				if (ft_strchr(*i,'='))
+					printf("%s\n", *i);
+				++i;
+			}
+		}
 		else
 		{
 			exec_cmd(&cmd_info, *envp, pipes);
-		
-
 			if (input != STDIN)
 				close(input);
-		// if (cmd_info.out_name)
-		// {
-		// 	close(pipes[C_TO_P][RD]);
-		// 	input = open(cmd_info.out_name, O_RDONLY);
-		// }
-		// else
-		// when meet redir output bash acts like no pipes before
 			input = pipes[C_TO_P][RD];
 		}
 		free(cmd_info.cmd_args);

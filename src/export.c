@@ -1,5 +1,6 @@
 #include "../include/export.h"
 
+
 int cnt_envp(char **envp)
 {
     int i;
@@ -74,14 +75,26 @@ void    print_export(char **envp)
 {
     int i;
     char    **sorted;
+    char    *seperator;
 
     i = -1;
     sorted = sort_env(envp);
     while (sorted[++i])
-        printf("declare -x %s", sorted[i]);
+    {
+        seperator = ft_strchr(sorted[i], '=');
+        if (*seperator == '=')
+        {
+            *seperator = '\0';
+            printf("declare -x %s=\"%s\"\n", sorted[i], seperator+1);
+            *seperator = '=';
+        }
+        else
+            printf("declare -x %s\n", sorted[i]);
+    }
+    free_copied_env(sorted);
 }
 
-int	ft_valid_key(char *key)
+int	is_valid_key(char *key)
 {
 	int i;
 
@@ -99,7 +112,7 @@ int	ft_valid_key(char *key)
 	return (1);
 }
 
-int     check_valid_export(char *line)
+int     is_valid_export(char *line)
 {
     char    **str_arr;
     char    *key;
@@ -109,7 +122,7 @@ int     check_valid_export(char *line)
     str_arr = ft_split(line, '=');
     key = str_arr[0];
     i = -1;
-    ret = ft_valid_key(key);
+    ret = is_valid_key(key);
     while (str_arr[++i])
     {
         free(str_arr[i]);
@@ -118,11 +131,22 @@ int     check_valid_export(char *line)
     return (ret);
 }
 
+char    **find_existing_var(char *token, char **envp)
+{
+    while (*envp)
+    {
+        if (!strdelcmp(token, *envp, '='))
+            return envp;
+        ++envp;
+    }
+    return NULL;
+}
+
 void    export(t_cmd *cmds, char ***envp)
 {
     int i;
     int count;
-    int key_index;
+    char **target;
     char **new_env;
 
     if (!cmds->tokens[1].cmd)
@@ -137,11 +161,22 @@ void    export(t_cmd *cmds, char ***envp)
     i = 0;
     while (cmds->tokens[++i].cmd)
     {
-        if (check_valid_export(cmds->tokens[i].cmd))
+        if (is_valid_export(cmds->tokens[i].cmd))
         {
-            cmds->tokens[i].cmd[0] = '\0';
-            ++count;
+            target = find_existing_var(cmds->tokens[i].cmd, *envp);
+            if (target) 
+            {
+                if (ft_strchr(cmds->tokens[i].cmd, '='))
+                {
+                    free(*target);
+                    *target = ft_strdup(cmds->tokens[i].cmd);
+                }
+            }
+            else
+                ++count;
         }
+        else
+            cmds->tokens[i].cmd[0] = '\0';
     }
     new_env = malloc((count+1)*sizeof(char *));
     new_env[count] = NULL;

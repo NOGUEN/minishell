@@ -28,5 +28,7 @@ void	error_exit(char *str);
 int		***get_pipes(int cmd_num);
 void	cmd_not_found(char *cmd);
 char    **sort_env(char **envp);
+void    free_copied_env(char **copied);
+char    **copy_envp(char **envp);
 
 #endif
