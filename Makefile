@@ -10,19 +10,19 @@ READLINE_LIB	= -lreadline -L/opt/homebrew/opt/readline/lib
 READLINE_INC	= -I/opt/homebrew/opt/readline/include
 
 SRC_DIR 	= src
-SRC 		= src/alloc_token.c \
-			  src/alloc_word.c \
-			  src/check.c \
-			  src/get_env.c \
-			  src/get_parse_size.c \
+SRC 		= src/parse/alloc_token.c \
+			  src/parse/alloc_word.c \
+			  src/parse/check.c \
+			  src/parse/get_env.c \
+			  src/parse/get_parse_size.c \
+			  src/parse/new_cmd.c \
+			  src/parse/parse.c \
+			  src/parse/quote_count.c \
+			  src/parse/split_cmd.c \
+			  src/parse/split_count.c \
+			  src/parse/utils.c		\
 			  src/minishell.c \
-			  src/new_cmd.c \
-			  src/parse.c \
-			  src/quote_count.c \
 			  src/signal.c \
-			  src/split_cmd.c \
-			  src/split_count.c \
-			  src/utils.c		\
 			  src/unset.c		\
 			  src/export.c		\
 			  src/exec.c		\
@@ -48,6 +48,7 @@ $(LIBFT) :
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 			mkdir -p $(OBJ_DIR)
+			mkdir -p $(OBJ_DIR)/parse
 			mkdir -p $(OBJ_DIR)/utils
 			mkdir -p $(OBJ_DIR)/get_next_line
 			$(CC) -c $< -o $(<:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o) \

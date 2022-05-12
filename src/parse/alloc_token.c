@@ -1,4 +1,17 @@
-#include "../include/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   alloc_token.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/12 19:55:23 by noguen            #+#    #+#             */
+/*   Updated: 2022/05/12 19:55:25 by noguen           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/minishell.h"
+#include "../../include/parse.h"
 
 void    alloc_env(char *src, char **dest, char **envp, int *index)
 {

@@ -8,7 +8,8 @@ int main(int argc, char *argv[], char *envp[])
     char *line;
     char **copied_env;
 
-    copied_env = copy_envp(envp);
+    copied_env = copy_env(envp);
+    signal_init();
     while (line = readline("minishell $ "))
     {
         if (*line != '\0' && !check_whitespace(line))

@@ -1,5 +1,17 @@
-#include "../include/minishell.h"
-#include "../include/parse.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/12 18:55:29 by noguen            #+#    #+#             */
+/*   Updated: 2022/05/12 18:55:32 by noguen           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/minishell.h"
+#include "../../include/parse.h"
 
 int check_ls_result(int *ls_pipe, char *cmd)
 {
