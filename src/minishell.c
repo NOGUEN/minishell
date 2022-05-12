@@ -20,8 +20,8 @@ char **copy_env(char **envp)
     int num_env;
     char **copied;
 
-    num_env = 0;
-    while (envp[num_env++])
+    num_env = -1;
+    while (envp[++num_env])
         ;
     copied = malloc((num_env + 1) * sizeof(char *));
     copied[num_env] = NULL;
