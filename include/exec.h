@@ -14,6 +14,7 @@
 # define EXEC_H
 
 # define END_OF_FDS -1
+# define CD_FAILED -1
 
 # include <unistd.h>
 
@@ -24,6 +25,7 @@
 # include "inout.h"
 # include "unset.h"
 # include "export.h"
+
 
 void	exec(t_cmd *cmd_list, char ***envp);
 void	exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2]);
