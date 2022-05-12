@@ -82,5 +82,9 @@ void    parse(t_cmd **cmds, char *line, char **envp);
 
 /* utils */
 char    *cut_string(char **str);
+char    **copy_envp(char **envp);
+char    **sort_env(char **envp);
+void    print_str_fd(char *s, int fd);
+
 
 #endif

@@ -7,6 +7,11 @@ int main(int argc, char *argv[], char *envp[])
     t_cmd   *cmds;
     char    *line;
 
+    int i = -1;
+    while (envp[++i])
+    {
+        printf("%s\n", envp[i]);
+    }
     while (line = readline("minishell $ "))
     {
         if (*line != '\0' && !check_whitespace(line))
