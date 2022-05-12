@@ -36,7 +36,15 @@ int main(int argc, char *argv[], char *envp[])
     char *line;
     char **copied_env;
 
+<<<<<<< HEAD
+    int i = -1;
+    while (envp[++i])
+    {
+        printf("%s\n", envp[i]);
+    }
+=======
     copied_env = copy_env(envp);
+>>>>>>> 9adfe3634dc979e44f93a4d3ac72f3f3df6ece34
     while (line = readline("minishell $ "))
     {
         if (*line != '\0' && !check_whitespace(line))
