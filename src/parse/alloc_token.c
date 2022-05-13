@@ -65,7 +65,7 @@ int alloc_d_quote_cnt(char *src, char **dest, char **envp)
     return (index);
 }
 
-void	alloc_s_quote_cnt(char *src, char **dest, int *index)
+int	alloc_s_quote_cnt(char *src, char **dest)
 {
 	int	src_index;
 	int	dest_length;
@@ -76,7 +76,7 @@ void	alloc_s_quote_cnt(char *src, char **dest, int *index)
 		dest_length++;
 	ft_memcpy(*dest, src + 1, dest_length);
 	*dest += dest_length;
-	*index += src_index;
+	return (src_index);
 }
 
 void	cmd_copy(char *src, char *dest, char **envp)
@@ -92,7 +92,7 @@ void	cmd_copy(char *src, char *dest, char **envp)
 	{
 		if (src[src_index] == '\''
 			&& check_unclosed_quote(&src[src_index], '\''))
-			alloc_s_quote_cnt(&src[src_index], &dest_end, &src_index);
+			src_index += alloc_s_quote_cnt(&src[src_index], &dest_end);
 		else if (src[src_index] == '\"'
 			&& check_unclosed_quote(&src[src_index], '\"'))
 			src_index += alloc_d_quote_cnt(&src[src_index], &dest_end, envp);
@@ -103,7 +103,6 @@ void	cmd_copy(char *src, char *dest, char **envp)
 			*dest_end = src[src_index];
 			dest_end++;
 		}
-        printf("src index: %d\n", src_index);
 	}
 	*dest_end = '\0';
 }

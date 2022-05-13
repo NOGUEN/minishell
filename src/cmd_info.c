@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/inout.h"
+#include "../include/cmd_info.h"
 
 void init_input(int *in_fd, t_token *in_redir, int (*pipes)[2])
 {

@@ -34,7 +34,6 @@ int	env_len(char *cmd, int *size, char **envp)
 	int		index;
 	char	*status;
 
-	printf("%s\n", cmd);
 	index = 0;
 	if (cmd[1] == '?')
 	{
@@ -49,9 +48,7 @@ int	env_len(char *cmd, int *size, char **envp)
 		return (0);
 	}
 	index = get_env_key_size(cmd);
-	printf("size: %d\n", *size);
 	*size += get_env_value_size(cmd, index, envp);
-	printf("size: %d\n", *size);
 	return (index);
 }
 

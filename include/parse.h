@@ -19,7 +19,7 @@
 /* alloc_token */
 int     alloc_env(char *src, char **dest, char **envp);
 int     alloc_d_quote_cnt(char *src, char **dest, char **envp);
-void    alloc_s_quote_cnt(char *src, char **dest, int *index);
+int	alloc_s_quote_cnt(char *src, char **dest);
 void    cmd_copy(char *src, char *dest, char **envp);
 t_token *alloc_token(t_token *token, char **envp);
 

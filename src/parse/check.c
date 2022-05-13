@@ -46,9 +46,9 @@ int	check_unclosed_quote(char *str, char quote)
 {
 	int	index;
 
-	index = 0;
-	while (str[++index] && str[index] != quote)
-		;
+	index = 1;
+	while (str[index] && str[index] != quote)
+		index++;
 	if (str[index] == '\0')
 		return (0);
 	return (1);

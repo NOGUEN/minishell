@@ -33,8 +33,6 @@ int	get_env_key(char *src, char **key)
 
 	key_len = get_env_key_size(src);
 	*key = ft_substr(src, 1, key_len);
-	printf("cut key: %s\n", *key);
-	printf("cut key len : %d\n", key_len);
 	return (key_len);
 }
 
@@ -42,7 +40,6 @@ int	get_env_key_size(char *str)
 {
 	int	index;
 
-	printf("key_size: %s\n", str);
 	index = 0;
 	if (ft_isdigit(str[1]))
 		return (1);

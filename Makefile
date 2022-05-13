@@ -9,11 +9,11 @@ LIBFT_DIR	= libft
 #READLINE_LIB 	= -lreadline -L/usr/local/opt/readline/lib
 #READLINE_INC	= -I/usr/local/opt/readline/include
 
-READLINE_LIB 	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
-READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
+#READLINE_LIB 	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
+#READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
 
-#READLINE_LIB	= -lreadline -L/opt/homebrew/opt/readline/lib
-#READLINE_INC	= -I/opt/homebrew/opt/readline/include
+READLINE_LIB	= -lreadline -L/opt/homebrew/opt/readline/lib
+READLINE_INC	= -I/opt/homebrew/opt/readline/include
 
 SRC_DIR 	= src
 SRC 		= src/parse/alloc_token.c \
@@ -32,7 +32,7 @@ SRC 		= src/parse/alloc_token.c \
 			  src/unset.c		\
 			  src/export.c		\
 			  src/exec.c		\
-			  src/inout.c		\
+			  src/cmd_info.c	\
 			  src/utils/util1.c	\
 			  src/utils/util2.c	\
 			  src/get_next_line/get_next_line.c\

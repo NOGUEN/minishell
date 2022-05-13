@@ -23,9 +23,9 @@ int	get_parse_size(char *cmd, char **envp)
     index = -1;
 	while (cmd[++index])
 	{
-	    if (cmd[index] == '\'' && check_unclosed_quote(cmd, '\''))
+	    if (cmd[index] == '\'' && check_unclosed_quote(&cmd[index], '\''))
 		    index += squote_cnt(&cmd[index], &size);
-	    else if (cmd[index] == '\"' && check_unclosed_quote(cmd, '\"'))
+	    else if (cmd[index] == '\"' && check_unclosed_quote(&cmd[index], '\"'))
 		    index += dquote_cnt(&cmd[index], &size, envp);
 	    else if (cmd[index] == '$')
             index += env_len(&cmd[index], &size, envp);
