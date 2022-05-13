@@ -12,7 +12,6 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-#include "structs.h"
 #include "../libft/libft.h"
 #include "exec.h"
 

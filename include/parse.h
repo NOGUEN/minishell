@@ -14,7 +14,6 @@
 # define PARSE_H
 
 # include "utils.h"
-# include "structs.h"
 
 /* alloc_token */
 int     alloc_env(char *src, char **dest, char **envp);

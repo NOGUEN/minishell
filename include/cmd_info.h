@@ -14,10 +14,10 @@
 # define CMD_INFO_H
 
 # define NO_DATA -1
+# define ERR_IN_OUT -2
 
 # include "vars.h"
 # include "utils.h"
-# include "structs.h"
 
 # include <fcntl.h>
 # include <readline/readline.h>

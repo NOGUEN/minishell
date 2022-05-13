@@ -19,6 +19,7 @@
 # include "vars.h"
 # include "../libft/libft.h"
 # include "get_next_line.h"
+# include "cmd_info.h"
 
 int		strdelcmp(char *s1, char *s2, int del);
 int		open_file(char *name, int mode);
@@ -30,5 +31,6 @@ void	cmd_not_found(char *cmd);
 char    **sort_env(char **envp);
 void    free_copied_env(char **copied);
 char    **copy_envp(char **envp);
+void	close_fds(t_cmd_info *cmd_info, int (*pipes)[2], int *input);
 
 #endif
