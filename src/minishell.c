@@ -37,6 +37,7 @@ int     main(int argc, char *argv[], char *envp[])
             free_cmds(cmds);
             free(line);
         }
+        printf("g%d\n",g_exit_status);
         g_exit_status = 0;
     }
     free_copied_env(copied_env);
