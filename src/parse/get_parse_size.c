@@ -22,14 +22,21 @@ int get_parse_size(char *cmd, char **envp)
     while (*cmd)
     {
         if (*cmd == '\'')
+        {
             size += squote_cnt(&cmd);
+            break ;
+        }
         else if (*cmd == '\"')
+        {
             size += dquote_cnt(&cmd, envp);
+            break ;
+        }
         else if (*cmd == '$')
         {
             ++cmd;
             tmp = cut_string(&cmd);
             size += env_len(tmp, envp);
+            break ;
         }
         ++cmd;
     }

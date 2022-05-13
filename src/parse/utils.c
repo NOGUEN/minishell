@@ -23,7 +23,8 @@ char    *cut_string(char **str)
     ret = NULL;
     size = 0;
     tmp = *str;
-    while (tmp) {
+    while (*tmp)
+    {
         if (*tmp == ' ')
             break ;
         else if (*tmp == '\"' || *tmp == '\'')

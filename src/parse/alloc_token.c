@@ -81,14 +81,25 @@ void    cmd_copy(char *src, char *dest, char **envp)
 
     src_index = -1;
     dest_end = dest;
+    printf("%s\n", src);
     while (src[++src_index])
     {
+        printf("%c\n", src[src_index]);
         if (src[src_index] == '\'' && check_unclosed_quote(&src[src_index], '\''))
+        {
             alloc_s_quote_cnt(&src[src_index], &dest_end, &src_index);
+            break ;
+        }
         else if (src[src_index] == '\"' && check_unclosed_quote(&src[src_index], '\"'))
+        {
             alloc_d_quote_cnt(&src[src_index], &dest_end, envp, &src_index);
+            break ;
+        }
         else if (src[src_index] == '$')
+        {
             alloc_env(&src[src_index], &dest_end, envp, &src_index);
+            break ;
+        }
         else if (src[src_index])
         {
             *dest_end = src[src_index];
