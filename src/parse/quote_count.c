@@ -1,79 +1,90 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/*																			*/
+/*														:::	  ::::::::   */
 /*   quote_count.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/12 19:55:06 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/12 19:55:07 by noguen           ###   ########.fr       */
-/*                                                                            */
+/*													+:+ +:+		 +:+	 */
+/*   By: noguen <marvin@42.fr>					  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2022/05/12 19:55:06 by noguen			#+#	#+#			 */
+/*   Updated: 2022/05/13 13:44:19 by noguen           ###   ########.fr       */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
-char *find_env(char *str, char **envp)
+char	*find_env(char *str, char **envp)
 {
-    int len;
-    char **tmp;
+	int		len;
+	char	**tmp;
 
-    len = ft_strlen(str);
-    tmp = envp;
-    while (*tmp)
-    {
-        if (ft_strncmp(str, *tmp, len) == 0)
-            return *tmp;
-        tmp++;
-    }
-    return (NULL);
+	len = ft_strlen(str);
+	tmp = envp;
+	while (*tmp)
+	{
+		if (ft_strncmp(str, *tmp, len) == 0)
+			return (*tmp);
+		tmp++;
+	}
+	return (NULL);
 }
 
-int env_len(char *str, char **envp)
+int	env_len(char *cmd, int *size, char **envp)
 {
-    int len;
-    char *env;
+	int		index;
+	char	*status;
 
-    len = 0;
-    env = find_env(str, envp);
-    if (env != NULL)
-        len = ft_strlen(env) - ft_strlen(str) - 1;
-    return (len);
+	printf("%s\n", cmd);
+	index = 0;
+	if (cmd[1] == '?')
+	{
+		status = ft_itoa(g_exit_status);
+		*size += ft_strlen(status);
+		free(status);
+		return (1);
+	}
+	if (cmd[1] == '\0' || cmd[1] == '\"')
+	{
+		*size += 1;
+		return (0);
+	}
+	index = get_env_key_size(cmd);
+	printf("size: %d\n", *size);
+	*size += get_env_value_size(cmd, index, envp);
+	printf("size: %d\n", *size);
+	return (index);
 }
 
-int dquote_cnt(char **cmd, char **envp)
+int	dquote_cnt(char *cmd, int *size, char **envp)
 {
-    int size;
-    char *tmp;
+	int		index;
+	char	*tmp;
 
-    size = 0;
-    (*cmd)++;
-    while (**cmd && **cmd != '\"')
-    {
-        if (**cmd == '$')
-        {
-            ++(*cmd);
-            tmp = cut_string(cmd);
-            size += env_len(tmp, envp);
-            free(tmp);
-        }
-        else
-            size++;
-        (*cmd)++;
-    }
-    return (size);
+	index = 1;
+	while (cmd[index] && cmd[index] != '\"')
+	{
+		if (cmd[index] == '$')
+		{
+			index += (env_len(&cmd[index], size, envp) + 1);
+		}
+		else
+		{
+			++index;
+			++(*size);
+		}
+	}
+	return (index);
 }
 
-int squote_cnt(char **cmd)
+int	squote_cnt(char *cmd, int *size)
 {
-    int size;
+	int	index;
 
-    size = 0;
-    (*cmd)++;
-    while (**cmd && **cmd != '\'')
-    {
-        ++size;
-        ++(*cmd);
-    }
-    return (size);
+	index = 1;
+	while (cmd[index] && cmd[index] != '\'')
+	{
+		++index;
+		++(*size);
+	}
+	return (index);
 }

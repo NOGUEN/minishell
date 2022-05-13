@@ -1,19 +1,19 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/*																			*/
+/*														:::	  ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/12 18:55:29 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/12 18:55:32 by noguen           ###   ########.fr       */
-/*                                                                            */
+/*													+:+ +:+		 +:+	 */
+/*   By: noguen <marvin@42.fr>					  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2022/05/12 18:55:29 by noguen			#+#	#+#			 */
+/*   Updated: 2022/05/13 13:42:43 by noguen           ###   ########.fr       */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
-int check_ls_result(int *ls_pipe, char *cmd)
+int	check_ls_result(int *ls_pipe, char *cmd)
 {
 	int		result;
 	char	*line;
@@ -30,24 +30,24 @@ int check_ls_result(int *ls_pipe, char *cmd)
 			if (!ft_strcmp(*finded, cmd))
 			{
 				result = TRUE;
-				break;
+				break ;
 			}
 			++finded;
 		}
 		free(line);
 		free_char_ptr2d(to_free);
 		if (result == TRUE)
-			break;
+			break ;
 	}
-	return result;
+	return (result);
 }
 
 int	is_correct_path(char *path, char *cmd)
 {
 	int		ls_pipe[2];
 	int		pid;
-	char	*ls_args[3]; 
-	
+	char	*ls_args[3];
+
 	pipe(ls_pipe);
 	pid = fork();
 	if (pid == CHILD)
@@ -62,7 +62,7 @@ int	is_correct_path(char *path, char *cmd)
 	}
 	waitpid(CHILD, NULL, 0);
 	close(ls_pipe[WR]);
-	return check_ls_result(ls_pipe, cmd);
+	return (check_ls_result(ls_pipe, cmd));
 }
 
 char	**get_path_list(char **envp)
@@ -92,8 +92,8 @@ char	*find_cmdpath(char *cmd, char **envp)
 		return (*ft_split(cmd, ' '));
 	if (cmd[0] == '/')
 	{
-		if (is_correct_path(cmd,cmd))
-			return cmd;
+		if (is_correct_path(cmd, cmd))
+			return (cmd);
 		else
 			cmd_not_found(cmd);
 	}
@@ -114,7 +114,7 @@ char	*find_cmdpath(char *cmd, char **envp)
 	return (path);
 }
 
-void    parse(t_cmd **cmds, char *line, char **envp)
+void	parse(t_cmd **cmds, char *line, char **envp)
 {
     int		index;
     int		begin;
@@ -122,39 +122,39 @@ void    parse(t_cmd **cmds, char *line, char **envp)
     t_cmd   *new;
     t_cmd   *tmp;
 
-    index = 0;
-    begin = 0;
-    flag = PIPE;
-    if ((line[index] == '\"' || line[index] == '\'') && (flag & QUOTE) == 0)
-        flag |= QUOTE;
-    else if ((line[index] == '\"' || line[index] == '\'') && (flag & PIPE) != 0)
-        flag &= !QUOTE;
-    while (1)
-    {
-        if (line[index] == '\0' || (line[index] == '|' && (flag & QUOTE) == 0))
-        {
-            if (line[index] == '|')
-                line[index] = '\0';
-            else
-                flag &= !PIPE;
-            new = new_cmd(&line[begin], flag, envp, begin);
-            if (new == NULL)
-                return ;
-            if (begin == 0)
-            {
-                *cmds = new;
-                tmp = *cmds;
-            }
-            else
-            {
-                (*cmds)->next = new;
-                *cmds = (*cmds)->next;
-            }
-            if ((flag & PIPE) == 0)
-                break ;
-            begin = index + 1;
-        }
-        ++index;
-    }
-    *cmds = tmp;
+	index = 0;
+	begin = 0;
+	flag = PIPE;
+	if ((line[index] == '\"' || line[index] == '\'') && (flag & QUOTE) == 0)
+		flag |= QUOTE;
+	else if ((line[index] == '\"' || line[index] == '\'') && (flag & PIPE) != 0)
+		flag &= !QUOTE;
+	while (1)
+	{
+		if (line[index] == '\0' || (line[index] == '|' && (flag & QUOTE) == 0))
+		{
+			if (line[index] == '|')
+				line[index] = '\0';
+			else
+				flag &= !PIPE;
+			new = new_cmd(&line[begin], flag, envp, begin);
+			if (new == NULL)
+				return ;
+			if (begin == 0)
+			{
+				*cmds = new;
+				tmp = *cmds;
+			}
+			else
+			{
+				(*cmds)->next = new;
+				*cmds = (*cmds)->next;
+			}
+			if ((flag & PIPE) == 0)
+				break ;
+			begin = index + 1;
+		}
+		++index;
+	}
+	*cmds = tmp;
 }

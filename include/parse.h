@@ -16,8 +16,8 @@
 # include "utils.h"
 
 /* alloc_token */
-void    alloc_env(char *src, char **dest, char **envp, int *index);
-void    alloc_d_quote_cnt(char *src, char **dest, char **envp, int *index);
+int     alloc_env(char *src, char **dest, char **envp);
+int     alloc_d_quote_cnt(char *src, char **dest, char **envp);
 void    alloc_s_quote_cnt(char *src, char **dest, int *index);
 void    cmd_copy(char *src, char *dest, char **envp);
 t_token *alloc_token(t_token *token, char **envp);
@@ -36,6 +36,9 @@ int     check_unclosed_quote(char *str, char quote);
 /*get env*/
 char    *get_env_value(char *key, char **envp);
 int     get_env_key(char *src, char **key);
+int     get_env_key_size(char *str);
+int	get_env_value_size(char *str, int size, char **envp);
+
 
 /* get_parse_size */
 int     get_parse_size(char *cmd, char **envp);
@@ -51,9 +54,9 @@ void    parse(t_cmd **cmds, char *line, char **envp);
 
 /* qoute_count */
 char    *find_env(char *str, char **envp);
-int     env_len(char *str, char **envp);
-int     dquote_cnt(char **cmd, char **envp);
-int     squote_cnt(char **cmd);
+int     env_len(char *cmd, int *size, char **envp);
+int     dquote_cnt(char *cmd, int *size, char **envp);
+int     squote_cnt(char *cmd, int *size);
 
 /* split_count */
 void    masking_quote_flag(char const *s, int *flag);
