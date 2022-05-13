@@ -37,13 +37,29 @@ int	open_file(char *name, int mode)
 {
 	int		fd;
 
-	if (!name)
-		return (-1);
-	fd = open(name, mode, S_IWUSR|S_IRUSR);
-	if (fd < 0)
+	if (!name || name[0] == '\0')
 	{
-		printf("failed open: %s\n", name);
-		exit(0);
+		printf("syntax error near unexpected token `newline'\n");
+		fd = ERR_IN_OUT;
+		g_exit_status = 258;
 	}
+	else
+		fd = open(name, mode, S_IWUSR|S_IRUSR);
 	return (fd);
+}
+
+void	close_fds(t_cmd_info *cmd_info, int (*pipes)[2], int *input)
+{
+	close(pipes[P_TO_C][WR]);
+	close(pipes[P_TO_C][RD]);
+	close(pipes[C_TO_P][RD]);
+	if (pipes[C_TO_P][WR] != cmd_info->out_fd)
+		close(pipes[C_TO_P][WR]);
+	if (*input != STDIN)
+	{
+		close(*input);
+		*input = STDIN;
+	}
+	if (cmd_info->out_fd != NO_DATA && cmd_info->out_fd != STDOUT)
+		close(cmd_info->out_fd);
 }

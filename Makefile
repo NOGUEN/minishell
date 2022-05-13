@@ -27,12 +27,16 @@ SRC 		= src/parse/alloc_token.c \
 			  src/parse/split_cmd.c \
 			  src/parse/split_count.c \
 			  src/parse/utils.c		\
+			  src/built_in/unset.c		\
+			  src/built_in/exit.c		\
+			  src/built_in/export.c		\
+			  src/built_in/export_utils.c		\
+			  src/built_in/env.c		\
+			  src/built_in/cd.c		\
 			  src/minishell.c \
 			  src/signal.c \
-			  src/unset.c		\
-			  src/export.c		\
 			  src/exec.c		\
-			  src/inout.c		\
+			  src/cmd_info.c		\
 			  src/utils/util1.c	\
 			  src/utils/util2.c	\
 			  src/get_next_line/get_next_line.c\
@@ -53,7 +57,7 @@ $(LIBFT) :
 			cp $(LIBFT_DIR)/$(LIBFT) ./
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-			mkdir -p $(OBJ_DIR)
+			mkdir -p $(OBJ_DIR)/built_in
 			mkdir -p $(OBJ_DIR)/parse
 			mkdir -p $(OBJ_DIR)/utils
 			mkdir -p $(OBJ_DIR)/get_next_line

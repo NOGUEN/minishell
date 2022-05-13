@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/inout.h"
+#include "../include/cmd_info.h"
 
 void init_input(int *in_fd, t_token *in_redir, int (*pipes)[2])
 {
@@ -34,7 +34,10 @@ void init_input(int *in_fd, t_token *in_redir, int (*pipes)[2])
 		else if (!ft_strcmp((in_redir - 1)->cmd, "<<<"))
 			ft_putstr_fd(in_redir->cmd, pipes[P_TO_C][WR]);
 		else
-			error_exit("minishell: parse error near '<'\n");//should change from exit to goback to main loop
+		{
+			printf("minishell: syntax error\n");
+			g_exit_status = 258;
+		}
 	}
 }
 
@@ -48,9 +51,12 @@ void init_output(int *out_fd, char **out_name, t_token *out_redir)
 	else if (!ft_strcmp((out_redir - 1)->cmd, ">>"))
 		open_flag = O_WRONLY | O_APPEND| O_CREAT;
 	else
-		error_exit("minishell: parse error near '>'\n");
+	{
+		printf("minishell: parse error near '>'\n");
+		g_exit_status = 258;
+		return ;
+	}
 	*out_name = out_redir->cmd;
-	// printf("%d %s\n",open_flag, *out_name);
 	*out_fd = open_file(*out_name, open_flag);
 }
 
@@ -91,13 +97,13 @@ void init_cmd_info(t_cmd_info *info, t_token *tokens, int (*pipes)[2])
 	if (tokens[0].cmd[0] != '<' && tokens[0].cmd[0] != '>')
 		++len_cmd_arg;
 	i = 1;
-	while (tokens[i].cmd)
+	while (tokens[i - 1].cmd)
 	{
 		if (tokens[i - 1].cmd[0] == '<')
 			init_input(&info->in_fd, &tokens[i], pipes);
 		else if (tokens[i - 1].cmd[0] == '>')
 			init_output(&info->out_fd, &info->out_name, &tokens[i]);
-		else if (tokens[i].cmd[0] != '<' && tokens[i].cmd[0] != '>')
+		else if (tokens[i].cmd && tokens[i].cmd[0] != '<' && tokens[i].cmd[0] != '>')
 			++len_cmd_arg;
 		++i;
 	}

@@ -21,13 +21,12 @@
 # include "vars.h"
 # include "utils.h"
 # include "parse.h"
-# include "structs.h"
 # include "cmd_info.h"
-# include "unset.h"
-# include "export.h"
+# include "built_in.h"
 
 
 void	exec(t_cmd *cmd_list, char ***envp);
-void	exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2]);
+void	fork_and_exec(t_cmd_info *cmd_info, char **envp, int (*pipes)[2]);
+void    exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2]);
 
 #endif

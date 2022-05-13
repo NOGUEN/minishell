@@ -29,6 +29,8 @@
 
 # include "../libft/libft.h"
 
+int     g_exit_status;
+
 struct	s_arg
 {
 	int		cnt;
@@ -52,5 +54,20 @@ struct s_cmd_info
 };
 typedef struct s_cmd_info t_cmd_info;
 
+typedef struct      s_token
+{
+    char            *cmd;
+    char            redir_flag;
+}                   t_token;
+
+typedef struct      s_cmd_list
+{
+    t_token         *tokens;
+    int             flag;
+    char            *(redir_file[4]);
+    int             pipe_flag;
+    int             exit_flag;
+    struct s_cmd_list    *next;
+}                   t_cmd;
 
 #endif
