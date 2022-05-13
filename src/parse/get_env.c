@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: noguen <marvin@42.fr>					  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/05/12 19:55:53 by noguen			#+#	#+#			 */
-/*   Updated: 2022/05/13 13:17:48 by noguen           ###   ########.fr       */
-/*																			*/
+/*                                                    +:+ +:+         +:+     */
+/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/14 00:45:40 by noguen            #+#    #+#             */
+/*   Updated: 2022/05/14 01:15:04 by noguen           ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
@@ -57,7 +57,8 @@ int	get_env_value_size(char *str, int size, char **envp)
 
 	index = -1;
 	while (envp[++index])
-		if ((!ft_strncmp(&str[1], envp[index], size)) && envp[index][size] == '=')
+		if ((!ft_strncmp(&str[1], envp[index], size))
+			&& envp[index][size] == '=')
 			return (ft_strlen(envp[index] + size + 1));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 18:12:16 by soekim            #+#    #+#             */
-/*   Updated: 2022/04/01 12:19:31 by soekim           ###   ########.fr       */
+/*   Updated: 2022/05/14 01:02:32 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	open_file(char *name, int mode)
 		g_exit_status = 258;
 	}
 	else
-		fd = open(name, mode, S_IWUSR|S_IRUSR);
+		fd = open(name, mode, S_IWUSR | S_IRUSR);
 	return (fd);
 }
 

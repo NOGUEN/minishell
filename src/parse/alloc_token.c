@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   alloc_token.c                                      :+:      :+:    :+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: noguen <marvin@42.fr>					  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/05/12 19:55:23 by noguen			#+#	#+#			 */
-/*   Updated: 2022/05/13 13:39:29 by noguen           ###   ########.fr       */
-/*																			*/
+/*                                                    +:+ +:+         +:+     */
+/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/14 00:43:26 by noguen            #+#    #+#             */
+/*   Updated: 2022/05/14 01:16:36 by noguen           ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
@@ -19,9 +19,9 @@ int	alloc_env(char *src, char **dest, char **envp)
 	char	*key;
 	char	*env_val;
 	int		env_len;
-    int     index;
+	int		index;
 
-    index = 0;
+	index = 0;
 	if (src[1] == '?')
 	{
 		status = ft_itoa(g_exit_status);
@@ -42,15 +42,15 @@ int	alloc_env(char *src, char **dest, char **envp)
 	env_len = ft_strlen(env_val);
 	ft_memcpy(*dest, env_val, env_len);
 	*dest += env_len;
-    free(key);
-    return (index);
+	free(key);
+	return (index);
 }
 
-int alloc_d_quote_cnt(char *src, char **dest, char **envp)
+int	alloc_d_quote_cnt(char *src, char **dest, char **envp)
 {
-    int index;
+	int	index;
 
-    index = 1;
+	index = 1;
 	while (src[index] && src[index] != '\"')
 	{
 		if (src[index] == '$')
@@ -59,10 +59,10 @@ int alloc_d_quote_cnt(char *src, char **dest, char **envp)
 		{
 			**dest = src[index];
 			(*dest)++;
-		    ++index;
+			++index;
 		}
 	}
-    return (index);
+	return (index);
 }
 
 int	alloc_s_quote_cnt(char *src, char **dest)
@@ -82,10 +82,10 @@ int	alloc_s_quote_cnt(char *src, char **dest)
 void	cmd_copy(char *src, char *dest, char **envp)
 {
 	int		src_index;
-    int     size;
+	int	 size;
 	char	*dest_end;
 
-    size = 0;
+	size = 0;
 	src_index = -1;
 	dest_end = dest;
 	while (src[++src_index])
@@ -130,7 +130,7 @@ t_token	*alloc_token(t_token *token, char **envp)
 		{
 			token[i].cmd = (char *)malloc(sizeof(char) * (cmd_len + 1));
 			cmd_copy(tmp_cmd, token[i].cmd, envp);
-            free(tmp_cmd);
+			free(tmp_cmd);
 		}
 		i++;
 	}

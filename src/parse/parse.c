@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: noguen <marvin@42.fr>					  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/05/12 18:55:29 by noguen			#+#	#+#			 */
-/*   Updated: 2022/05/13 13:42:43 by noguen           ###   ########.fr       */
-/*																			*/
+/*                                                    +:+ +:+         +:+     */
+/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/14 00:44:35 by noguen            #+#    #+#             */
+/*   Updated: 2022/05/14 00:44:38 by noguen           ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
@@ -116,11 +116,11 @@ char	*find_cmdpath(char *cmd, char **envp)
 
 void	parse(t_cmd **cmds, char *line, char **envp)
 {
-    int		index;
-    int		begin;
-    int		flag;
-    t_cmd   *new;
-    t_cmd   *tmp;
+	int		index;
+	int		begin;
+	int		flag;
+	t_cmd   *new;
+	t_cmd   *tmp;
 
 	index = 0;
 	begin = 0;

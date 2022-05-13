@@ -6,19 +6,19 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 22:56:55 by soekim            #+#    #+#             */
-/*   Updated: 2022/05/12 22:46:25 by soekim           ###   ########.fr       */
+/*   Updated: 2022/05/14 01:05:24 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/exec.h"
 
-void init_fork_pipes(int (*pipes)[2])
+void	init_fork_pipes(int (*pipes)[2])
 {
 	if (pipe(pipes[P_TO_C]) < 0)
 		error_exit("Error : pipe");
 	if (pipe(pipes[C_TO_P]) < 0)
 		error_exit("Error : pipe");
-	return;
+	return ;
 }
 
 void	exec(t_cmd *cmd_list, char ***envp)
@@ -36,7 +36,7 @@ void	exec(t_cmd *cmd_list, char ***envp)
 		init_fork_pipes(pipes);
 		init_cmd_info(&cmd_info, cmd_list->tokens, pipes);
 		if (g_exit_status)
-			return close_fds(&cmd_info, pipes, &input);
+			return (close_fds(&cmd_info, pipes, &input));
 		if (cmd_info.in_fd == NO_DATA)
 			cmd_info.in_fd = input;
 		if (cmd_info.out_fd == NO_DATA)
@@ -52,7 +52,8 @@ void	exec(t_cmd *cmd_list, char ***envp)
 			cd(&cmd_info, pipes, &input);
 		else if (!ft_strcmp(cmd_info.cmd_args[0], "unset"))
 			unset(&cmd_info, envp);
-		else if (!ft_strcmp(cmd_info.cmd_args[0], "export") && cmd_info.cmd_args[1])
+		else if (!ft_strcmp(cmd_info.cmd_args[0], "export")
+			&& cmd_info.cmd_args[1])
 			export_new(&cmd_info, envp);
 		else if (!ft_strcmp(cmd_info.cmd_args[0], "env"))
 			env(*envp);
@@ -64,16 +65,16 @@ void	exec(t_cmd *cmd_list, char ***envp)
 				close(input);
 			input = pipes[C_TO_P][RD];
 		}
-		if (cmd_is_built_in || g_exit_status) 
+		if (cmd_is_built_in || g_exit_status)
 			close_fds(&cmd_info, pipes, &input);
 		free(cmd_info.cmd_args);
 		cmd_list = cmd_list->next;
 	}
 }
 
-void fork_and_exec(t_cmd_info *cmd_info, char **envp, int (*pipes)[2])
+void	fork_and_exec(t_cmd_info *cmd_info, char **envp, int (*pipes)[2])
 {
-	int pid;
+	int	pid;
 
 	pid = fork();
 	if (pid < 0)
@@ -88,16 +89,16 @@ void fork_and_exec(t_cmd_info *cmd_info, char **envp, int (*pipes)[2])
 		waitpid(CHILD, &g_exit_status, 0);
 		g_exit_status >>= 8;
 	}
-	return;
+	return ;
 }
 
-void exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2])
+void	exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2])
 {
-	char *path;
+	char	*path;
 
 	close(pipes[P_TO_C][WR]);
 	close(pipes[C_TO_P][RD]);
-	if (ft_strcmp("env", cmd_info->cmd_args[0]) 
+	if (ft_strcmp("env", cmd_info->cmd_args[0])
 		&& ft_strcmp("export", cmd_info->cmd_args[0]))
 		path = find_cmdpath(cmd_info->cmd_args[0], envp);
 	dup2(cmd_info->in_fd, STDIN);

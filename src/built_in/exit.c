@@ -1,26 +1,26 @@
 #include "../../include/built_in.h"
 
-void    ft_exit(char **args)
+void	ft_exit(char **args)
 {
-    int i;
-    int is_valid_arg;
+	int	i;
+	int	is_valid_arg;
 
-    i = -1;
-    is_valid_arg = TRUE;
-    while (args[0] && args[0][++i])
-    {
-        if (ft_isdigit(args[0][i]) == FALSE)
-        {
-            printf("minishell: exit: %s: numeric argument required\n", args[0]);
-            is_valid_arg = FALSE;
-            break;
-        }
-    }
-    if (args[0] && is_valid_arg)
-        g_exit_status = ft_atoi(args[0]);
-    else
-        g_exit_status = 0;
-    if (args[0] && args[1] && is_valid_arg)
-        printf("minishell: exit: too many arguments\n");
-    exit(g_exit_status);
+	i = -1;
+	is_valid_arg = TRUE;
+	while (args[0] && args[0][++i])
+	{
+		if (ft_isdigit(args[0][i]) == FALSE)
+		{
+			printf("minishell: exit: %s: numeric argument required\n", args[0]);
+			is_valid_arg = FALSE;
+			break ;
+		}
+	}
+	if (args[0] && is_valid_arg)
+		g_exit_status = ft_atoi(args[0]);
+	else
+		g_exit_status = 0;
+	if (args[0] && args[1] && is_valid_arg)
+		printf("minishell: exit: too many arguments\n");
+	exit(g_exit_status);
 }

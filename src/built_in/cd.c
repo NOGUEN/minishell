@@ -6,22 +6,23 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 19:22:34 by soekim            #+#    #+#             */
-/*   Updated: 2022/05/13 19:22:36 by soekim           ###   ########.fr       */
+/*   Updated: 2022/05/14 00:48:51 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/built_in.h"
 
-void cd(t_cmd_info *cmd_info, int (*pipes)[2], int *input)
+void	cd(t_cmd_info *cmd_info, int (*pipes)[2], int *input)
 {
-	int result;
-	char *cwd_backup;
+	int		result;
+	char	*cwd_backup;
 
 	cwd_backup = getcwd(0, 0);
 	if (cmd_info->cmd_args[1][0] == '\0')
 		result = chdir(getenv("HOME"));
 	else if (cmd_info->cmd_args[1][0] == '~' \
-			&& (cmd_info->cmd_args[1][1] == '\0' || cmd_info->cmd_args[1][1] == '/'))
+			&& (cmd_info->cmd_args[1][1] == '\0'
+			|| cmd_info->cmd_args[1][1] == '/'))
 	{
 		result = chdir(getenv("HOME"));
 		if (cmd_info->cmd_args[1][1] == '/')

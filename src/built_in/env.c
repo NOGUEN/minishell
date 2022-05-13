@@ -1,8 +1,8 @@
 #include "../../include/built_in.h"
 
-void env(char **envp)
+void	env(char **envp)
 {
-	char **i;
+	char	**i;
 
 	i = envp;
 	while (*i)
