@@ -22,7 +22,7 @@
 # include "utils.h"
 # include "parse.h"
 # include "structs.h"
-# include "inout.h"
+# include "cmd_info.h"
 # include "unset.h"
 # include "export.h"
 

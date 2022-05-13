@@ -7,6 +7,6 @@
 # include "structs.h"
 # include "utils.h"
 
-void    export(t_cmd *cmds, char ***envp);
+void    export(t_cmd_info *cmd_info, char ***envp);
 
 #endif

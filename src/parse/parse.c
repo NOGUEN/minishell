@@ -116,9 +116,9 @@ char	*find_cmdpath(char *cmd, char **envp)
 
 void    parse(t_cmd **cmds, char *line, char **envp)
 {
-    int index;
-    int begin;
-    int flag;
+    int		index;
+    int		begin;
+    int		flag;
     t_cmd   *new;
     t_cmd   *tmp;
 

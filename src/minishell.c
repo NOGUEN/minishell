@@ -1,8 +1,20 @@
 #include "../include/minishell.h"
 
-int g_exit_status;
+int     g_exit_status;
 
-int main(int argc, char *argv[], char *envp[])
+void    free_cmds(t_cmd *cmds)
+{
+    t_cmd   *to_free;
+
+    while (cmds)
+    {
+        to_free = cmds;
+        cmds = cmds->next;
+        free(to_free);
+    }
+}
+
+int     main(int argc, char *argv[], char *envp[])
 {
     t_cmd *cmds;
     char *line;
@@ -24,7 +36,7 @@ int main(int argc, char *argv[], char *envp[])
             //     printf("\n");
             // }
             exec(cmds, &copied_env);
-            // free_list(cmds);
+            free_cmds(cmds);
             free(line);
         }
     }

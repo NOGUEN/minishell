@@ -43,13 +43,6 @@ struct	s_file
 };
 typedef struct s_file	t_file;
 
-// struct	s_inout
-// {
-// 	t_file	in;
-// 	t_file	out;
-// };
-// typedef struct s_inout	t_inout;
-
 struct s_cmd_info
 {
 	int in_fd;

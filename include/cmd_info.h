@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INOUT_H
-# define INOUT_H
+#ifndef CMD_INFO_H 
+# define CMD_INFO_H
 
 # define NO_DATA -1
 

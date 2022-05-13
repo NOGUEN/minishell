@@ -60,11 +60,23 @@ void	cd_and_close_fds(t_cmd_info *cmd_info, int (*pipes)[2], int input)
 		close(cmd_info->out_fd);
 }
 
+void	env(char **envp)
+{
+	char **i;
+
+	i = envp;
+	while (*i)
+	{
+		if (ft_strchr(*i, '='))
+			printf("%s\n", *i);
+		++i;
+	}
+}
+
 void exec(t_cmd *cmd_list, char ***envp)
 {
 	t_cmd_info cmd_info;
 	int pipes[2][2];
-	// int fds_to_write[3];
 	int input;
 
 	input = STDIN;
@@ -87,20 +99,10 @@ void exec(t_cmd *cmd_list, char ***envp)
 			cd_and_close_fds(&cmd_info, pipes, input);
 		else if (!ft_strcmp(cmd_info.cmd_args[0], "unset"))
 			unset(&cmd_info, envp);
-		else if (!ft_strcmp(cmd_info.cmd_args[0], "export"))
-			export(cmd_list, envp); // need to change consider pipe
+		else if (!ft_strcmp(cmd_info.cmd_args[0], "export") && cmd_info.cmd_args[1])
+			export(&cmd_info, envp);
 		else if (!ft_strcmp(cmd_info.cmd_args[0], "env"))
-		{
-			char **i;
-
-			i = *envp;
-			while (*i)
-			{
-				if (ft_strchr(*i, '='))
-					printf("%s\n", *i);
-				++i;
-			}
-		}
+			env(*envp);
 		else
 		{
 			exec_cmd(&cmd_info, *envp, pipes);
@@ -115,21 +117,26 @@ void exec(t_cmd *cmd_list, char ***envp)
 
 void exec_cmd(t_cmd_info *cmd_info, char **envp, int (*pipes)[2])
 {
-	int pid;
-	char *path;
+	int		pid;
+	char	*path;
 
 	pid = fork();
 	if (pid < 0)
 		error_exit("Error : fork");
-
 	if (pid == CHILD)
 	{
 		close(pipes[P_TO_C][WR]);
 		close(pipes[C_TO_P][RD]);
-		path = find_cmdpath(cmd_info->cmd_args[0], envp);
+		if (ft_strcmp("env", cmd_info->cmd_args[0]) && ft_strcmp("export", cmd_info->cmd_args[0]))
+			path = find_cmdpath(cmd_info->cmd_args[0], envp); 
 		dup2(cmd_info->in_fd, STDIN);
 		dup2(cmd_info->out_fd, STDOUT);
-		execve(path, cmd_info->cmd_args, envp);
+		if (!ft_strcmp("env", cmd_info->cmd_args[0]))
+			env(envp);
+		else if (!ft_strcmp("export", cmd_info->cmd_args[0]))
+			export(cmd_info, &envp);
+		else
+			execve(path, cmd_info->cmd_args, envp);
 		exit(0);
 	}
 	else

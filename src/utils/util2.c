@@ -31,7 +31,6 @@ void	free_char_ptr2d(char **ptr2d)
 
 void	cmd_not_found(char *cmd)
 {
-	write(1, "\n", 1);
 	ft_putstr_fd(cmd, 1);
 	ft_putstr_fd(": command not found\n", 1);
 	exit(0);

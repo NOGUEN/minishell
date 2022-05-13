@@ -12,78 +12,6 @@
 
 #include "../include/export.h"
 
-
-int cnt_envp(char **envp)
-{
-    int i;
-
-    i = 0;
-    if (envp != NULL)
-    {
-        while (envp[i])
-            ++i;
-    }
-    return (i);
-}
-
-void    print_env_value(char *str, int fd)
-{
-    int i;
-
-    i = -1;
-    while (str[++i])
-    {
-        if (str[i] == '=')
-            break ;
-    }
-    while (str[++i])
-    {
-        write(fd, str, i);
-        write(fd, "\"", 1);
-        write(fd, str + i, ft_strlen(str + i));
-        write(fd, "\"", 1);
-        write(fd, "\n", 1);
-    }
-}
-
-int check_key(char *cmd, char **envp)
-{
-    int i;
-    int key_index;
-
-    i = -1;
-    key_index = 0;
-    while(cmd[key_index] != '=')
-        ++key_index;
-    while (envp[++i])
-    {
-        if (ft_strncmp(envp[i], cmd, key_index) == 0)
-            return (i);
-    }
-    return (-1);
-}
-
-void    add_envp(char *new_envp, char ***envp)
-{
-    char    **new;
-    int     i;
-    int     row;
-
-    i = -1;
-    row = cnt_envp(*envp);
-    new = (char **)malloc(sizeof(char *) * (row + 1));
-    if (new == NULL)
-        return ;
-    while ((*envp)[++i])
-    {
-        new[i] = ft_strdup(*(envp)[i]);
-        free(*envp[i]);
-    }
-    free(*envp);
-    new[i] = ft_strdup(new_envp);
-    *envp = new;
-}
-
 void    print_export(char **envp)
 {
     int i;
@@ -122,7 +50,7 @@ int	is_valid_key(char *key)
 			return (0);
 		i++;
 	}
-	return (1);
+	return (TRUE);
 }
 
 int     is_valid_export(char *line)
@@ -174,46 +102,41 @@ char    **find_existing_var(char *token, char **envp)
     return NULL;
 }
 
-void    export(t_cmd *cmds, char ***envp)
+void    export(t_cmd_info *cmd_info, char ***envp)
 {
     int i;
     int count;
     char **target;
     char **new_env;
 
-    if (!cmds->tokens[1].cmd)
+    if (!cmd_info->cmd_args[1])
     {
         print_export(*envp);
         return;
     }
     count = 0;
     i = 0;
-    while (cmds->tokens[++i].cmd)
+    while (cmd_info->cmd_args[++i])
     {
-        if (is_valid_export(cmds->tokens[i].cmd))
+        if (is_valid_export(cmd_info->cmd_args[i]))
         {
-            target = find_existing_var(cmds->tokens[i].cmd, *envp);
+            target = find_existing_var(cmd_info->cmd_args[i], *envp);
             if (target) 
             {
-                printf("token %s",cmds->tokens[i].cmd);
-                if (ft_strchr(cmds->tokens[i].cmd, '='))
+                if (ft_strchr(cmd_info->cmd_args[i], '='))
                 {
-                    printf("here\n\n\n");
                     free(*target);
-                    *target = ft_strdup(cmds->tokens[i].cmd);
+                    *target = ft_strdup(cmd_info->cmd_args[i]);
                 }
             }
             else
                 ++count;
         }
         else
-            cmds->tokens[i].cmd[0] = '\0';
+            cmd_info->cmd_args[i][0] = '\0';
     }
     if (count == 0)
-    {
-        printf("bf return\n");
         return ;
-    }
     i = -1;
     while ((*envp)[++i])
         ++count;
@@ -224,10 +147,10 @@ void    export(t_cmd *cmds, char ***envp)
     while ((*envp)[++i])
         new_env[++count] = (*envp)[i];
     i = 0;
-    while (cmds->tokens[++i].cmd)
+    while (cmd_info->cmd_args[++i])
     {
-        if (cmds->tokens[i].cmd[0])
-            new_env[++count] = cmds->tokens[i].cmd;
+        if (cmd_info->cmd_args[i][0])
+            new_env[++count] = cmd_info->cmd_args[i];
     }
     free(*envp);
     *envp = new_env;
