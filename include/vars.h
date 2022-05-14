@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 21:37:46 by soekim            #+#    #+#             */
-/*   Updated: 2022/05/14 15:26:57 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/14 17:11:29 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_cmd_list
 {
 	t_token				*tokens;
 	int					flag;
-	char				*(redir_file[4]);
 	int					pipe_flag;
 	int					exit_flag;
 	struct s_cmd_list	*next;

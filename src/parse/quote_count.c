@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:46:21 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 00:46:22 by noguen           ###   ########.fr       */
+/*   Updated: 2022/05/14 17:09:59 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	env_len(char *cmd, int *size, char **envp)
 int	dquote_cnt(char *cmd, int *size, char **envp)
 {
 	int		index;
-	char	*tmp;
 
 	index = 1;
 	while (cmd[index] && cmd[index] != '\"')

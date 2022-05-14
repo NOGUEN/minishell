@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:44:18 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 15:10:24 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/14 17:09:39 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	get_parse_size(char *cmd, char **envp)
 {
 	int		size;
 	int		index;
-	char	*tmp;
 
 	size = 0;
 	index = -1;
