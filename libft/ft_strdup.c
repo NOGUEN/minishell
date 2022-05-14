@@ -6,14 +6,12 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:44:51 by soekim            #+#    #+#             */
-/*   Updated: 2020/11/20 11:15:53 by soekim           ###   ########.fr       */
+/*   Updated: 2022/05/14 13:18:22 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
-#include <stdio.h>
 char	*ft_strdup(const char *s1)
 {
 	int		i;

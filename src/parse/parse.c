@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:44:35 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 00:44:38 by noguen           ###   ########.fr       */
+/*   Updated: 2022/05/14 13:16:25 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,8 @@ void	parse(t_cmd **cmds, char *line, char **envp)
 	int		index;
 	int		begin;
 	int		flag;
-	t_cmd   *new;
-	t_cmd   *tmp;
+	t_cmd	*new;
+	t_cmd	*tmp;
 
 	index = 0;
 	begin = 0;

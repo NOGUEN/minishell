@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:43:26 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 01:16:36 by noguen           ###   ########.fr       */
+/*   Updated: 2022/05/14 13:15:40 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	alloc_s_quote_cnt(char *src, char **dest)
 void	cmd_copy(char *src, char *dest, char **envp)
 {
 	int		src_index;
-	int	 size;
+	int		size;
 	char	*dest_end;
 
 	size = 0;

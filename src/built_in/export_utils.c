@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/14 13:17:18 by noguen            #+#    #+#             */
+/*   Updated: 2022/05/14 13:17:41 by noguen           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/built_in.h"
 
 int	is_valid_export(char *line)
@@ -64,7 +76,6 @@ char	**find_existing_var(char *token, char **envp)
 // {
 //	 char	*token_sep;
 //	 char	*env_sep;
- 
 //	 token_sep = ft_strchr(token, '=');
 //	 if (token_sep)
 //		 *token_sep = '\0';
