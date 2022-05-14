@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 01:14:14 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 17:15:15 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/14 17:29:55 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	free_cmds(t_cmd *cmds)
 			free(free_tokens->cmd);
 			free_tokens++;
 		}
+		free(free_cmd->tokens);
 		free(free_cmd);
 	}
 }
