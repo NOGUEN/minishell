@@ -14,6 +14,7 @@ mkdir -p objs/utils
 mkdir -p objs/get_next_line
 gcc -g -fsanitize=address -c src/parse/alloc_word.c -o objs/parse/alloc_word.o \
 			-I/opt/homebrew/opt/readline/include
+ 
 mkdir -p objs/built_in
 mkdir -p objs/parse
 mkdir -p objs/utils

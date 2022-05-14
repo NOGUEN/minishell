@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 21:37:46 by soekim            #+#    #+#             */
-/*   Updated: 2021/07/02 15:39:49 by soekim           ###   ########.fr       */
+/*   Updated: 2022/05/14 13:11:27 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,45 +29,42 @@
 
 # include "../libft/libft.h"
 
-int     g_exit_status;
+extern int	g_exit_status;
 
-struct	s_arg
+typedef struct s_arg
 {
 	int		cnt;
 	char	**vec;
-};
-typedef struct s_arg	t_arg;
+}				t_arg;
 
-struct	s_file
+typedef struct s_file
 {
 	int		fd;
 	int		o_flag;
-};
-typedef struct s_file	t_file;
+}				t_file;
 
-struct s_cmd_info
+typedef struct s_cmd_info
 {
-	int in_fd;
-	int out_fd;
-	char *out_name;
-	char **cmd_args;
-};
-typedef struct s_cmd_info t_cmd_info;
+	int		in_fd;
+	int		out_fd;
+	char	*out_name;
+	char	**cmd_args;
+}				t_cmd_info;
 
-typedef struct      s_token
+typedef struct s_token
 {
-    char            *cmd;
-    char            redir_flag;
-}                   t_token;
+	char	*cmd;
+	char	redir_flag;
+}				t_token;
 
-typedef struct      s_cmd_list
+typedef struct s_cmd_list
 {
-    t_token         *tokens;
-    int             flag;
-    char            *(redir_file[4]);
-    int             pipe_flag;
-    int             exit_flag;
-    struct s_cmd_list    *next;
-}                   t_cmd;
+	t_token				*tokens;
+	int					flag;
+	char				*(redir_file[4]);
+	int					pipe_flag;
+	int					exit_flag;
+	struct s_cmd_list	*next;
+}				t_cmd;
 
 #endif
