@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:12:19 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 13:14:17 by noguen           ###   ########.fr       */
+/*   Updated: 2022/05/14 17:18:24 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		is_valid_export(char *line);
 char	**find_existing_var(char *token, char **envp);
 
 /* cd */
-void	cd(t_cmd_info *cmd_info, int (*pipes)[2], int *input);
+void	cd(t_cmd_info *cmd_info);
 
 /* unset */
 void	unset(t_cmd_info *cmd_info, char ***envp);

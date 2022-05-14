@@ -6,13 +6,13 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 19:22:34 by soekim            #+#    #+#             */
-/*   Updated: 2022/05/14 00:48:51 by noguen           ###   ########.fr       */
+/*   Updated: 2022/05/14 17:11:55 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/built_in.h"
 
-void	cd(t_cmd_info *cmd_info, int (*pipes)[2], int *input)
+void	cd(t_cmd_info *cmd_info)
 {
 	int		result;
 	char	*cwd_backup;

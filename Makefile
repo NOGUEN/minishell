@@ -48,7 +48,7 @@ OBJ 		= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 all : 		$(NAME)
 
 $(NAME) : 	$(LIBFT) $(OBJ)
-			$(CC) -o $@ $(OBJ) $(READLINE_LIB) $(READLINE_INC)\
+			$(CC) $(CFLAGS) -o $@ $(OBJ) $(READLINE_LIB) $(READLINE_INC)\
 			$(LIBFT)
 			
 
@@ -61,7 +61,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 			mkdir -p $(OBJ_DIR)/parse
 			mkdir -p $(OBJ_DIR)/utils
 			mkdir -p $(OBJ_DIR)/get_next_line
-			$(CC) -c $< -o $(<:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o) \
+			$(CC) $(CFLAGS) -c $< -o $(<:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o) \
 			$(READLINE_INC)
 
 clean :

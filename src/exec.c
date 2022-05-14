@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 22:56:55 by soekim            #+#    #+#             */
-/*   Updated: 2022/05/14 15:22:15 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/14 17:18:25 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	exec(t_cmd *cmd_list, char ***envp)
 		if (!ft_strcmp(cmd_info.cmd_args[0], "exit"))
 			ft_exit(&cmd_info.cmd_args[1]);
 		else if (!ft_strcmp(cmd_info.cmd_args[0], "cd"))
-			cd(&cmd_info, pipes, &input);
+			cd(&cmd_info);
 		else if (!ft_strcmp(cmd_info.cmd_args[0], "unset"))
 			unset(&cmd_info, envp);
 		else if (!ft_strcmp(cmd_info.cmd_args[0], "export")
@@ -70,6 +70,7 @@ void	exec(t_cmd *cmd_list, char ***envp)
 		free(cmd_info.cmd_args);
 		cmd_list = cmd_list->next;
 	}
+
 }
 
 void	fork_and_exec(t_cmd_info *cmd_info, char **envp, int (*pipes)[2])

@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 01:14:14 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 16:09:35 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/14 17:15:15 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,27 @@ int	main(int argc, char *argv[], char *envp[])
 	t_cmd	*cmds;
 	char	*line;
 	char	**copied_env;
+	int		i;
 
+	i = argc;
+	argc = i;
+	copied_env = NULL;
+	argv = copied_env;
 	copied_env = copy_envp(envp);
 	signal_init();
-	while (line = readline("minishell $ "))
+	while (1)
 	{
+		line = readline("minishell $ ");
+		if (line == NULL)
+			break ;
 		if (*line != '\0' && !check_whitespace(line))
 		{
 			add_history(line);
 			parse(&cmds, line, envp);
 			// system("leaks minishell");
 			exec(cmds, &copied_env);
+			system("leaks minishell");
+
 			free_cmds(cmds);
 			// free(line);
 		}
