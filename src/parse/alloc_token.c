@@ -126,12 +126,9 @@ t_token	*alloc_token(t_token *token, char **envp)
 			else
 				token[i].redir_flag = -1;
 		}
-		if (cmd_len != 0)
-		{
-			token[i].cmd = (char *)malloc(sizeof(char) * (cmd_len + 1));
-			cmd_copy(tmp_cmd, token[i].cmd, envp);
-			free(tmp_cmd);
-		}
+		token[i].cmd = (char *)malloc(sizeof(char) * (cmd_len + 1));
+		cmd_copy(tmp_cmd, token[i].cmd, envp);
+		free(tmp_cmd);
 		i++;
 	}
 	return (token);

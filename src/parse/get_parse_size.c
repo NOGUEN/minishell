@@ -32,5 +32,6 @@ int	get_parse_size(char *cmd, char **envp)
 		else if (cmd[index])
 			++size;
 	}
+	printf("parse size: %d\n", size);
 	return (size);
 }

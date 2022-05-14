@@ -6,15 +6,14 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
 
-# Make data base, printed on Sat May 14 12:48:47 2022
+# Make data base, printed on Sat May 14 14:58:18 2022
 
 # Variables
 
 # automatic
- 
 <D = $(patsubst %/,%,$(dir $<))
+ 
 # automatic
 ?F = $(notdir $?)
 # makefile (from `Makefile', line 46)
@@ -52,7 +51,7 @@ __CFBundleIdentifier = com.microsoft.VSCode
 # environment
 INFOPATH = /opt/homebrew/share/info:
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/dk/16l17g0j3hn4kkrx49r03j3w0000gn/T/vscode-ipc-ad173a85-1b68-4c88-b079-5fb4af46d896.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/dk/16l17g0j3hn4kkrx49r03j3w0000gn/T/vscode-ipc-ab38273e-9031-46f2-bd2a-67c0a23d64fd.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -96,7 +95,7 @@ READLINE_LIB = -lreadline -L/opt/homebrew/opt/readline/lib
 # environment
 LOGNAME = noguen
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 ZSH = /Users/noguen/.oh-my-zsh
 # environment
@@ -122,7 +121,6 @@ USER = noguen
 # makefile
 .DEFAULT_GOAL := all
 # makefile (from `Makefile', line 4)
- 
 NAME = minishell
 # environment
 LESS = -R
@@ -268,7 +266,7 @@ objs/utils/util2.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-14 00:07:38
+#  Last modified 2022-05-14 13:22:12
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -285,6 +283,7 @@ libft.a:
 #  Implicit/static pattern stem: `'
 #  File does not exist.
 #  File has been updated.
+ 
 #  Needs to be updated (-q is set).
 # automatic
 # @ := libft.a
@@ -330,7 +329,6 @@ objs/parse/quote_count.o:
 minishell: libft.a objs/parse/alloc_token.o objs/parse/alloc_word.o objs/parse/check.o objs/parse/get_env.o objs/parse/get_parse_size.o objs/parse/new_cmd.o objs/parse/parse.o objs/parse/quote_count.o objs/parse/split_cmd.o objs/parse/split_count.o objs/parse/utils.o objs/built_in/unset.o objs/built_in/exit.o objs/built_in/export.o objs/built_in/export_utils.o objs/built_in/env.o objs/built_in/cd.o objs/minishell.o objs/signal.o objs/exec.o objs/cmd_info.o objs/utils/util1.o objs/utils/util2.o objs/get_next_line/get_next_line.o objs/get_next_line/get_next_line_utils.o
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
@@ -474,6 +472,6 @@ objs/built_in/export_utils.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat May 14 12:48:47 2022
+# Finished Make data base on Sat May 14 14:58:18 2022
 
  
