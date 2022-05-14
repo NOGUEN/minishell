@@ -20,5 +20,6 @@
 # include <readline/readline.h>
 
 void	init_cmd_info(t_cmd_info *info, t_token *token, int (*pipes)[2]);
+void	read_heredoc(t_token *in_redir, int (*pipes)[2]);
 
 #endif

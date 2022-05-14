@@ -21,7 +21,7 @@
 void	print_export(char **envp);
 void	export_new(t_cmd_info *cmd_info, char ***envp);
 void	update_existing_count_new(
-			t_cmd_info *cmd_info, char ***envp, int *pcount);
+			t_cmd_info *cmd_info, char ***envp, int *count);
 void	update_existing(char **existing, char *new_val);
 
 /* export utils */

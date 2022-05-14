@@ -63,3 +63,12 @@ void	close_fds(t_cmd_info *cmd_info, int (*pipes)[2], int *input)
 	if (cmd_info->out_fd != NO_DATA && cmd_info->out_fd != STDOUT)
 		close(cmd_info->out_fd);
 }
+
+void	init_fork_pipes(int (*pipes)[2])
+{
+	if (pipe(pipes[P_TO_C]) < 0)
+		error_exit("Error : pipe");
+	if (pipe(pipes[C_TO_P]) < 0)
+		error_exit("Error : pipe");
+	return ;
+}

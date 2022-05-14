@@ -57,20 +57,19 @@ void	export_new(t_cmd_info *cmd_info, char ***envp)
 	while (cmd_info->cmd_args[++i])
 	{
 		if (cmd_info->cmd_args[i][0])
-			new_env[++count] = cmd_info->cmd_args[i];
+			new_env[++count] = ft_strdup(cmd_info->cmd_args[i]);
 	}
 	free(*envp);
 	*envp = new_env;
 }
 
-void	update_existing_count_new(t_cmd_info *cmd_info,
-			char ***envp, int *pcount)
+void	update_existing_count_new(t_cmd_info *cmd_info, \
+									char ***envp, int *count)
 {
 	int		i;
-	int		count;
 	char	**existing;
 
-	count = 0;
+	*count = 0;
 	i = 0;
 	while (cmd_info->cmd_args[++i])
 	{
@@ -80,13 +79,15 @@ void	update_existing_count_new(t_cmd_info *cmd_info,
 			if (existing)
 				update_existing(existing, cmd_info->cmd_args[i]);
 			else
-				++count;
+				++(*count);
 		}
 		else
+		{
+			printf("minishell: export: '%s': not a valid identifier\n", \
+					cmd_info->cmd_args[i]);
 			cmd_info->cmd_args[i][0] = '\0';
+		}
 	}
-	i = -1;
-	*pcount = count;
 }
 
 void	update_existing(char **existing, char *new_val)

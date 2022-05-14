@@ -12,34 +12,59 @@
 
 #include "../../include/built_in.h"
 
-void	unset(t_cmd_info *cmd_info, char ***envp)
+char	**get_new_envp(char **envp, int new_size)
 {
-	int		i;
-	int		j;
-	int		count;
+	int		env_i;
+	int		new_i;
 	char	**new;
 
-	i = -1;
-	count = 0;
-	while ((*envp)[++i])
+	new = malloc((new_size + 1) * sizeof(char *));
+	if (!new)
+		return (NULL);
+	new[new_size] = NULL;
+	new_i = 0;
+	env_i = 0;
+	while (new_i < new_size)
 	{
-		j = 0;
-		while (cmd_info->cmd_args[++j])
+		if (envp[env_i][0])
 		{
-			if (!strdelcmp((*envp)[i], cmd_info->cmd_args[j], '='))
-				(*envp)[i][0] = 0;
+			new[new_i] = envp[env_i];
+			++new_i;
 		}
-		if ((*envp)[i][0])
-			++count;
+		++env_i;
 	}
-	new = malloc((count + 1) * sizeof(char *));
-	new[count] = NULL;
-	j = count;
-	while (--i >= 0)
-	{
-		if ((*envp)[i][0])
-			new[--j] = (*envp)[i];
-	}
+	return (new);
+}
+
+void	renew_envp(char ***envp, char **new_envp)
+{
 	free(*envp);
-	*envp = new;
+	*envp = new_envp;
+}
+
+void	unset(t_cmd_info *cmd_info, char ***envp)
+{
+	int		env_i;
+	int		cmd_i;
+	int		new_size;
+	char	**new_envp;
+
+	env_i = -1;
+	new_size = 0;
+	while ((*envp)[++env_i])
+	{
+		cmd_i = 0;
+		while (cmd_info->cmd_args[++cmd_i])
+		{
+			if (!strdelcmp((*envp)[env_i], cmd_info->cmd_args[cmd_i], '='))
+				(*envp)[env_i][0] = 0;
+		}
+		if ((*envp)[env_i][0])
+			++new_size;
+	}
+	new_envp = get_new_envp(*envp, new_size);
+	if (!new_envp)
+		g_exit_status = 1;
+	else
+		renew_envp(envp, new_envp);
 }

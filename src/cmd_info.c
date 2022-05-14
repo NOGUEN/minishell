@@ -14,23 +14,13 @@
 
 void	init_input(int *in_fd, t_token *in_redir, int (*pipes)[2])
 {
-	char	*hdoc_input;
-
 	if (!ft_strcmp((in_redir - 1)->cmd, "<"))
 		*in_fd = open_file(in_redir->cmd, O_RDONLY);
 	else
 	{
 		*in_fd = pipes[P_TO_C][RD];
 		if (!ft_strcmp((in_redir - 1)->cmd, "<<"))
-		{
-			while ((hdoc_input = readline("heredoc> ")))
-			{
-				if (!ft_strcmp(hdoc_input, in_redir->cmd))
-					break ;
-				ft_putendl_fd(hdoc_input, pipes[P_TO_C][WR]);
-				free(hdoc_input);
-			}
-		}
+			read_heredoc(in_redir, pipes);
 		else if (!ft_strcmp((in_redir - 1)->cmd, "<<<"))
 			ft_putstr_fd(in_redir->cmd, pipes[P_TO_C][WR]);
 		else
@@ -38,6 +28,22 @@ void	init_input(int *in_fd, t_token *in_redir, int (*pipes)[2])
 			printf("minishell: syntax error\n");
 			g_exit_status = 258;
 		}
+	}
+}
+
+void	read_heredoc(t_token *in_redir, int (*pipes)[2])
+{
+	char	*hdoc_input;
+
+	while (TRUE)
+	{
+		hdoc_input = readline("heredoc> ");
+		if (!hdoc_input)
+			return ;
+		if (!ft_strcmp(hdoc_input, in_redir->cmd))
+			break ;
+		ft_putendl_fd(hdoc_input, pipes[P_TO_C][WR]);
+		free(hdoc_input);
 	}
 }
 
