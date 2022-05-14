@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:44:18 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 01:15:53 by noguen           ###   ########.fr       */
+/*   Updated: 2022/05/14 15:10:24 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ int	get_parse_size(char *cmd, char **envp)
 		else if (cmd[index])
 			++size;
 	}
-	printf("parse size: %d\n", size);
 	return (size);
 }

@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 01:14:14 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 01:14:18 by noguen           ###   ########.fr       */
+/*   Updated: 2022/05/14 16:09:35 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,22 @@
 
 void	free_cmds(t_cmd *cmds)
 {
-	t_cmd	*to_free;
+	t_cmd	*free_cmd;
+	t_token	*free_tokens;
+	int		index;
 
+	index = -1;
 	while (cmds)
 	{
-		to_free = cmds;
+		free_cmd = cmds;
 		cmds = cmds->next;
-		free(to_free);
+		free_tokens = free_cmd->tokens;
+		while (free_tokens->cmd)
+		{
+			free(free_tokens->cmd);
+			free_tokens++;
+		}
+		free(free_cmd);
 	}
 }
 
@@ -38,13 +47,15 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			add_history(line);
 			parse(&cmds, line, envp);
+			system("leaks minishell");
 			exec(cmds, &copied_env);
 			free_cmds(cmds);
 			free(line);
 		}
-		printf("g%d\n", g_exit_status);
 		g_exit_status = 0;
+		system("leaks minishell");
 	}
 	free_copied_env(copied_env);
+
 	return (0);
 }
