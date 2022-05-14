@@ -57,7 +57,6 @@ int	main(int argc, char *argv[], char *envp[])
 			free_cmds(cmds);
 			free(line);
 		}
-		g_exit_status = 0;
 	}
 	free_copied_env(copied_env);
 	// system("leaks minishell");
