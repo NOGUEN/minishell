@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 21:37:46 by soekim            #+#    #+#             */
-/*   Updated: 2022/05/14 13:11:27 by noguen           ###   ########.fr       */
+/*   Updated: 2022/05/14 13:24:06 by noguen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 # include "../libft/libft.h"
 
-extern int	g_exit_status;
+int		g_exit_status;
 
 typedef struct s_arg
 {
