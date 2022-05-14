@@ -47,15 +47,16 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			add_history(line);
 			parse(&cmds, line, envp);
-			system("leaks minishell");
+			// system("leaks minishell");
 			exec(cmds, &copied_env);
 			free_cmds(cmds);
-			free(line);
+			// free(line);
 		}
 		g_exit_status = 0;
-		system("leaks minishell");
+        free(line);
+		// system("leaks minishell");
 	}
 	free_copied_env(copied_env);
-
+    system("leaks minishell");
 	return (0);
 }
