@@ -32,15 +32,8 @@ char	**get_new_envp(char **envp, int new_size)
 			new[new_i] = ft_strdup(envp[env_i]);
 			++new_i;
 		}
-		else if (envp[env_i])
-		{
-			printf("%s\n", envp[env_i]);
-			free(envp[env_i]);
-		}
-
 		++env_i;
 	}
-	
 	return (new);
 }
 
@@ -73,7 +66,7 @@ void	unset(t_cmd_info *cmd_info, char ***envp)
 		{
 			if (!strcmp_bfdel((*envp)[env_i], cmd_info->cmd_args[cmd_i], '='))
 			{
-				printf("adasd %s\n",(*envp)[env_i]);
+				printf("adasd %s %s\n",(*envp)[env_i], cmd_info->cmd_args[cmd_i]);
 				(*envp)[env_i][0] = 0;
 			}
 		}
