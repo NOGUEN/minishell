@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 20:02:56 by soekim            #+#    #+#             */
-/*   Updated: 2022/05/15 19:25:06 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/15 20:12:36 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,8 @@ int	strcmp_bfdel(char *s1, char *s2, int del)
 		++s1;
 		++s2;
 	}
-	return (0);
+	if (*s1 == del || *s1 == del)
+		return (0);
+	else
+		return (*s1 - *s2);
 }

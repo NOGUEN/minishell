@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:17:18 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 13:17:41 by noguen           ###   ########.fr       */
+/*   Updated: 2022/05/15 20:12:21 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,31 +72,3 @@ char	**find_existing_var(char *token, char **envp)
 		*token_sep = '=';
 	return (existing);
 }
-
-// {
-//	 char	*token_sep;
-//	 char	*env_sep;
-//	 token_sep = ft_strchr(token, '=');
-//	 if (token_sep)
-//		 *token_sep = '\0';
-//	 while (*envp)
-//	 {
-//		 env_sep = ft_strchr(*envp, '=');
-//		 if (env_sep)
-//			 *env_sep = '\0';
-//		 if (!ft_strcmp(token, *envp))
-//		 {
-//			 if (env_sep)
-//				 *env_sep = '=';
-//			 if (token_sep)
-//				 *token_sep = '=';
-//			 return envp;
-//		 }
-//		 if (env_sep)
-//			 *env_sep = '=';
-//		 ++envp;
-//	 }
-//	 if (token_sep)
-//		 *token_sep = '=';
-//	 return NULL;
-// }

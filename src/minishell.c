@@ -60,6 +60,5 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	printf("\x1b[1A\033[12Cexit\n");
 	free_copied_env(copied_env);
-	// system("leaks minishell");
 	return (0);
 }

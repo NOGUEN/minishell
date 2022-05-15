@@ -78,8 +78,8 @@ void	update_existing_count_new(t_cmd_info *cmd_info, \
 			existing = find_existing_var(cmd_info->cmd_args[i], *envp);
 			if (existing)
 			{
-				printf("existing %s\n", *existing);
 				update_existing(existing, cmd_info->cmd_args[i]);
+				cmd_info->cmd_args[i][0] = '\0';
 			}
 			else
 				++(*count);

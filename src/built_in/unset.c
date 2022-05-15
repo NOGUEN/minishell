@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:17:08 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/15 19:33:13 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/15 20:11:27 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	**get_new_envp(char **envp, int new_size)
 	env_i = 0;
 	while (new_i < new_size)
 	{
-		// printf("%s|\n",envp[ env_i]);
 		if (envp[env_i][0])
 		{
 			new[new_i] = ft_strdup(envp[env_i]);
@@ -66,14 +65,12 @@ void	unset(t_cmd_info *cmd_info, char ***envp)
 		{
 			if (!strcmp_bfdel((*envp)[env_i], cmd_info->cmd_args[cmd_i], '='))
 			{
-				printf("adasd %s %s\n",(*envp)[env_i], cmd_info->cmd_args[cmd_i]);
 				(*envp)[env_i][0] = 0;
 			}
 		}
 		if ((*envp)[env_i][0])
 			++new_size;
 	}
-	printf("newsize %d\n",new_size);
 	new_envp = get_new_envp(*envp, new_size);
 	if (!new_envp)
 		g_exit_status = 1;

@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 19:43:55 by soekim            #+#    #+#             */
-/*   Updated: 2022/05/14 12:50:46 by noguen           ###   ########.fr       */
+/*   Updated: 2022/05/15 20:09:39 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	free_copied_env(char **copied);
 char	**copy_envp(char **envp);
 void	close_fds(t_cmd_info *cmd_info, int (*pipes)[2], int *input);
 void	init_fork_pipes(int (*pipes)[2]);
-int     strcmp_bfdel(char *s1, char *s2, int del);
+int		strcmp_bfdel(char *s1, char *s2, int del);
 
 #endif

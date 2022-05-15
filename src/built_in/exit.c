@@ -36,5 +36,6 @@ void	ft_exit(char **args)
 		g_exit_status = ft_atoi(args[0]);
 	else
 		g_exit_status = 0;
+	printf("\x1b[1A\033[12Cexit\n");
 	exit(g_exit_status);
 }
