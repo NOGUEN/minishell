@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:17:08 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 15:19:20 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/15 19:33:13 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**get_new_envp(char **envp, int new_size)
 	{
 		if (envp[env_i][0])
 		{
-			new[new_i] = envp[env_i];
+			new[new_i] = ft_strdup(envp[env_i]);
 			++new_i;
 		}
 		++env_i;
@@ -38,6 +38,13 @@ char	**get_new_envp(char **envp, int new_size)
 
 void	renew_envp(char ***envp, char **new_envp)
 {
+	char	**tmp;
+	int		index;
+
+	index = -1;
+	tmp = *envp;
+	while (tmp[++index])
+		free(tmp[index]);
 	free(*envp);
 	*envp = new_envp;
 }
