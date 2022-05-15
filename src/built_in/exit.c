@@ -15,24 +15,26 @@
 void	ft_exit(char **args)
 {
 	int	i;
-	int	is_valid_arg;
 
 	i = -1;
-	is_valid_arg = TRUE;
 	while (args[0] && args[0][++i])
 	{
 		if (ft_isdigit(args[0][i]) == FALSE)
 		{
 			printf("minishell: exit: %s: numeric argument required\n", args[0]);
-			is_valid_arg = FALSE;
-			break ;
+			g_exit_status = 255;
+			exit(g_exit_status);
 		}
 	}
-	if (args[0] && is_valid_arg)
+	if (args[0] && args[1])
+	{
+		printf("minishell: exit: too many arguments\n");
+		g_exit_status = 1;
+		return ;
+	}
+	if (args[0])
 		g_exit_status = ft_atoi(args[0]);
 	else
 		g_exit_status = 0;
-	if (args[0] && args[1] && is_valid_arg)
-		printf("minishell: exit: too many arguments\n");
 	exit(g_exit_status);
 }
