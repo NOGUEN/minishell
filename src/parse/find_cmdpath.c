@@ -24,6 +24,8 @@ char	**get_path_list(char **envp)
 			break ;
 		++i;
 	}
+	if (!envp[i])
+		return (NULL);
 	return (ft_split(envp[i] + 5, ':'));
 }
 
@@ -35,6 +37,11 @@ char	*find_cmdpath_split(char *cmd, char **envp)
 	char	*path;
 
 	path_list = get_path_list(envp);
+	if (!path_list)
+	{
+		printf("minishell: %s: No such file or directory\n", cmd);
+		exit(127);
+	}
 	to_free = path_list;
 	while (*path_list)
 	{
