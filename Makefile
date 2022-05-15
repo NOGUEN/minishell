@@ -1,4 +1,4 @@
-CC 				= gcc -g -fsanitize=address
+CC 				= gcc -g #-fsanitize=address
 RM				= rm -rf
 CFLAGS 			= -Wall -Wextra -Werror
 NAME 			= minishell
@@ -28,7 +28,6 @@ PARSE			= alloc_token.c			\
 				  find_cmdpath.c		\
 				  get_env.c				\
 				  get_parse_size.c		\
-				  is_correct_path.c		\
 				  new_cmd.c				\
 				  parse.c				\
 				  quote_count.c			\

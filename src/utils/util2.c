@@ -35,3 +35,15 @@ void	cmd_not_found(char *cmd)
 	ft_putstr_fd(": command not found\n", 1);
 	exit(0);
 }
+
+int	strcmp_bfdel(char *s1, char *s2, int del)
+{
+	while (*s1 && *s2 && *s1 != del && *s2 != del)
+	{
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		++s1;
+		++s2;
+	}
+	return (0);
+}

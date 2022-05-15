@@ -32,5 +32,6 @@ void	free_copied_env(char **copied);
 char	**copy_envp(char **envp);
 void	close_fds(t_cmd_info *cmd_info, int (*pipes)[2], int *input);
 void	init_fork_pipes(int (*pipes)[2]);
+int     strcmp_bfdel(char *s1, char *s2, int del);
 
 #endif

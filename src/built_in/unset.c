@@ -26,19 +26,28 @@ char	**get_new_envp(char **envp, int new_size)
 	env_i = 0;
 	while (new_i < new_size)
 	{
+		// printf("%s|\n",envp[ env_i]);
 		if (envp[env_i][0])
 		{
 			new[new_i] = envp[env_i];
 			++new_i;
 		}
+		else if (envp[env_i])
+		{
+			printf("%s\n", envp[env_i]);
+			free(envp[env_i]);
+		}
+
 		++env_i;
 	}
+	
 	return (new);
 }
 
 void	renew_envp(char ***envp, char **new_envp)
 {
 	free(*envp);
+	// system("leaks minishell");
 	*envp = new_envp;
 }
 
@@ -56,12 +65,16 @@ void	unset(t_cmd_info *cmd_info, char ***envp)
 		cmd_i = 0;
 		while (cmd_info->cmd_args[++cmd_i])
 		{
-			if (!strdelcmp((*envp)[env_i], cmd_info->cmd_args[cmd_i], '='))
+			if (!strcmp_bfdel((*envp)[env_i], cmd_info->cmd_args[cmd_i], '='))
+			{
+				printf("adasd %s\n",(*envp)[env_i]);
 				(*envp)[env_i][0] = 0;
+			}
 		}
 		if ((*envp)[env_i][0])
 			++new_size;
 	}
+	printf("newsize %d\n",new_size);
 	new_envp = get_new_envp(*envp, new_size);
 	if (!new_envp)
 		g_exit_status = 1;

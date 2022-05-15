@@ -64,7 +64,7 @@ int	executed_built_in(t_cmd_info *cmd_info, char ***envp)
 	else if (!ft_strcmp(cmd_info->cmd_args[0], "unset"))
 		unset(cmd_info, envp);
 	else if (!ft_strcmp(cmd_info->cmd_args[0], "export")
-		&& cmd_info->cmd_args[1])
+			&& cmd_info->cmd_args[1])
 		export_new(cmd_info, envp);
 	else
 		return (FALSE);
