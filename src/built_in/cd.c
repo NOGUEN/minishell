@@ -32,7 +32,7 @@ void	cd(t_cmd_info *cmd_info)
 	char	*cwd_backup;
 
 	cwd_backup = getcwd(0, 0);
-	if (cmd_info->cmd_args[1][0] == '\0')
+	if (cmd_info->cmd_args[1] == NULL || cmd_info->cmd_args[1][0] == '\0')
 		result = chdir(getenv("HOME"));
 	else if (cmd_info->cmd_args[1][0] == '~' \
 			&& (cmd_info->cmd_args[1][1] == '\0'
