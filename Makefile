@@ -15,53 +15,70 @@ READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
 #READLINE_LIB	= -lreadline -L/opt/homebrew/opt/readline/lib
 #READLINE_INC	= -I/opt/homebrew/opt/readline/include
 
-SRC_DIR 	= src
-SRC 		= src/parse/alloc_token.c \
-			  src/parse/alloc_word.c \
-			  src/parse/check.c \
-			  src/parse/get_env.c \
-			  src/parse/get_parse_size.c \
-			  src/parse/new_cmd.c \
-			  src/parse/parse.c \
-			  src/parse/quote_count.c \
-			  src/parse/split_cmd.c \
-			  src/parse/split_count.c \
-			  src/parse/utils.c		\
-			  src/built_in/unset.c		\
-			  src/built_in/exit.c		\
-			  src/built_in/export.c		\
-			  src/built_in/export_utils.c		\
-			  src/built_in/env.c		\
-			  src/built_in/cd.c		\
-			  src/minishell.c \
-			  src/signal.c \
-			  src/exec.c		\
-			  src/cmd_info.c	\
-			  src/utils/util1.c	\
-			  src/utils/util2.c	\
-			  src/get_next_line/get_next_line.c\
-			  src/get_next_line/get_next_line_utils.c
+SRC_DIR 		= src
+PARSE_PATH		= src/parse/
+BUILTIN_PATH	= src/built_in/
+UTILS_PATH		= src/utils/
+GNL_PATH		= src/get_next_line/
 
-OBJ_DIR 	= objs
-OBJ 		= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+PARSE			= alloc_token.c			\
+				  alloc_word.c			\
+				  alloc_env.c			\
+				  check.c				\
+				  find_cmdpath.c		\
+				  get_env.c				\
+				  get_parse_size.c		\
+				  is_correct_path.c		\
+				  new_cmd.c				\
+				  parse.c				\
+				  quote_count.c			\
+				  split_cmd.c			\
+				  split_count.c			\
+				  utils.c				\
+
+BUILTIN			= unset.c				\
+				  exit.c				\
+				  export.c				\
+				  export_utils.c		\
+				  env.c					\
+				  cd.c					\
+
+UTILS			= util1.c				\
+				  util2.c				\
+
+GNL				= get_next_line.c		\
+				  get_next_line_utils.c	\
+
+MAIN			= minishell.c			\
+				  signal.c				\
+				  exec.c				\
+				  cmd_info.c			\
+
+SRC 			= $(addprefix $(PARSE_PATH), $(PARSE))		\
+				  $(addprefix $(BUILTIN_PATH), $(BUILTIN))	\
+				  $(addprefix $(UTILS_PATH), $(UTILS))		\
+				  $(addprefix $(GNL_PATH), $(GNL))			\
+				  $(addprefix src/, $(MAIN))				\
+
+OBJ_DIR 		= objs
+OBJ 			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all : 		$(NAME)
 
 $(NAME) : 	$(LIBFT) $(OBJ)
-			$(CC) $(CFLAGS) -o $@ $(OBJ) $(READLINE_LIB) $(READLINE_INC)\
+			@$(CC) $(CFLAGS) -o $@ $(OBJ) $(READLINE_LIB) $(READLINE_INC)\
 			$(LIBFT)
-			
 
 $(LIBFT) :
-			cd $(LIBFT_DIR); make
-			cp $(LIBFT_DIR)/$(LIBFT) ./
+			@cd $(LIBFT_DIR); make
+			@cp $(LIBFT_DIR)/$(LIBFT) ./
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-			mkdir -p $(OBJ_DIR)/built_in
-			mkdir -p $(OBJ_DIR)/parse
-			mkdir -p $(OBJ_DIR)/utils
-			mkdir -p $(OBJ_DIR)/get_next_line
-			$(CC) $(CFLAGS) -c $< -o $(<:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o) \
+			@mkdir -p $(OBJ_DIR)/built_in
+			@mkdir -p $(OBJ_DIR)/parse
+			@mkdir -p $(OBJ_DIR)/utils
+			@mkdir -p $(OBJ_DIR)/get_next_line
+			@$(CC) $(CFLAGS) -c $< -o $(<:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o) \
 			$(READLINE_INC)
 
 clean :

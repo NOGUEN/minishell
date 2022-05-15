@@ -6,45 +6,12 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:43:26 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 17:31:08 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/15 14:03:00 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
-
-int	alloc_env(char *src, char **dest, char **envp)
-{
-	char	*status;
-	char	*key;
-	char	*env_val;
-	int		env_len;
-	int		index;
-
-	index = 0;
-	if (src[1] == '?')
-	{
-		status = ft_itoa(g_exit_status);
-		ft_memcpy(*dest, status, ft_strlen(status));
-		*dest += ft_strlen(status);
-		free(status);
-		return (1);
-	}
-	else if (src[1] == '\0' || src[1] == '\"')
-	{
-		**dest = '$';
-		*dest += 1;
-		return (0);
-	}
-	key = NULL;
-	index += get_env_key(src, &key);
-	env_val = get_env_value(key, envp);
-	env_len = ft_strlen(env_val);
-	ft_memcpy(*dest, env_val, env_len);
-	*dest += env_len;
-	free(key);
-	return (index);
-}
 
 int	alloc_d_quote_cnt(char *src, char **dest, char **envp)
 {

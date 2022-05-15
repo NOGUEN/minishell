@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 01:14:14 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/14 17:29:55 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/15 14:37:18 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char *argv[], char *envp[])
 	signal_init();
 	while (TRUE)
 	{
-		line = readline("minishell $ ");
+		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
 		if (*line != '\0' && !check_whitespace(line))
@@ -58,7 +58,7 @@ int	main(int argc, char *argv[], char *envp[])
 			free(line);
 		}
 	}
+	printf("\x1b[1A\033[12Cexit\n");
 	free_copied_env(copied_env);
-	// system("leaks minishell");
 	return (0);
 }
