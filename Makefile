@@ -82,12 +82,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 			$(READLINE_INC)
 
 clean :
-			cd $(LIBFT_DIR); make clean
-			$(RM) $(OBJ) $(OBJ_DIR)
+			@cd $(LIBFT_DIR); make clean
+			@$(RM) $(OBJ) $(OBJ_DIR)
 
 fclean : 	clean
-			cd $(LIBFT_DIR); make fclean
-			$(RM) $(NAME) $(LIBFT)
+			@cd $(LIBFT_DIR); make fclean
+			@$(RM) $(NAME) $(LIBFT)
 
 re : 		fclean all
 

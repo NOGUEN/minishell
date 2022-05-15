@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:44:35 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/15 14:30:18 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/15 14:38:28 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	parse_set(int *index, int *begin, int *flag, char *line)
 	*flag = PIPE;
 	if ((line[*index] == '\"' || line[*index] == '\'') && (*flag & QUOTE) == 0)
 		(*flag) |= QUOTE;
-	else if ((line[*index] == '\"' || line[*index] == '\'') && (*flag & PIPE) != 0)
+	else if ((line[*index] == '\"' || line[*index] == '\'')
+		&& (*flag & PIPE) != 0)
 		(*flag) &= !QUOTE;
 }
 
