@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:44:35 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/15 17:26:10 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/15 17:27:20 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	parse_split1(char *line, int index, int *flag)
 	}
 	else
 		(*flag) &= !PIPE;
-
 }
 
 void	parse_split2(t_cmd **cmds, t_cmd **tmp, t_cmd *new, int begin)
