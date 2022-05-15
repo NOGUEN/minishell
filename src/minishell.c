@@ -6,7 +6,7 @@
 /*   By: noguen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 01:14:14 by noguen            #+#    #+#             */
-/*   Updated: 2022/05/15 17:26:11 by hnoh             ###   ########.fr       */
+/*   Updated: 2022/05/15 17:51:35 by hnoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,5 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	printf("\x1b[1A\033[12Cexit\n");
 	free_copied_env(copied_env);
-//	system("leaks minishell");
 	return (0);
 }
