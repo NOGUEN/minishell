@@ -13,6 +13,8 @@
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
+// 체크하는 함수들을 모아놓았음.
+
 int	check_whitespace(char *line)
 {
 	int	len;

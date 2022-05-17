@@ -77,16 +77,16 @@ char	*alloc_word(const char **s)
 	int		i;
 	char	*word;
 
-	len = word_len(*s);
-	word = (char *)malloc(sizeof(char) + (len + 1));
-	if (word == NULL)
+	len = word_len(*s); // 단어의 길이를 얻어내는 함수.
+	word = (char *)malloc(sizeof(char) + (len + 1)); // 얻어낸 단어의 길이대로 할당해줌.
+	if (word == NULL) // 널가드
 		return (NULL);
 	i = -1;
-	while (++i < len)
+	while (++i < len) // 단어의 길이만큼 할당한 문자열에 값을 복사해서 넣어줌.
 	{
 		word[i] = **s;
 		(*s)++;
 	}
-	word[i] = '\0';
+	word[i] = '\0'; // 문자열 끝맺음.
 	return (word);
 }

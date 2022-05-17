@@ -71,16 +71,16 @@ int	split_count(char const *s)
 	flag = 0;
 	while (*s)
 	{
-		masking_quote_flag(s, &flag);
-		if ((flag & BEGIN) == 0)
+		masking_quote_flag(s, &flag); // 큰 따옴표인지, 작은 따옴표인지를 비트마스킹으로 체크함.
+		if ((flag & BEGIN) == 0) // 만약에 BEGIN 플래그가 마킹되어있다면, 이는 시작점이라는 뜻. 시작점이 아니면 아래의 명령어들이 실행됨.
 		{
-			if (*s != ' ')
+			if (*s != ' ') // 공백은 전부 건너뛰고 새로운 문자가 나오는 순간 시작점으로 취급.
 				flag |= BEGIN;
-			if (*s == '<' || *s == '>')
+			if (*s == '<' || *s == '>') // 공백이고 뭐고 상관없이 일단 리다이렉트가 오면 체크.
 				flag |= REDIR;
 		}
 		else
-			count_on_flag(s, &flag, &cnt);
+			count_on_flag(s, &flag, &cnt); // 앞에서 설정한 플래그 대로 세기 시작.
 		++s;
 	}
 	if (flag & BEGIN)

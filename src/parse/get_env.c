@@ -13,6 +13,9 @@
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
+/*환경 변수에 관련이 있는 함수들을 모아놓았음.
+value나 key값을 가져오거나, value나 key의 크기 값을 가져오는 함수들.*/
+
 char	*get_env_value(char *key, char **envp)
 {
 	int	i;

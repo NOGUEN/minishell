@@ -13,6 +13,8 @@
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
+// 환경변수 할당해주는 함수들.
+
 void	alloc_env2(char *src, char **dest, char **envp, int *index)
 {
 	char	*key;
